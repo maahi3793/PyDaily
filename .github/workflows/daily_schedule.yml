@@ -1,0 +1,60 @@
+name: PyDaily Bot Schedule
+
+on:
+  schedule:
+    # 7:00 AM IST = 1:30 AM UTC
+    - cron: '30 1 * * *'
+    # 10:00 PM IST = 4:30 PM UTC
+    - cron: '30 16 * * *'
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          cd PyDailyEmail
+          pip install -r requirements.txt
+
+      - name: Determine Mode
+        id: mode
+        run: |
+          HOUR=$(date -u +%H)
+          if [ "$HOUR" -lt "12" ]; then
+            echo "mode=morning" >> $GITHUB_OUTPUT
+            echo "Running Morning Cycle"
+          else
+            echo "mode=evening" >> $GITHUB_OUTPUT
+            echo "Running Evening Cycle"
+          fi
+
+      - name: Create Secrets File (Service Account)
+        run: |
+          cd PyDailyEmail
+          echo '${{ secrets.GOOGLE_CREDENTIALS }}' > service_account.json
+          # Debug check (safe)
+          ls -l service_account.json
+
+      - name: Run Bot
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        run: |
+          cd PyDailyEmail
+          # Update config.json with ENV vars since we ignored the file
+          # We actually need to modify run_bot.py or inject config content
+          # EASIEST FIX: Write a temp config.json from secrets
+          
+          echo "{\"gemini_key\": \"$GEMINI_API_KEY\", \"email_address\": \"$EMAIL_ADDRESS\", \"email_password\": \"$EMAIL_PASSWORD\"}" > config.json
+          
+          python run_bot.py --mode ${{ steps.mode.outputs.mode }}
