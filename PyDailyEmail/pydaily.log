@@ -1,0 +1,28 @@
+2025-12-21 18:55:46,248 - INFO - Configuring Gemini with Key: AIzaS...Aww
+2025-12-21 18:55:46,248 - INFO - Using Model: gemini-1.5-flash
+2025-12-21 18:55:48,009 - INFO - Configuring Gemini with Key: AIzaS...Aww
+2025-12-21 18:55:48,011 - INFO - Using Model: gemini-1.5-flash
+2025-12-21 18:55:48,019 - INFO - Attempting to generate lesson for Day 1
+2025-12-21 18:55:48,463 - ERROR - Gemini API Error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-12-21 19:03:28,713 - INFO - Configuring Gemini with Key: AIzaS...Aww
+2025-12-21 19:03:28,713 - INFO - Using Model: gemini-1.5-flash
+2025-12-21 19:03:30,327 - INFO - Configuring Gemini with Key: AIzaS...Aww
+2025-12-21 19:03:30,327 - INFO - Using Model: gemini-1.5-flash
+2025-12-21 19:03:34,186 - INFO - Configuring Gemini with Key: AIzaS...Aww
+2025-12-21 19:03:34,191 - INFO - Using Model: gemini-1.5-flash
+2025-12-21 19:03:34,199 - INFO - Attempting to generate lesson for Day 1
+2025-12-21 19:03:34,562 - ERROR - Gemini API Error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-12-21 19:05:27,977 - INFO - Configuring Gemini with Key: AIzaS...Aww
+2025-12-21 19:05:27,977 - INFO - Using Model: gemini-flash-latest
+2025-12-21 19:05:31,217 - INFO - Configuring Gemini with Key: AIzaS...Aww
+2025-12-21 19:05:31,218 - INFO - Using Model: gemini-flash-latest
+2025-12-21 19:05:31,222 - INFO - Attempting to generate lesson for Day 1
+2025-12-21 19:05:35,578 - INFO - Content generated successfully
+2025-12-21 19:05:44,625 - INFO - Configuring Gemini with Key: AIzaS...Aww
+2025-12-21 19:05:44,625 - INFO - Using Model: gemini-flash-latest
+2025-12-21 19:05:45,671 - INFO - Configuring Gemini with Key: AIzaS...Aww
+2025-12-21 19:05:45,673 - INFO - Using Model: gemini-flash-latest
+2025-12-21 19:06:24,148 - INFO - Configuring Gemini with Key: AIzaS...Aww
+2025-12-21 19:06:24,149 - INFO - Using Model: gemini-1.5-flash
+2025-12-21 19:17:42,237 - INFO - Configuring Gemini with Key: AIzaS...Aww
+2025-12-21 19:17:42,253 - INFO - Using Model: gemini-1.5-flash
