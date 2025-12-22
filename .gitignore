@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+.pydaily.log
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Virtual Enviroment
+venv/
+.env
+
+# Project Secrets - CRITICAL
+config.json
+service_account.json
+contacts.json
+state.json
+
+# Cache
+lessons/
