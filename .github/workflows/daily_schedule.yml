@@ -51,10 +51,7 @@ jobs:
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         run: |
           cd PyDailyEmail
-          # Update config.json with ENV vars since we ignored the file
-          # We actually need to modify run_bot.py or inject config content
-          # EASIEST FIX: Write a temp config.json from secrets
-          
-          echo "{\"gemini_key\": \"$GEMINI_API_KEY\", \"email_address\": \"$EMAIL_ADDRESS\", \"email_password\": \"$EMAIL_PASSWORD\"}" > config.json
+          cd PyDailyEmail
+          # Update config.json with ENV vars is NA. We use os.environ now.
           
           python run_bot.py --mode ${{ steps.mode.outputs.mode }}
