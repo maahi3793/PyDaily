@@ -46,6 +46,9 @@ jobs:
         run: |
           cd PyDailyEmail
           
+          # 0. FORCE INSTALL DEPENDENCIES (Brute Force Fix v2 - RE-TRIGGER)
+          pip install gspread oauth2client google-generativeai python-dotenv pandas google-auth
+          
           # 1. Reconstruct Service Account File safely
           python -c "import os; open('service_account.json','w').write(os.environ['GOOGLE_CREDENTIALS'])"
           
