@@ -129,14 +129,28 @@ Code Rules:
         logging.info(f"Attempting to generate REMINDER for Day {day_number}")
         try:
             prompt = f"""
-            Write a short, encouraging evening reminder email for a Python student who just finished Day {day_number}.
-            Subject: Did you crush Day {day_number}? 🌙
-            Content:
-            - Ask if they finished the "Challenge" from this morning.
-            - Ask if they solved the "Pop Quiz".
-            - Give a tiny hint or fun fact related to Day {day_number}'s topic.
-            - Keep it brief and emojis friendly.
-            - Format: HTML Body.
+            Generate a short, encouraging evening check-in email for Day {day_number}.
+
+            CONTENT GOALS:
+            - Ask if they finished the Challenge/Quiz?
+            - Provide a tiny, 1-sentence "Pro Tip" related to Day {day_number}'s topic.
+            - Motivate them for tomorrow.
+
+            STRICT FORMATTING RULES:
+            1. Output VALID HTML matching this structure:
+               <div style="font-family: Helvetica, Arial, sans-serif; max-width:600px; margin:0 auto; border:1px solid #e0e0e0; border-radius:10px;">
+                 <div style="background-color:#2c3e50; color:white; padding:15px; text-align:center; border-radius:10px 10px 0 0;">
+                   <h3>🌙 Nightly Check-in: Day {day_number}</h3>
+                 </div>
+                 <div style="padding:20px; color:#333; background-color:#f9f9f9;">
+                    [Insert Content Here...]
+                 </div>
+                 <div style="text-align:center; padding:15px;">
+                    <a href="https://github.com/maahi3793/PyDaily" style="background-color:#27ae60; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">I'm Ready for Day {day_number + 1} 🚀</a>
+                 </div>
+               </div>
+
+            2. NO MARKDOWN. RETURN ONLY THE HTML STRING.
             """
             response = self.model.generate_content(prompt)
             return response.text
