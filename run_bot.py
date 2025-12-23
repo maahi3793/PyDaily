@@ -167,6 +167,8 @@ def main():
         run_morning_cycle(gemini, mailer, cache)
     elif args.mode == 'evening':
         run_evening_cycle(gemini, mailer, cache)
+    elif args.mode == 'motivation':
+        run_motivation_cycle(gemini, mailer, cache)
 
 if __name__ == "__main__":
     main()
