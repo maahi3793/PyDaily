@@ -20,56 +20,31 @@ def save_json(filepath, data):
     with open(filepath, 'w') as f:
         json.dump(data, f, indent=4)
 
-from backend import sheets_manager
 
-# Initialize Sheets Manager (Global)
-sheets = sheets_manager.SheetsManager()
 
-# --- Contacts ---
+# --- Contacts (Supabase Backend) ---
+from backend.db_supabase import SupabaseManager
+
+# Global DB Instance (for direct access)
+db = SupabaseManager()
+
 def get_contacts():
-    # Priority: Google Sheets > JSON
-    if sheets.sheet:
-        return sheets.get_all_contacts()
-    
-    # Fallback to Local JSON
-    return load_json(CONTACTS_FILE, [])
+    # 🚀 Now fetching from Supabase directly
+    db = SupabaseManager()
+    return db.admin_get_all_students()
 
-def add_contact(name, email):
-    if sheets.sheet:
-        return sheets.add_contact(name, email)
-    
-    # Fallback
-    contacts = load_json(CONTACTS_FILE, [])
-    for c in contacts:
-        if c['email'] == email:
-            return False
-    contacts.append({"name": name, "email": email, "day": 1, "status": "pending"})
-    save_json(CONTACTS_FILE, contacts)
-    return True
+def add_contact(name, email, password="ChangeMe123!"):
+    db = SupabaseManager()
+    success, msg = db.admin_create_student(email, name, password)
+    return success
 
 def delete_contact(email):
-    if sheets.sheet:
-        sheets.delete_contact(email)
-        return
-
-    # Fallback
-    contacts = load_json(CONTACTS_FILE, [])
-    new_contacts = [c for c in contacts if c['email'] != email]
-    save_json(CONTACTS_FILE, new_contacts)
+    db = SupabaseManager()
+    db.admin_delete_student(email)
 
 def update_contact_status(email, day=None, status=None):
-    if sheets.sheet:
-        sheets.update_status(email, day, status)
-        return
-
-    # Fallback
-    contacts = load_json(CONTACTS_FILE, [])
-    for c in contacts:
-        if c['email'] == email:
-            if day: c['day'] = day
-            if status: c['status'] = status
-            break
-    save_json(CONTACTS_FILE, contacts)
+    db = SupabaseManager()
+    return db.admin_update_student_progress(email, day, status)
 
 # --- Config ---
 def get_config():
@@ -105,3 +80,9 @@ def update_state(day=None, last_run=None):
     if day: state['current_day'] = day
     if last_run: state['last_run'] = last_run
     save_json(STATE_FILE, state)
+
+# --- Admin Auth Ops ---
+def admin_force_password_reset(email, new_password):
+    from backend.db_supabase import SupabaseManager
+    db = SupabaseManager()
+    return db.admin_update_password(email, new_password)

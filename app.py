@@ -11,12 +11,19 @@ if "role" not in st.session_state:
 def main():
     role = st.session_state["role"]
     
-    # --- LOGOUT BUTTON (Global) ---
+    # --- LOGOUT BUTTON (Restored for Gold Standard) ---
     if role != "guest":
         with st.sidebar:
-            if st.button("Logout", type="secondary"):
+            st.divider()
+            # Subtle Logout
+            if st.button("Logout"):
+                from backend.db_supabase import SupabaseManager
+                db = SupabaseManager()
+                db.sign_out()
+                
                 st.session_state["role"] = "guest"
                 st.session_state.pop("user_email", None)
+                st.session_state.pop("auth_token", None)
                 st.rerun()
 
     # --- ROUTING ---
