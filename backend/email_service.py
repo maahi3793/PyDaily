@@ -99,7 +99,7 @@ class EmailService:
                 </div>
                 
                 <p>Please log in and start your journey!</p>
-                <a href="http://localhost:8501" style="display:inline-block; background-color:#4F46E5; color:white; padding:10px 20px; text-decoration:none; border-radius:5px; font-weight:bold;">Login Now</a>
+                <a href="https://pydaily.streamlit.app/" style="display:inline-block; background-color:#4F46E5; color:white; padding:10px 20px; text-decoration:none; border-radius:5px; font-weight:bold;">Login Now</a>
             </div>
         </div>
         """
@@ -150,7 +150,7 @@ class EmailService:
                     {questions_html}
                     
                     <div style="text-align:center; margin-top:30px;">
-                        <a href="http://localhost:8501" style="background-color:#F59E0B; color:white; padding:12px 24px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;">
+                        <a href="https://pydaily.streamlit.app/" style="background-color:#F59E0B; color:white; padding:12px 24px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;">
                            🎮 Take Interactive Quiz & Get Scored
                         </a>
                     </div>

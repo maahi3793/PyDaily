@@ -156,7 +156,7 @@ class SupabaseManager:
         try:
             # redirect_to ensures they land on the app.
             print(f"🔄 Sending Reset Link to {email}...")
-            self.supabase.auth.reset_password_email(email, options={'redirect_to': 'http://localhost:8501'})
+            self.supabase.auth.reset_password_email(email, options={'redirect_to': 'https://pydaily.streamlit.app/'})
             return True, "Check your email for the reset link."
         except Exception as e:
             print(f"❌ Reset Failed: {type(e).__name__}")
