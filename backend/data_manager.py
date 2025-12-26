@@ -51,15 +51,30 @@ def get_config():
     config = load_json(CONFIG_FILE, {"gemini_key": "", "email_address": "", "email_password": "", "test_mode": False, "admin_email": ""})
     
     # Priority: Env Vars > Config File (Safety for Cloud)
-    if not config.get('gemini_key'):
-        config['gemini_key'] = os.environ.get('GEMINI_API_KEY', '')
-    if not config.get('email_address'):
-        config['email_address'] = os.environ.get('EMAIL_ADDRESS', '')
-    if not config.get('email_password'):
-        config['email_password'] = os.environ.get('EMAIL_PASSWORD', '')
-    if not config.get('admin_email'):
-        config['admin_email'] = os.environ.get('ADMIN_EMAIL', '') # Optional Env Var
-        
+    # Check Environment Variables first
+    if not config.get('gemini_key') and 'GEMINI_API_KEY' in os.environ:
+        config['gemini_key'] = os.environ['GEMINI_API_KEY']
+    if not config.get('email_address') and 'EMAIL_ADDRESS' in os.environ:
+        config['email_address'] = os.environ['EMAIL_ADDRESS']
+    if not config.get('email_password') and 'EMAIL_PASSWORD' in os.environ:
+        config['email_password'] = os.environ['EMAIL_PASSWORD']
+    if not config.get('admin_email') and 'ADMIN_EMAIL' in os.environ:
+        config['admin_email'] = os.environ['ADMIN_EMAIL']
+
+    # Fallback: Streamlit Secrets (Cloud Support)
+    try:
+        import streamlit as st
+        if 'GEMINI_API_KEY' in st.secrets and not config.get('gemini_key'):
+            config['gemini_key'] = st.secrets['GEMINI_API_KEY']
+        if 'EMAIL_ADDRESS' in st.secrets and not config.get('email_address'):
+            config['email_address'] = st.secrets['EMAIL_ADDRESS']
+        if 'EMAIL_PASSWORD' in st.secrets and not config.get('email_password'):
+            config['email_password'] = st.secrets['EMAIL_PASSWORD']
+        if 'ADMIN_EMAIL' in st.secrets and not config.get('admin_email'):
+            config['admin_email'] = st.secrets['ADMIN_EMAIL']
+    except:
+        pass # Not running in Streamlit or Secrets not found
+    
     return config
 
 def save_config(gemini_key, email_address, email_password, test_mode=False, admin_email=""):
