@@ -252,7 +252,7 @@ def run_insights_cycle(gemini, mailer, cache):
 
 def main():
     parser = argparse.ArgumentParser(description="PyDaily Automation Bot")
-    parser.add_argument('--mode', choices=['morning', 'evening', 'motivation'], required=True, help="Mode to run: morning (Lessons), evening (Reminders), or motivation (Boost)")
+    parser.add_argument('--mode', choices=['morning', 'evening', 'motivation', 'insights'], required=True, help="Mode to run: morning (Lessons), evening (Reminders), motivation (Boost), or insights (AI Feedback)")
     args = parser.parse_args()
 
     # Load Config
@@ -277,6 +277,8 @@ def main():
         run_evening_cycle(gemini, mailer, cache)
     elif args.mode == 'motivation':
         run_motivation_cycle(gemini, mailer, cache)
+    elif args.mode == 'insights':
+        run_insights_cycle(gemini, mailer, cache)
 
 if __name__ == "__main__":
     main()
