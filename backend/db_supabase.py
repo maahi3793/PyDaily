@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 # Load Environment Variables
-load_dotenv()
+# load_dotenv()
 
 class SupabaseManager:
     """
@@ -18,7 +18,7 @@ class SupabaseManager:
         service_key = os.getenv("SUPABASE_SERVICE_KEY")
         
         if not url or not key:
-            print("❌ Supabase Credentials Missing")
+            print(f"❌ Supabase Credentials Missing. Debug Info: URL='{url}', Key_Length={len(key) if key else 0}")
             self.supabase = None
             self.admin_supabase = None
         else:

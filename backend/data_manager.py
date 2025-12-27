@@ -52,6 +52,11 @@ def get_config():
     
     # Priority: Env Vars > Config File (Safety for Cloud)
     # Check Environment Variables first
+    if not config.get('supabase_url') and 'SUPABASE_URL' in os.environ:
+        config['supabase_url'] = os.environ['SUPABASE_URL']
+    if not config.get('supabase_service_key') and 'SUPABASE_SERVICE_KEY' in os.environ:
+        config['supabase_service_key'] = os.environ['SUPABASE_SERVICE_KEY']
+
     if not config.get('gemini_key') and 'GEMINI_API_KEY' in os.environ:
         config['gemini_key'] = os.environ['GEMINI_API_KEY']
     if not config.get('email_address') and 'EMAIL_ADDRESS' in os.environ:
