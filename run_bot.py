@@ -257,9 +257,27 @@ def main():
 
     # Load Config
     config = data_manager.get_config()
-    if not config.get('gemini_key') or not config.get('email_address'):
-        logging.error("Configuration missing! Run the App UI to set keys.")
-        return
+    
+    # --- DEBUG SECTION ---
+    print("--- ENV DEBUG ---")
+    print(f"SUPABASE_URL Detected: {'YES' if config.get('supabase_url') else 'NO'}")
+    if config.get('supabase_url'):
+        print(f"SUPABASE_URL Length: {len(config.get('supabase_url'))}")
+    
+    masked_env = {}
+    for k, v in os.environ.items():
+        if 'KEY' in k or 'SECRET' in k or 'PASSWORD' in k:
+            masked_env[k] = '***'
+        elif 'URL' in k:
+             masked_env[k] = v[:8] + '...' if v else 'EMPTY'
+        else:
+            masked_env[k] = v
+    print("Full Env Keys:", sorted(masked_env.keys()))
+    print("-----------------")
+
+    if not config.get('gemini_key') or not config.get('email_address') or not config.get('supabase_url'):
+        logging.error("Configuration missing! Checking: Gemini, Email, Supabase URL.")
+        sys.exit(1)
 
     # Init Services
     gemini = gemini_service.GeminiService(config['gemini_key'])
