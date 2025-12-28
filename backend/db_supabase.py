@@ -17,18 +17,30 @@ class SupabaseManager:
         key = os.getenv("SUPABASE_KEY")
         service_key = os.getenv("SUPABASE_SERVICE_KEY")
         
-        if not url or not key:
-            print(f"❌ Supabase Credentials Missing. Debug Info: URL='{url}', Key_Length={len(key) if key else 0}")
+        if not url:
+            print(f"❌ Supabase URL Missing.")
             self.supabase = None
             self.admin_supabase = None
-        else:
+            return
+
+        if not key and not service_key:
+             print(f"❌ Supabase Keys Missing (Need at least Anon Key or Service Key).")
+             self.supabase = None
+             self.admin_supabase = None
+             return
+
+        # Initialize Standard Client (if Anon Key exists)
+        if key:
             self.supabase: Client = create_client(url, key)
+        else:
+            print("⚠️ Running without Anon Key (Standard Auth limited).")
+            self.supabase = None
             
-            # Initialize Admin Client if Service Key exists
-            if service_key:
-                self.admin_supabase: Client = create_client(url, service_key)
-            else:
-                self.admin_supabase = None
+        # Initialize Admin Client (if Service Key exists)
+        if service_key:
+            self.admin_supabase: Client = create_client(url, service_key)
+        else:
+            self.admin_supabase = None
 
     # --- 1. AUTHENTICATION (The Gatekeeper) ---
 
