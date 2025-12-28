@@ -102,7 +102,19 @@ def run():
     # 2. Content (No more manual HTML wrappers)
     
     # Internal Header
-    st.markdown("<h2>PyDaily</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>PyDaily: Your AI Python Tutor</h2>", unsafe_allow_html=True)
+    
+    # --- SEO OPTIMIZATION ---
+    # Hidden text for Search Engines to index instead of "Email Password"
+    st.markdown("""
+    <div style="display:none;">
+        <h1>PyDaily - Master Python Programming with AI</h1>
+        <p>PyDaily is the ultimate automated Python learning platform.</p>
+        <p>Start from "Hello World" and master Data Structures, Algorithms, and Web Development.</p>
+        <p>Features: Daily AI-generated lessons, Interactive Quizzes, Instant Feedback, and structured curriculum.</p>
+        <p>Join the community and code every day.</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Tabs
     tab1, tab2 = st.tabs(["Sign In", "New Account"]) # Renamed for clarity
