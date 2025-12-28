@@ -95,7 +95,12 @@ def run_morning_cycle(gemini, mailer, cache):
                 logging.info(f"Cache Miss: Generating Day {day} Lesson...")
                 # Get history up to yesterday
                 history = cache.get_topics_history(day - 1)
-                content = gemini.generate_lesson(day, history)
+                
+                # Get Phase Info
+                from backend import curriculum
+                phase, phase_goal = curriculum.get_phase_info(int(day))
+                
+                content = gemini.generate_lesson(day, history, phase, phase_goal)
             
             cache.save_lesson(day, content)
         
