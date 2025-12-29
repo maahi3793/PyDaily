@@ -3,10 +3,13 @@ import logging
 import re
 import json
 
+from backend.db_supabase import SupabaseManager
+
 class LessonManager:
     def __init__(self, lessons_dir="lessons"):
         self.lessons_dir = lessons_dir
         self.topics_file = os.path.join(lessons_dir, "topics.json")
+        self.db = SupabaseManager() # Hybrid Cache
         
         if not os.path.exists(lessons_dir):
             os.makedirs(lessons_dir)
@@ -21,36 +24,46 @@ class LessonManager:
         return os.path.join(self.lessons_dir, filename)
 
     def get_lesson(self, day):
-        """Returns cached lesson content or None if not found."""
+        """Returns cached lesson content (DB first, then File)."""
+        # 1. Try DB (Persistent)
+        content = self.db.get_daily_content(day)
+        if content:
+            logging.info(f"Cache Hit (DB): Loaded Day {day}.")
+            return content
+            
+        # 2. Try File (Local/Fallback)
         path = self._get_path(day, "lesson")
         if os.path.exists(path):
-            logging.info(f"Cache Hit: Loading Day {day} Lesson from file.")
+            logging.info(f"Cache Hit (File): Loading Day {day}.")
             with open(path, "r", encoding="utf-8") as f:
                 return f.read()
         return None
 
     def save_lesson(self, day, content):
-        """Saves generated lesson to cache AND extracts/saves topic."""
-        # 1. Save HTML File
+        """Saves generated lesson to DB AND File."""
+        # 1. Extract Topic
+        topic = self._extract_topic(content)
+        
+        # 2. Save to DB (Primary)
+        self.db.save_daily_content(day, content, topic)
+        
+        # 3. Save HTML File (Backup)
         path = self._get_path(day, "lesson")
         with open(path, "w", encoding="utf-8") as f:
             f.write(content)
         logging.info(f"Cache Saved: Day {day} Lesson.")
         
-        # 2. Extract & Save Topic
-        self._extract_and_update_topic(day, content)
+        # 4. Update Local Topics JSON (Legacy Support)
+        self._update_local_topics(day, topic)
 
-    def _extract_and_update_topic(self, day, content):
-        """Finds <!-- TOPIC: ... --> and updates topics.json"""
+    def _extract_topic(self, content):
         match = re.search(r"<!--\s*TOPIC:\s*(.*?)\s*-->", content, re.IGNORECASE)
-        topic = "General Python"
         if match:
-            topic = match.group(1).strip()
-            logging.info(f"Extracted Topic for Day {day}: {topic}")
-        else:
-            logging.warning(f"No TOPIC tag found for Day {day}. Using default.")
-            
-        # Update JSON
+             return match.group(1).strip()
+        return "General Python"
+
+    def _update_local_topics(self, day, topic):
+        """Updates topics.json"""
         try:
             with open(self.topics_file, "r") as f:
                 data = json.load(f)

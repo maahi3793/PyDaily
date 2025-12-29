@@ -406,17 +406,43 @@ class SupabaseManager:
             print(f"❌ Pending Feedback Fetch Failed: {e}")
             return []
 
-    def admin_mark_feedback_sent(self, result_ids):
+    # --- 5. CONTENT ARCHIVE (Daily Lessons) ---
+
+    def save_daily_content(self, day, content, topic="Python Topic"):
         """
-        ADMIN: Marks a list of result IDs as feedback_sent=True
+        ADMIN: Saves generated lesson content to 'daily_content' table.
+        This allows the Web App to display it later.
         """
-        if not self.admin_supabase or not result_ids: return False
+        if not self.admin_supabase: return False, "No Admin Key"
         try:
-            self.admin_supabase.table('quiz_results').update({'feedback_sent': True}).in_('id', result_ids).execute()
-            print(f"✅ Marked {len(result_ids)} results as feedback sent.")
-            return True
+            data = {
+                "day": day,
+                "content": content,
+                "topic": topic
+            }
+            # Upsert using 'day' as PK
+            res = self.admin_supabase.table('daily_content').upsert(data).execute()
+            print(f"✅ Daily Content Saved for Day {day}.")
+            return True, "Saved"
         except Exception as e:
-            print(f"❌ Feedback Mark Failed: {e}")
-            return False
+            print(f"❌ Save Content Failed: {e}")
+            return False, str(e)
+
+    def get_daily_content(self, day):
+        """
+        Fetches lesson content for a specific day.
+        Publicly accessible (via anon key) if RLS allows.
+        """
+        client = self.supabase if self.supabase else self.admin_supabase
+        if not client: return None
+        
+        try:
+            res = client.table('daily_content').select('content').eq('day', day).single().execute()
+            if res.data:
+                return res.data.get('content')
+            return None
+        except Exception as e:
+            # print(f"⚠️ Content Fetch Miss (Day {day}): {e}") # Reduce noise
+            return None
 
 
