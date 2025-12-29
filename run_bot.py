@@ -116,6 +116,36 @@ def run_morning_cycle(gemini, mailer, cache):
         else:
             logging.error(f"❌ Failed Day {day}: {msg}")
 
+    # --- LINKEDIN AUTOMATION ---
+    # Only run once per morning cycle (using the first group's day/topic)
+    # We grab the first day from the loop to decide the topic.
+    if day_groups:
+        try:
+            # Get Content (From Cache - strictly using what was just sent)
+            from backend import curriculum
+            # topic = curriculum.TOPICS.get(sample_day, f"Python Day {sample_day}") # No longer just using topic
+            
+            # Fetch the actual HTML/Markdown content
+            lesson_content = cache.get_lesson(sample_day)
+            
+            if lesson_content and linkedin_token:
+                logging.info(f"👔 Starting LinkedIn Automation for Day {sample_day}...")
+                
+                # 1. Generate Viral Hook using ACTUAL content
+                post_text = gemini.generate_linkedin_post(lesson_content)
+                
+                # 2. Post
+                from backend.linkedin_service import LinkedInService
+                linkedin = LinkedInService(linkedin_token)
+                linkedin.post_update(post_text)
+            elif not linkedin_token:
+                logging.info("Skipping LinkedIn: No LINKEDIN_ACCESS_TOKEN found.")
+            else:
+                logging.warning(f"Skipping LinkedIn: Content for Day {sample_day} not found in cache.")
+                
+        except Exception as e:
+            logging.error(f"LinkedIn Automation Failed: {e}")
+
 def run_evening_cycle(gemini, mailer, cache):
     logging.info("🌙 Starting Evening Cycle (Reminders)...")
     contacts = data_manager.get_contacts()

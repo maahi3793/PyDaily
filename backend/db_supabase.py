@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 # Load Environment Variables
-# load_dotenv()
+load_dotenv()
 
 class SupabaseManager:
     """
@@ -73,6 +73,22 @@ class SupabaseManager:
                 }
             })
             print(f"✅ Signup Result: {res}")
+            
+            # --- AUTO-FIX: Initialize Student Data ---
+            # Standard signup trigger might fail or not exist. We enforce it here via Admin.
+            if res.user and res.user.id and self.admin_supabase:
+                try:
+                    print(f"🛠️ Initializing student_data for {res.user.id}...")
+                    self.admin_supabase.table('student_data').insert({
+                        "student_id": res.user.id,
+                        "current_day": 1,
+                        "status": "pending"
+                    }).execute()
+                    print("✅ Student Data Initialized.")
+                except Exception as db_e:
+                    # Ignore duplicate key errors if trigger actually worked
+                    print(f"⚠️ Student Init Note: {db_e}")
+
             return res
         except Exception as e:
             print(f"❌ Signup Failed Exception: {type(e).__name__}")

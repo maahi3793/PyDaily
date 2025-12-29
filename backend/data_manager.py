@@ -1,5 +1,9 @@
 import json
 import os
+from dotenv import load_dotenv
+
+# Load local .env (if present)
+load_dotenv()
 
 DATA_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTACTS_FILE = os.path.join(DATA_DIR, 'contacts.json')

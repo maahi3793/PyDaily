@@ -262,3 +262,36 @@ Friendly, Mentor-like, use emojis sparingly.
         except Exception as e:
             logging.error(f"Gemini API Error (Motivation): {str(e)}")
             return f"Error generating motivation: {str(e)}"
+    def generate_linkedin_post(self, lesson_content):
+        logging.info("Generating LinkedIn Post from Lesson Content...")
+        try:
+            prompt = f"""
+            You are a Viral Social Media Manager for "PyDaily" (A Python Newsletter).
+            
+            INPUT CONTEXT (The Actual Lesson):
+            {lesson_content[:4000]}  # Truncate to safety limit
+            
+            TASK:
+            Create a LinkedIn Post based on the above lesson.
+            
+            STRUCTURE:
+            1. HOOK: A viral opening line about the topic. 🤯
+            2. THE MICRO-LESSON: clearly explain the concept or show the code snippet from the lesson. (Keep it short & readable).
+            3. THE PITCH:
+               - "This is just a sneak peek."
+               - "Join our Free Newsletter to get these lessons daily." 📩
+               - "Test your skills with our Interactive Quizzes." 🧠
+            
+            CALL TO ACTION (MUST INCLUDE):
+            "👉 Start your 100-Day Journey for Free: https://pydaily.streamlit.app"
+            
+            STRICT FORMAT:
+            Return ONLY the raw text for the post. Use Emojis (🚀, 🐍, 💡).
+            """
+            
+            response = self.model.generate_content(prompt)
+            return response.text.strip()
+            
+        except Exception as e:
+            logging.error(f"Gemini LinkedIn Gen Error: {e}")
+            return "🚀 Another day, another Python concept mastered! Join the newsletter: https://pydaily.streamlit.app #Python"

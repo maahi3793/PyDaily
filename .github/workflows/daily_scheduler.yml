@@ -35,6 +35,7 @@ jobs:
       EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
       EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
       ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+      LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
 
     steps:
       - uses: actions/checkout@v3
@@ -53,17 +54,17 @@ jobs:
           python -c "import os; url = os.getenv('SUPABASE_URL', ''); print(f'DEBUG CHECK: URL Length is {len(url)}')"
 
       - name: Run Morning Cycle (Lessons)
-        if: github.event.schedule == '0 8 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Morning Lessons')
+        if: github.event.schedule == '30 2 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Morning Lessons')
         run: python run_bot.py --mode morning
 
       - name: Run Quiz Insights (AI Feedback)
-        if: github.event.schedule == '0 11 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Quiz Insights')
+        if: github.event.schedule == '30 5 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Quiz Insights')
         run: python run_bot.py --mode insights
 
       - name: Run Mid-Day Motivation (Boost)
-        if: github.event.schedule == '0 12 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Motivation Boost')
+        if: github.event.schedule == '30 6 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Motivation Boost')
         run: python run_bot.py --mode motivation
 
       - name: Run Evening Cycle (Reminders)
-        if: github.event.schedule == '0 20 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Evening Reminders')
+        if: github.event.schedule == '30 14 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Evening Reminders')
         run: python run_bot.py --mode evening
