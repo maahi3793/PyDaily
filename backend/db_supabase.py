@@ -445,4 +445,55 @@ class SupabaseManager:
             # print(f"⚠️ Content Fetch Miss (Day {day}): {e}") # Reduce noise
             return None
 
+    def save_daily_reminder(self, day, content):
+        """
+        Updates the 'reminder_content' column for a specific day.
+        Assumes the 'daily_content' row already exists (created by Lesson).
+        """
+        if not self.admin_supabase: return False, "No Admin Key"
+        try:
+            # Try UPDATE first
+            res = self.admin_supabase.table('daily_content').update({'reminder_content': content}).eq('day', day).execute()
+            if len(res.data) > 0:
+                print(f"✅ Reminder Saved for Day {day}.")
+                return True, "Saved"
+            else:
+                print(f"⚠️ Warning: Lesson for Day {day} not found. Cannot attach reminder.")
+                return False, "Lesson Missing"
+        except Exception as e:
+            print(f"❌ Save Reminder Failed: {e}")
+            return False, str(e)
+
+    def get_daily_reminder(self, day):
+        client = self.supabase if self.supabase else self.admin_supabase
+        if not client: return None
+        try:
+            res = client.table('daily_content').select('reminder_content').eq('day', day).single().execute()
+            return res.data.get('reminder_content') if res.data else None
+        except: return None
+
+    # --- 6. MOTIVATION ARCHIVE ---
+
+    def save_daily_motivation(self, date_str, content):
+        """
+        Saves motivation to 'daily_motivations' table.
+        """
+        if not self.admin_supabase: return False, "No Admin Key"
+        try:
+            data = {"date_str": date_str, "content": content}
+            self.admin_supabase.table('daily_motivations').upsert(data).execute()
+            print(f"✅ Motivation Saved for {date_str}.")
+            return True, "Saved"
+        except Exception as e:
+            print(f"❌ Save Motivation Failed: {e}")
+            return False, str(e)
+
+    def get_daily_motivation(self, date_str):
+        client = self.supabase if self.supabase else self.admin_supabase
+        if not client: return None
+        try:
+            res = client.table('daily_motivations').select('content').eq('date_str', date_str).single().execute()
+            return res.data.get('content') if res.data else None
+        except: return None
+
 

@@ -91,6 +91,11 @@ class LessonManager:
             return "Basic Python Concepts"
 
     def get_reminder(self, day):
+        # 1. Try DB
+        content = self.db.get_daily_reminder(day)
+        if content: return content
+        
+        # 2. Try File
         path = self._get_path(day, "reminder")
         if os.path.exists(path):
             logging.info(f"Cache Hit: Loading Day {day} Reminder from file.")
@@ -99,6 +104,10 @@ class LessonManager:
         return None
 
     def save_reminder(self, day, content):
+        # 1. Save to DB
+        self.db.save_daily_reminder(day, content)
+        
+        # 2. Save to File
         path = self._get_path(day, "reminder")
         with open(path, "w", encoding="utf-8") as f:
             f.write(content)
@@ -106,6 +115,11 @@ class LessonManager:
 
     def get_motivation(self, date_str):
         """Returns cached motivation for a specific date (YYYY-MM-DD)."""
+        # 1. Try DB
+        content = self.db.get_daily_motivation(date_str)
+        if content: return content
+        
+        # 2. Try File
         filename = f"motivation_{date_str}.html"
         path = os.path.join(self.lessons_dir, filename)
         if os.path.exists(path):
@@ -115,6 +129,10 @@ class LessonManager:
         return None
 
     def save_motivation(self, date_str, content):
+        # 1. Save to DB
+        self.db.save_daily_motivation(date_str, content)
+        
+        # 2. Save to File
         filename = f"motivation_{date_str}.html"
         path = os.path.join(self.lessons_dir, filename)
         with open(path, "w", encoding="utf-8") as f:
