@@ -113,48 +113,47 @@ Friendly, Mentor-like, use emojis sparingly.
     def generate_quiz(self, day_number, history_context):
         logging.info(f"Attempting to generate JSON QUIZ for Day {day_number}")
         
-        prompt = f"""
-            Generate a SENIOR-LEVEL INTERVIEW QUIZ for a Python Developer.
-            
-            CONTEXT:
-            The student has completed Days 1-{day_number}.
-            Topics Covered So Far: {history_context}
-            
-            QUIZ REQUIREMENTS:
-            - **Format**: JSON (Strict Check).
-            - **Questions**: 10 Total.
-            - **Type**: 100% Multiple Choice (No open-ended).
-            - **Content**: Mix of Theory (6) and Code Output Prediction (4).
-            
-            JSON SCHEMA:
-            {{
-                "title": "Day {day_number} Checkpoint",
-                "questions": [
-                    {{
-                        "id": 1,
-                        "question": "What is the output of the following code...",
-                        "options": ["A) Error", "B) 10", "C) 20", "D) None"],
-                        "answer": "B) 10", 
-                        "explanation": "Because Python..."
-                    }}
-                ]
-            }}
-            
-            STRICT RULES:
-            1. Return ONLY the raw JSON string.
-            2. No Markdown formatting (```json).
-            3. Ensure "options" is always a list of 4 distinct strings.
-            4. "answer" must match one of the "options" exactly.
-            """
-            
-        import time
-        from tenacity import retry, stop_after_attempt, wait_fixed 
-        # Using simple loop to avoid dependency if tenacity not installed, using manual loop
-        
         max_retries = 3
         for attempt in range(max_retries):
             try:
                 logging.info(f"Quiz Generation Attempt {attempt + 1}/{max_retries}")
+                
+                # Dynamic Prompt for Retry (vary slightly if needed, but standard is fine)
+                prompt = f"""
+                Generate a SENIOR-LEVEL INTERVIEW QUIZ for a Python Developer.
+                
+                CONTEXT:
+                The student has completed Days 1-{day_number}.
+                Topics Covered So Far: {history_context}
+                
+                QUIZ REQUIREMENTS:
+                - **Format**: JSON (Strict Check).
+                - **Questions**: 15 Total.
+                - **Type**: 100% Multiple Choice (No open-ended).
+                - **Content**: Mix of Theory (10) and Code Output Prediction (5).
+                
+                JSON SCHEMA:
+                {{
+                    "title": "Day {day_number} Checkpoint",
+                    "questions": [
+                        {{
+                            "id": 1,
+                            "question": "What is the output of...",
+                            "options": ["A) Error", "B) 10", "C) 20", "D) None"],
+                            "answer": "B) 10", 
+                            "explanation": "Because Python..."
+                        }}
+                    ]
+                }}
+                
+                STRICT RULES:
+                1. Return ONLY the raw JSON string.
+                2. No Markdown formatting (```json).
+                3. Ensure "options" is always a list of 4 distinct strings. DOES NOT ALLOW EMPTY STRINGS.
+                4. "answer" must match one of the "options" exactly.
+                5. double check that NO options are empty (e.g. "A) ").
+                """
+                
                 response = self.model.generate_content(prompt)
                 
                 # Clean potential markdown
@@ -168,10 +167,27 @@ Friendly, Mentor-like, use emojis sparingly.
                 if not text.startswith("{") or not text.endswith("}"):
                     raise ValueError("Output is not valid JSON structure")
 
+                # DEEP VALIDATION (The Fix for 'Empty Options')
+                import json
+                data = json.loads(text)
+                questions = data.get('questions', [])
+                
+                if len(questions) < 10: # Allow 10-15 range, but warn if low
+                     raise ValueError(f"Too few questions generated: {len(questions)}")
+                
+                for q in questions:
+                    if not q.get('question'): raise ValueError("Empty Question Text")
+                    options = q.get('options', [])
+                    if len(options) != 4: raise ValueError(f"Question {q.get('id')} has {len(options)} options (Expected 4)")
+                    for opt in options:
+                        if len(opt.strip()) < 3: # "A) " is 3 chars. "A)" is 2. Empty string is 0.
+                            raise ValueError(f"Empty or Malformed Option Detected: '{opt}'")
+                
+                logging.info("✅ Valid Quiz JSON Generated.")
                 return text
                 
             except Exception as e:
-                logging.warning(f"Gemini Attempt {attempt+1} Failed: {e}")
+                logging.warning(f"Gemini Attempt {attempt+1} Failed Validation: {e}")
                 time.sleep(2)
         
         # If we get here, all retries failed.
