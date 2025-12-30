@@ -469,10 +469,30 @@ def render_dashboard():
                     if cached_lesson:
                         st.success("✅ Quiz Module Ready")
                         
+                        # EDIT MODE
+                        with st.expander("📝 View / Edit Quiz JSON"):
+                            new_content = st.text_area(f"Editor (Day {day})", value=cached_lesson, height=400)
+                            if st.button(f"💾 Save Quiz (Day {day})"):
+                                cache.save_lesson(day, new_content)
+                                st.success("Saved!")
+                                st.rerun()
+                        
+                        # PREVIEW MODE
                         with st.popover(f"👁️ Preview Quiz (Day {day})"):
-                            import streamlit.components.v1 as components
-                            clean_html = cached_lesson.replace('```html', '').replace('```', '')
-                            components.html(clean_html, height=600, scrolling=True)
+                            # Check if JSON
+                            content_str = cached_lesson.strip()
+                            if content_str.startswith("{") or content_str.startswith("["):
+                                import json
+                                try:
+                                    json_data = json.loads(content_str)
+                                    st.json(json_data)
+                                except:
+                                    st.code(content_str, language='json')
+                            else:
+                                # Fallback for HTML
+                                import streamlit.components.v1 as components
+                                clean_html = cached_lesson.replace('```html', '').replace('```', '')
+                                components.html(clean_html, height=600, scrolling=True)
 
                     else:
                         st.warning("⚠️ Not Generated")
