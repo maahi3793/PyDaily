@@ -108,10 +108,26 @@ def run():
         
         if content:
             st.divider()
-            # Clean Markdown if needed
-            clean_html = content.replace('```html', '').replace('```', '')
-            import streamlit.components.v1 as components
-            components.html(clean_html, height=700, scrolling=True)
+            
+            # Check if this is a Quiz (Day 3, 6...) or looks like JSON
+            is_quiz_day = (selected_day % 3 == 0 and selected_day > 0)
+            is_json = content.strip().startswith("{") or content.strip().startswith("[")
+            
+            if is_quiz_day or is_json:
+                # Show Redirect Card
+                st.info("🎯 **Interactive Quiz Detected**")
+                st.markdown(f"""
+                <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; border-radius: 10px; text-align: center;">
+                    <h3 style="color: #166534; margin-top:0;">📝 Time to Test Your Skills!</h3>
+                    <p style="color: #15803d;">This day features an interactive quiz instead of a reading lesson.</p>
+                    <p>👉 <b>Navigate to the '🧠 Quiz Arena' tab above to take the quiz!</b></p>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                # Render Standard Lesson HTML
+                clean_html = content.replace('```html', '').replace('```', '')
+                import streamlit.components.v1 as components
+                components.html(clean_html, height=700, scrolling=True)
         else:
             st.info(f"Day {selected_day} content not found in cache. Ask your Admin to generate it!")
 
