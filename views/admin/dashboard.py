@@ -478,21 +478,15 @@ def render_dashboard():
                                 st.rerun()
                         
                         # PREVIEW MODE
-                        with st.popover(f"👁️ Preview Quiz (Day {day})"):
-                            # Check if JSON
-                            content_str = cached_lesson.strip()
-                            if content_str.startswith("{") or content_str.startswith("["):
-                                import json
-                                try:
-                                    json_data = json.loads(content_str)
-                                    st.json(json_data)
-                                except:
-                                    st.code(content_str, language='json')
-                            else:
-                                # Fallback for HTML
+                        with st.popover(f"👁️ Preview Email (Day {day})"):
+                            # Render as HTML Email
+                            try:
+                                email_html = mailer.format_quiz_for_email(cached_lesson)
                                 import streamlit.components.v1 as components
-                                clean_html = cached_lesson.replace('```html', '').replace('```', '')
-                                components.html(clean_html, height=600, scrolling=True)
+                                components.html(email_html, height=600, scrolling=True)
+                            except Exception as e:
+                                st.error(f"Preview Failed: {e}")
+                                st.code(cached_lesson, language='json')
 
                     else:
                         st.warning("⚠️ Not Generated")

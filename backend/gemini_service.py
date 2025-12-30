@@ -123,7 +123,7 @@ Friendly, Mentor-like, use emojis sparingly.
                 Generate a SENIOR-LEVEL INTERVIEW QUIZ for a Python Developer.
                 
                 CONTEXT:
-                The student has completed Days 1-{day_number}.
+                The student has completed Days 1-{day_number - 1}.
                 Topics Covered So Far: {history_context}
                 
                 QUIZ REQUIREMENTS:
