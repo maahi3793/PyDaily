@@ -106,7 +106,24 @@ def run_morning_cycle(gemini, mailer, cache):
         
         # 2. Send
         subject = f"🎯 PyDaily Challenge: Day {day}" if is_quiz_day else f"🐍 PyDaily: Day {day}"
-        success, msg = mailer.send_email(group, subject, content)
+        
+        # FIX: For Quizzes, don't send the Raw JSON. Send a Dashboard Link.
+        if is_quiz_day:
+            email_body = f"""
+            <div style="font-family:sans-serif; max-width:600px; margin:0 auto; text-align:center; padding:30px; border:1px solid #e0e0e0; border-radius:10px;">
+                <h1 style="color:#4F46E5;">⚔️ It's Quiz Day!</h1>
+                <p style="font-size:18px; color:#333;">You have reached <strong>Day {day}</strong>. It's time to test your knowledge.</p>
+                <div style="background:#f3f4f6; padding:20px; border-radius:8px; margin:20px 0;">
+                    <p>This is an internal checkpoint. Log in to the Student Dashboard to take your Interactive Quiz.</p>
+                </div>
+                <a href="https://pydaily.streamlit.app" style="background-color:#4F46E5; color:white; padding:15px 30px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;">👉 Go to Dashboard</a>
+                <p style="margin-top:20px; font-size:12px; color:#888;">Complete this quiz to unlock tomorrow's lesson.</p>
+            </div>
+            """
+        else:
+            email_body = content
+
+        success, msg = mailer.send_email(group, subject, email_body)
         
         if success:
             # 3. Update Status
