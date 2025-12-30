@@ -57,12 +57,8 @@ def render_dashboard():
     complete_contacts = [c for c in contacts_list if c.get('status') == 'complete']
 
     # Split Queue for Tabs
-    # standard_pending = [c for c in pending_contacts if (c.get('day', 1) % 3 != 0 or c.get('day', 1) == 0)]
-    # quiz_pending = [c for c in pending_contacts if (c.get('day', 1) % 3 == 0 and c.get('day', 1) > 0)]
-    
-    # UNIFIED QUEUE: All days are Lessons for now (User requested "Quiz Later")
-    standard_pending = pending_contacts
-    quiz_pending = [] # Disabled for now
+    standard_pending = [c for c in pending_contacts if (c.get('day', 1) % 3 != 0 or c.get('day', 1) == 0)]
+    quiz_pending = [c for c in pending_contacts if (c.get('day', 1) % 3 == 0 and c.get('day', 1) > 0)]
 
     pending_count = len(pending_contacts)
     
