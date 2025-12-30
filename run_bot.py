@@ -86,22 +86,27 @@ def run_morning_cycle(gemini, mailer, cache):
         # Check Quiz Logic
         is_quiz_day = (int(day) % 3 == 0) and (int(day) > 0)
         
-        if not content:
-            if is_quiz_day:
-                logging.info(f"🎯 Quiz Day detected: Generating Quiz for Day {day}...")
-                history = cache.get_topics_history(day)
-                content = gemini.generate_quiz(day, history)
-            else:
-                logging.info(f"Cache Miss: Generating Day {day} Lesson...")
-                # Get history up to yesterday
-                history = cache.get_topics_history(day - 1)
-                
-                # Get Phase Info
-                from backend import curriculum
-                phase, phase_goal = curriculum.get_phase_info(int(day))
-                
-                content = gemini.generate_lesson(day, history, phase, phase_goal)
+            try:
+                if is_quiz_day:
+                    logging.info(f"🎯 Quiz Day detected: Generating Quiz for Day {day}...")
+                    history = cache.get_topics_history(day)
+                    content = gemini.generate_quiz(day, history)
+                else:
+                    logging.info(f"Cache Miss: Generating Day {day} Lesson...")
+                    history = cache.get_topics_history(day - 1)
+                    from backend import curriculum
+                    phase, phase_goal = curriculum.get_phase_info(int(day))
+                    content = gemini.generate_lesson(day, history, phase, phase_goal)
+            except Exception as e:
+                logging.error(f"❌ GENERATION FAILED for Day {day}: {e}")
+                logging.warning("Skipping this group to prevent bad data. Will retry next run.")
+                continue # Skip to next day group, do NOT save, do NOT send.
             
+            # Double Check Content Validity
+            if not content or "Error" in content[:20]: # Extra safety check
+                 logging.error(f"❌ Invalid Content Generated for Day {day}. Aborting.")
+                 continue
+
             cache.save_lesson(day, content)
         
         # 2. Send

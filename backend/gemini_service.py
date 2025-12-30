@@ -113,8 +113,7 @@ Friendly, Mentor-like, use emojis sparingly.
     def generate_quiz(self, day_number, history_context):
         logging.info(f"Attempting to generate JSON QUIZ for Day {day_number}")
         
-        try:
-            prompt = f"""
+        prompt = f"""
             Generate a SENIOR-LEVEL INTERVIEW QUIZ for a Python Developer.
             
             CONTEXT:
@@ -128,18 +127,18 @@ Friendly, Mentor-like, use emojis sparingly.
             - **Content**: Mix of Theory (6) and Code Output Prediction (4).
             
             JSON SCHEMA:
-            {
+            {{
                 "title": "Day {day_number} Checkpoint",
                 "questions": [
-                    {
+                    {{
                         "id": 1,
                         "question": "What is the output of the following code...",
                         "options": ["A) Error", "B) 10", "C) 20", "D) None"],
                         "answer": "B) 10", 
                         "explanation": "Because Python..."
-                    }
+                    }}
                 ]
-            }
+            }}
             
             STRICT RULES:
             1. Return ONLY the raw JSON string.
@@ -148,14 +147,36 @@ Friendly, Mentor-like, use emojis sparingly.
             4. "answer" must match one of the "options" exactly.
             """
             
-            response = self.model.generate_content(prompt)
-            # Clean potential markdown
-            text = response.text.replace('```json', '').replace('```', '').strip()
-            return text
-        except Exception as e:
-            logging.error(f"Gemini API Error (Quiz): {str(e)}")
-            # Return a valid empty JSON structure on fallback so UI doesn't crash
-            return '{"title": "Error", "questions": []}'
+        import time
+        from tenacity import retry, stop_after_attempt, wait_fixed 
+        # Using simple loop to avoid dependency if tenacity not installed, using manual loop
+        
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                logging.info(f"Quiz Generation Attempt {attempt + 1}/{max_retries}")
+                response = self.model.generate_content(prompt)
+                
+                # Clean potential markdown
+                text = response.text.strip()
+                if "```json" in text:
+                    text = text.split("```json")[1].split("```")[0].strip()
+                elif "```" in text:
+                    text = text.split("```")[1].split("```")[0].strip()
+                
+                # Basic Validation: Check if it looks like JSON
+                if not text.startswith("{") or not text.endswith("}"):
+                    raise ValueError("Output is not valid JSON structure")
+
+                return text
+                
+            except Exception as e:
+                logging.warning(f"Gemini Attempt {attempt+1} Failed: {e}")
+                time.sleep(2)
+        
+        # If we get here, all retries failed.
+        logging.error("All Gemini Quiz Retries Failed.")
+        raise Exception("Failed to generate Quiz after 3 attempts.")
 
     def generate_class_insights(self, quiz_results_list, topic_context):
         logging.info(f"Generating CLASS INSIGHTS for {len(quiz_results_list)} students")
