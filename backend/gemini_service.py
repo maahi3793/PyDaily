@@ -121,17 +121,18 @@ Friendly, Mentor-like, use emojis sparingly.
                 
                 # Dynamic Prompt for Retry (vary slightly if needed, but standard is fine)
                 prompt = f"""
-                Generate a SENIOR-LEVEL INTERVIEW QUIZ for a Python Developer.
+                Generate a BEGINNER-FRIENDLY QUIZ for a Python Student.
                 
                 CONTEXT:
                 The student has completed Days 1-{day_number - 1}.
                 Topics Covered So Far: {history_context}
                 
                 QUIZ REQUIREMENTS:
+                - **Difficulty**: Beginner to Intermediate (Focus on core understanding, not tricks).
                 - **Format**: JSON (Strict Check).
                 - **Questions**: 15 Total.
                 - **Type**: 100% Multiple Choice (No open-ended).
-                - **Content**: Mix of Theory (10) and Code Output Prediction (5).
+                - **Content**: Mix of Theory (10) and Simple Code Output Prediction (5).
                 
                 JSON SCHEMA:
                 {{
