@@ -38,33 +38,65 @@ jobs:
       LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           
       - name: Install Dependencies
         run: pip install -r requirements.txt
       
-      # ✅ DEBUG STEP: This will tell us if the secret is actually empty
+      # ✅ DEBUG STEP
       - name: Debug Secrets
         run: |
           python -c "import os; url = os.getenv('SUPABASE_URL', ''); print(f'DEBUG CHECK: URL Length is {len(url)}')"
 
-      - name: Run Morning Cycle (Lessons)
-        if: github.event.schedule == '30 2 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Morning Lessons')
-        run: python run_bot.py --mode morning
+      # 🕵️‍♂️ DETERMINE RUN MODE (Fixes Schedule Issue)
+      - name: Determine Run Mode
+        id: mode
+        run: |
+          # 1. Default to manual input content if available
+          MODE=""
+          
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+             echo "🔹 Manual Trigger Detected: ${{ github.event.inputs.action }}"
+             case "${{ github.event.inputs.action }}" in
+               "Morning Lessons") MODE="morning" ;;
+               "Quiz Insights") MODE="insights" ;;
+               "Motivation Boost") MODE="motivation" ;;
+               "Evening Reminders") MODE="evening" ;;
+             esac
+          elif [ "${{ github.event_name }}" == "schedule" ]; then
+             # 2. Time-Based Logic (UTC)
+             HOUR=$(date -u +'%H:%M')
+             echo "🔹 Schedule Trigger Detected. UTC Time: $HOUR"
+             
+             # Approx matching (cron might delay slightly, so we match broad windows if needed, but exact is fine for now)
+             # Cron: 02:30, 05:30, 06:30, 14:30
+             
+             # Note: We use grep for partial match to be safe against ':31' etc.
+             if [[ "$HOUR" == "02:"* ]]; then
+                MODE="morning"
+             elif [[ "$HOUR" == "05:"* ]]; then
+                MODE="insights"
+             elif [[ "$HOUR" == "06:"* ]]; then
+                MODE="motivation"
+             elif [[ "$HOUR" == "14:"* ]]; then
+                MODE="evening"
+             fi
+          fi
+          
+          if [ -z "$MODE" ]; then
+            echo "❌ Could not determine mode! Exiting."
+            exit 1
+          fi
+          
+          echo "✅ Selected Mode: $MODE"
+          echo "MODE=$MODE" >> $GITHUB_ENV
 
-      - name: Run Quiz Insights (AI Feedback)
-        if: github.event.schedule == '30 5 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Quiz Insights')
-        run: python run_bot.py --mode insights
-
-      - name: Run Mid-Day Motivation (Boost)
-        if: github.event.schedule == '30 6 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Motivation Boost')
-        run: python run_bot.py --mode motivation
-
-      - name: Run Evening Cycle (Reminders)
-        if: github.event.schedule == '30 14 * * *' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'Evening Reminders')
-        run: python run_bot.py --mode evening
+      # 🚀 EXECUTE BOT
+      - name: Run Bot
+        if: env.MODE != ''
+        run: python run_bot.py --mode ${{ env.MODE }}
