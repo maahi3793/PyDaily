@@ -86,6 +86,7 @@ def run_morning_cycle(gemini, mailer, cache):
         # Check Quiz Logic
         is_quiz_day = (int(day) % 3 == 0) and (int(day) > 0)
         
+        if not content:
             try:
                 if is_quiz_day:
                     logging.info(f"🎯 Quiz Day detected: Generating Quiz for Day {day}...")
