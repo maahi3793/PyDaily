@@ -53,48 +53,63 @@ jobs:
         run: |
           python -c "import os; url = os.getenv('SUPABASE_URL', ''); print(f'DEBUG CHECK: URL Length is {len(url)}')"
 
-      # 🕵️‍♂️ DETERMINE RUN MODE (Fixes Schedule Issue)
+      # 🕵️‍♂️ DETERMINE RUN MODE (Fixes Schedule Issue + Delays)
       - name: Determine Run Mode
         id: mode
+        shell: python
         run: |
-          # 1. Default to manual input content if available
-          MODE=""
+          import os
+          import datetime
           
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-             echo "🔹 Manual Trigger Detected: ${{ github.event.inputs.action }}"
-             case "${{ github.event.inputs.action }}" in
-               "Morning Lessons") MODE="morning" ;;
-               "Quiz Insights") MODE="insights" ;;
-               "Motivation Boost") MODE="motivation" ;;
-               "Evening Reminders") MODE="evening" ;;
-             esac
-          elif [ "${{ github.event_name }}" == "schedule" ]; then
-             # 2. Time-Based Logic (UTC)
-             HOUR=$(date -u +'%H:%M')
-             echo "🔹 Schedule Trigger Detected. UTC Time: $HOUR"
-             
-             # Approx matching (cron might delay slightly, so we match broad windows if needed, but exact is fine for now)
-             # Cron: 02:30, 05:30, 06:30, 14:30
-             
-             # Note: We use grep for partial match to be safe against ':31' etc.
-             if [[ "$HOUR" == "02:"* ]]; then
-                MODE="morning"
-             elif [[ "$HOUR" == "05:"* ]]; then
-                MODE="insights"
-             elif [[ "$HOUR" == "06:"* ]]; then
-                MODE="motivation"
-             elif [[ "$HOUR" == "14:"* ]]; then
-                MODE="evening"
-             fi
-          fi
+          # 1. Check for Manual Trigger
+          event_name = "${{ github.event_name }}"
+          manual_action = "${{ github.event.inputs.action }}"
           
-          if [ -z "$MODE" ]; then
-            echo "❌ Could not determine mode! Exiting."
-            exit 1
-          fi
+          mode = ""
           
-          echo "✅ Selected Mode: $MODE"
-          echo "MODE=$MODE" >> $GITHUB_ENV
+          if event_name == "workflow_dispatch":
+              print(f"🔹 Manual Trigger Detected: {manual_action}")
+              mapping = {
+                  "Morning Lessons": "morning",
+                  "Quiz Insights": "insights",
+                  "Motivation Boost": "motivation",
+                  "Evening Reminders": "evening"
+              }
+              mode = mapping.get(manual_action, "")
+              
+          elif event_name == "schedule":
+              now = datetime.datetime.utcnow()
+              hour = now.hour
+              minute = now.minute
+              print(f"🔹 Schedule Trigger Detected. UTC Time: {hour:02d}:{minute:02d}")
+              
+              # Robust Time Windows (Allowing for ~90min GitHub Delay)
+              # Morning (Sched 02:30): Accept 02:00 - 04:59
+              if 2 <= hour <= 4:
+                  mode = "morning"
+                  
+              # Insights (Sched 05:30): Accept 05:00 - 06:14
+              elif hour == 5 or (hour == 6 and minute < 15):
+                  mode = "insights"
+                  
+              # Motivation (Sched 06:30): Accept 06:15 - 08:00
+              elif (hour == 6 and minute >= 15) or hour == 7:
+                  mode = "motivation"
+                  
+              # Evening (Sched 14:30): Accept 14:00 - 16:59
+              elif 14 <= hour <= 16:
+                  mode = "evening"
+          
+          if not mode:
+              print("❌ Could not determine mode! Time might be too far off schedule.")
+              import sys
+              sys.exit(1)
+          
+          print(f"✅ Selected Mode: {mode}")
+          
+          # Write to GITHUB_ENV
+          with open(os.environ['GITHUB_ENV'], 'a') as f:
+              f.write(f"MODE={mode}\n")
 
       # 🚀 EXECUTE BOT
       - name: Run Bot
