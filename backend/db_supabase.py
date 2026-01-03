@@ -63,39 +63,46 @@ class SupabaseManager:
             print("❌ Supabase Client is None")
             return None
             
-        print(f"🔄 Attempting Signup for: {email}")
+        # Sanitized logging
+        # print(f"🔄 Attempting Signup for: {email}")
+
         try:
+            # 1. Sign up (Auth)
             res = self.supabase.auth.sign_up({
                 "email": email,
                 "password": password,
                 "options": {
-                    "data": { "full_name": full_name } # Passed to Trigger
+                    "data": {
+                        "full_name": full_name
+                    }
                 }
             })
-            print(f"✅ Signup Result: {res}")
             
-            # --- AUTO-FIX: Initialize Student Data ---
-            # Standard signup trigger might fail or not exist. We enforce it here via Admin.
-            if res.user and res.user.id and self.admin_supabase:
-                try:
-                    print(f"🛠️ Initializing student_data for {res.user.id}...")
-                    self.admin_supabase.table('student_data').insert({
-                        "student_id": res.user.id,
-                        "current_day": 1,
-                        "status": "pending"
-                    }).execute()
-                    print("✅ Student Data Initialized.")
-                except Exception as db_e:
-                    # Ignore duplicate key errors if trigger actually worked
-                    print(f"⚠️ Student Init Note: {db_e}")
+            # print(f"✅ Signup Result: {res}")
 
-            return res
+            if res.user:
+                # 2. Check if student_data row exists/needs creation
+                # (Triggers usually handle this, but if we need manual init)
+                if self.admin_supabase: # Only attempt if admin client is available
+                    try:
+                        # print(f"🛠️ Initializing student_data for {res.user.id}...")
+                        self.admin_supabase.table('student_data').insert({
+                            "student_id": res.user.id,
+                            "current_day": 1,
+                            "status": "pending"
+                        }).execute()
+                        # print("✅ Student Data Initialized.")
+                    except Exception as db_e:
+                        # print(f"⚠️ Student Init Note: {db_e}")
+                        pass # Row might exist from triggers
+
+                return res
+            else:
+                return None
+
         except Exception as e:
-            print(f"❌ Signup Failed Exception: {type(e).__name__}")
-            print(f"❌ Error Details: {str(e)}")
-            # Try to print response body if available
-            if hasattr(e, 'message'): print(f"❌ Message: {e.message}")
-            if hasattr(e, 'code'): print(f"❌ Code: {e.code}")
+            # print(f"❌ Signup Failed Exception: {type(e).__name__}")
+            # print(f"❌ Error Details: {str(e)}")
             return None
 
     def sign_out(self):

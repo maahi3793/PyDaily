@@ -4,12 +4,12 @@ import argparse
 import logging
 import time
 
-print("--- STARTUP DIAGNOSTICS ---")
-print(f"CWD: {os.getcwd()}")
-print(f"PYTHONPATH: {sys.path}")
-print("ENV VARS AVAILABLE:", [k for k in os.environ.keys() if 'KEY' in k or 'CRED' in k or 'EMAIL' in k])
-print("Checking backend/...", os.path.exists('backend'), os.path.exists('backend/__init__.py'))
-print("---------------------------")
+# print("--- STARTUP DIAGNOSTICS ---")
+# print(f"CWD: {os.getcwd()}")
+# print(f"PYTHONPATH: {sys.path}")
+# print("ENV VARS AVAILABLE:", [k for k in os.environ.keys() if 'KEY' in k or 'CRED' in k or 'EMAIL' in k])
+# print("Checking backend/...", os.path.exists('backend'), os.path.exists('backend/__init__.py'))
+# print("---------------------------")
 
 try:
     from collections import defaultdict
