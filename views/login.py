@@ -3,66 +3,121 @@ import time
 from backend.db_supabase import SupabaseManager
 
 def run():
-    # 1. Custom CSS for Login Page (Watermark & Native Card)
+    # 1. Custom CSS for Landing Page (Premium Design)
     st.markdown("""
     <style>
-    /* HIDE SIDEBAR on Login Page */
-    [data-testid="stSidebar"] {
-        display: none;
-    }
+    /* IMPORT PREMIUM FONT: 'Outfit' */
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
     
-    /* BACKGROUND: Clean Light */
+    /* HIDE SIDEBAR & DECORATION */
+    [data-testid="stSidebar"] { display: none; }
+    header { visibility: hidden; }
+    footer { visibility: hidden; }
+    
+    /* BACKGROUND & TYPOGRAPHY */
     .stApp {
-        background-color: #FAFAFA !important;
-        background-image: none !important;
+        background-color: #F8FAFC !important;
+        font-family: 'Outfit', sans-serif !important;
+        /* Force Single Page (No Scroll) */
+        height: 100vh;
+        overflow: hidden;
     }
     
-    /* GIANT WATERMARK TEXT */
+    /* WATERMARK TEXT (Fixed Size) */
     .stApp::before {
-        content: "PYTHON TUTOR";
+        content: "PYTHON AI TUTOR";
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        font-size: 13vw; 
+        font-size: 11vw; /* Reduced from 15vw to fit better */
         font-weight: 900;
         z-index: 0;
         white-space: nowrap;
         pointer-events: none;
         
-        /* Gradient Text: Pink -> Blue -> Yellow */
-        background: linear-gradient(135deg, #F9A8D4, #93C5FD, #FDE047); 
+        /* Subtle Gradient */
+        background: linear-gradient(135deg, #E2E8F0, #F1F5F9); 
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        opacity: 0.12; 
-        filter: blur(1px);
+        opacity: 0.4;
     }
     
-    /* CARD STYLING: Applied to the Main Block Container directly */
-    /* This avoids the "empty div" issue by styling the actual content wrapper */
-    .block-container {
-        background-color: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(12px);
-        border-radius: 24px;
-        box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        
-        padding: 3rem !important;
-        max-width: 480px !important;
-        
-        /* Centering & Positioning */
-        margin: auto !important;
-        top: 8vh !important; /* Raise it up a bit (User Request) */
+    /* ANIMATIONS */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    /* LOGO & HERO SECTION */
+    .hero-container {
+        padding-top: 5vh; /* Use VH for responsive vertical centering */
+        z-index: 10;
         position: relative;
     }
     
-    /* HEADER INSIDE CARD */
-    h2 {
-        text-align: center;
-        margin-bottom: 2rem !important;
-        font-weight: 800 !important;
-        letter-spacing: -0.03em !important;
-        color: #111827 !important;
+    .hero-title {
+        font-size: 3.5rem; /* Slightly smaller to prevent scroll */
+        font-weight: 800;
+        line-height: 1.1;
+        /* Vibrant Gradient */
+        background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+        letter-spacing: -0.03em;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        color: #475569;
+        line-height: 1.5;
+        margin-bottom: 2rem;
+        font-weight: 400;
+        max-width: 95%;
+    }
+    
+    /* COMPACT FEATURE GRID (To fit in 100vh) */
+    .feature-grid {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: white;
+        padding: 0.6rem 0.9rem;
+        border-radius: 10px;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        font-weight: 600;
+        color: #334155;
+        font-size: 0.85rem;
+    }
+    
+    /* LOGIN CARD (Right Column) */
+    .login-container {
+        margin-top: 15vh; /* Push down slightly but ensure it fits */
+    }
+    
+    /* BUTTON STYLING (Vibrant) */
+    button[kind="primary"] {
+        background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%);
+        border: none;
+        height: 48px;
+        font-weight: 700;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.2s;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        margin-top: 0.5rem;
+    }
+    button[kind="primary"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
     }
     
     /* TABS */
@@ -70,99 +125,94 @@ def run():
         background-color: transparent !important;
         margin-bottom: 1rem;
     }
-    div[data-baseweb="tab-list"] p {
-        color: #4B5563 !important; 
-        font-weight: 600 !important;
-    }
     
-    /* BUTTONS */
-    button[kind="primary"] {
-        background-color: #2563EB !important;
-        height: 48px !important;
-        border-radius: 10px !important;
-        font-weight: 600 !important;
-        box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.4) !important;
-        border: 1px solid rgba(255,255,255,0.2) !important;
-        margin-top: 10px !important;
+    /* Inputs */
+    input {
+        background-color: #F8FAFC !important;
+        border: 1px solid #E2E8F0 !important;
     }
-    button[kind="primary"]:hover {
-        background-color: #1D4ED8 !important;
-        transform: translateY(-1px);
-    }
-    
-    /* Clean Input Fields */
-    div[data-baseweb="input"] {
-        border-radius: 8px !important;
-        background-color: white !important;
-    }
-    
     </style>
     """, unsafe_allow_html=True)
 
-    # 2. Content (No more manual HTML wrappers)
+    # 2. Main Layout (2 Columns) - Use 'large' gap
+    col_left, col_right = st.columns([1.5, 1], gap="large")
     
-    # Internal Header
-    st.markdown("<h2>PyDaily: Your AI Python Tutor</h2>", unsafe_allow_html=True)
-    
-    # --- SEO OPTIMIZATION ---
-    # Hidden text for Search Engines to index instead of "Email Password"
-    st.markdown("""
-    <div style="display:none;">
-        <h1>PyDaily - Master Python Programming with AI</h1>
-        <p>PyDaily is the ultimate automated Python learning platform.</p>
-        <p>Start from "Hello World" and master Data Structures, Algorithms, and Web Development.</p>
-        <p>Features: Daily AI-generated lessons, Interactive Quizzes, Instant Feedback, and structured curriculum.</p>
-        <p>Join the community and code every day.</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Tabs
-    tab1, tab2 = st.tabs(["Sign In", "New Account"]) # Renamed for clarity
-    
-    db = SupabaseManager()
-    
-    # --- LOGIN FORM ---
-    with tab1:
-        with st.form("login_form"):
-            email = st.text_input("Email", placeholder="student@example.com")
-            password = st.text_input("Password", type="password")
-            
-            submit = st.form_submit_button("Enter Classroom", type="primary", use_container_width=True)
+    # --- LEFT COLUMN: BRANDING & PITCH ---
+    with col_left:
+        st.markdown('<div class="hero-container">', unsafe_allow_html=True)
         
-        if submit:
-            with st.spinner("Authenticating..."):
-                session = db.sign_in(email, password)
-                if session:
-                    token = session.session.access_token
-                    role = db.get_user_role(token)
-                    st.session_state["role"] = role
-                    st.session_state["auth_token"] = token
-                    st.session_state["user_email"] = email
-                    st.success("Welcome back!")
-                    time.sleep(0.5)
-                    st.rerun()
-                else:
-                    st.error("Invalid credentials")
-
-
-    # --- SIGN UP FORM ---
-    with tab2:
-        st.write("") # Spacer
-        with st.form("signup_form"):
-            new_email = st.text_input("Email")
-            new_name = st.text_input("Full Name")
-            new_password = st.text_input("Password", type="password")
-            
-            submit_new = st.form_submit_button("Join PyDaily", type="primary", use_container_width=True)
+        # LOGO
+        st.image("assets/logo.png", width=100) 
         
-        if submit_new:
-            if len(new_password) < 6:
-                st.warning("Password min 6 chars")
-            else:
-                with st.spinner("Creating account..."):
-                    res = db.sign_up(new_email, new_password, new_name)
-                    if res:
-                        st.success("Success! Please Sign In.")
+        st.write("")
+        # REMOVED: Beta Badge
+        
+        st.markdown('<div class="hero-title">Master Python in<br>15 Minutes a Day</div>', unsafe_allow_html=True)
+        st.markdown('<div class="hero-subtitle">The AI-powered automated challenge. Stop starting "courses" you never finish.<br><b>No burnout. Just consistency.</b></div>', unsafe_allow_html=True)
+        
+        # COMPACT FEATURES (Revised Copy)
+        st.markdown("""
+        <div class="feature-grid">
+            <div class="feature-item">📚 Daily Micro-Lessons</div>
+            <div class="feature-item">💡 Instant AI Feedback</div>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-item">🎯 Active Recall Quizzes</div>
+            <div class="feature-item">🚀 Career-Track Curriculum</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown('</div>', unsafe_allow_html=True) # End hero-container
+
+    # --- RIGHT COLUMN: LOGIN/SIGNUP CARD ---
+    with col_right:
+        st.markdown('<div class="login-container">', unsafe_allow_html=True)
+        
+        # Native Container with Border
+        with st.container(border=True):
+            st.subheader("Join the Challenge")
+            
+            tab1, tab2 = st.tabs(["Sign In", "Sign Up"]) 
+            db = SupabaseManager()
+
+            # LOGIN FORM
+            with tab1:
+                with st.form("login_form"):
+                    email = st.text_input("Email", placeholder="you@example.com")
+                    password = st.text_input("Password", type="password")
+                    st.write("")
+                    submit = st.form_submit_button("Sign In ->", type="primary", use_container_width=True)
+                
+                if submit:
+                    with st.spinner("Authenticating..."):
+                        session = db.sign_in(email, password)
+                        if session:
+                            st.session_state["role"] = db.get_user_role(session.session.access_token)
+                            st.session_state["auth_token"] = session.session.access_token
+                            st.session_state["user_email"] = email
+                            st.rerun()
+                        else:
+                            st.error("Login failed.")
+
+            # SIGNUP FORM
+            with tab2:
+                st.write("Create your free account.")
+                with st.form("signup_form"):
+                    new_name = st.text_input("Name", placeholder="Your Name")
+                    new_email = st.text_input("Email")
+                    new_password = st.text_input("Choose Password", type="password")
+                    st.write("")
+                    submit_new = st.form_submit_button("Join Class (Free)", type="primary", use_container_width=True)
+                
+                if submit_new:
+                    if len(new_password) < 6:
+                        st.warning("Password min 6 chars")
                     else:
-                        st.error("Error creating account.")
-                        st.caption("⚠️ If you were manually enrolled by an Admin, you already have an account! Please ask for your initial password and use the **Sign In** tab.")
+                        with st.spinner("Creating account..."):
+                            res = db.sign_up(new_email, new_password, new_name)
+                            if res:
+                                st.success("Check email to confirm.")
+                            else:
+                                st.error("Failed.")
+        
+        st.markdown('</div>', unsafe_allow_html=True)

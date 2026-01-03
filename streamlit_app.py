@@ -2,11 +2,10 @@ import streamlit as st
 
 # 1. Global Config (Must be first)
 st.set_page_config(
-    page_title="PyDaily | Master Python from Scratch", 
+    page_title="PyDaily: The 15-Minute Python Challenge", 
     page_icon="🐍", 
     layout="wide",
     initial_sidebar_state="collapsed",
-    # Meta tags are not natively supported here, injected via markdown below
 )
 
 # 2. Session State Initialization
