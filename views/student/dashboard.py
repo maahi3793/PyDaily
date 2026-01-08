@@ -88,7 +88,7 @@ def run():
     
     # 6. Interactive Learning Tabs
     st.write("")
-    tab1, tab2 = st.tabs(["📚 Knowledge Vault", "🧠 Quiz Arena"])
+    tab1, tab2, tab3 = st.tabs(["📚 Knowledge Vault", "🧠 Quiz Arena", "📊 Progress"])
     
     # --- TAB 1: KNOWLEDGE VAULT (Lesson Library) ---
     with tab1:
@@ -224,3 +224,86 @@ def run():
                 except json.JSONDecodeError:
                     st.error("⚠️ Error loading Interactive Quiz. It might be in the old legacy format.")
                     st.expander("View Legacy Content").code(quiz_content)
+                    
+    # --- TAB 3: PROGRESS (New Feature) ---
+    with tab3:
+        st.subheader("📊 Your Learning Curve")
+        
+        # 1. Fetch Granular History
+        attempts = db.get_student_attempts(token)
+        
+        if not attempts:
+            st.info("No quiz history found. Take your first quiz in the Arena!")
+        else:
+            import pandas as pd
+            import altair as alt
+            
+            # 2. Process Data
+            data = []
+            for item in attempts:
+                score = item.get('score', 0)
+                total = item.get('total', 25) # Note: DB column is 'total' in attempts table
+                pct = (score / total) * 100 if total > 0 else 0
+                
+                # Handle timestamp
+                ts = item.get('submitted_at')
+                # format timestamp nicely
+                
+                data.append({
+                    "Day Name": f"Day {item.get('day')}",
+                    "Day": item.get('day'),
+                    "Score": score,
+                    "Total": total,
+                    "Percentage": pct,
+                    "Timestamp": ts
+                })
+            
+            df = pd.DataFrame(data)
+            df['Timestamp'] = pd.to_datetime(df['Timestamp'])
+            
+            # 3. Metrics (Aggregated)
+            # Best Score per Day
+            best_scores = df.groupby('Day')['Percentage'].max()
+            avg_best = best_scores.mean()
+            total_quizzes = df['Day'].nunique()
+            total_attempts = len(df)
+            
+            m1, m2, m3 = st.columns(3)
+            with m1: st.metric("Quizzes Mastered", total_quizzes, help="Unique Days Completed")
+            with m2: st.metric("Total Attempts", total_attempts, help="Total Simulations Run")
+            with m3: st.metric("Avg Proficiency", f"{avg_best:.1f}%", help="Average of your BEST score for each day")
+            
+            st.divider()
+            
+            # 4. Creative Visualization: Inter-Day Progress (Scatter + Line)
+            st.markdown("#### 📈 Skill Trajectory")
+            st.caption("See how your score improves with every attempt.")
+            
+            chart = alt.Chart(df).mark_line(point=True).encode(
+                x=alt.X('Timestamp', title='Time', axis=alt.Axis(format='%b %d %H:%M')),
+                y=alt.Y('Percentage', title='Score (%)', scale=alt.Scale(domain=[0, 100])),
+                color='Day Name',
+                tooltip=['Day Name', 'Score', 'Total', 'Percentage', 'Timestamp']
+            ).interactive()
+            
+            st.altair_chart(chart, use_container_width=True)
+            
+            # 5. Detailed Log
+            st.markdown("#### 📜 Attempt Log")
+            st.dataframe(
+                df[['Day Name', 'Percentage', 'Score', 'Timestamp']].sort_values('Timestamp', ascending=False),
+                use_container_width=True,
+                column_config={
+                    "Percentage": st.column_config.ProgressColumn(
+                        "Score (%)",
+                        format="%.1f%%",
+                        min_value=0,
+                        max_value=100,
+                    ),
+                    "Timestamp": st.column_config.DatetimeColumn(
+                        "Submitted At",
+                        format="MMM D, h:mm a"
+                    )
+                },
+                hide_index=True
+            )

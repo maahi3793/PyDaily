@@ -140,34 +140,8 @@ def run_morning_cycle(gemini, mailer, cache):
             logging.error(f"❌ Failed Day {day}: {msg}")
 
     # --- LINKEDIN AUTOMATION ---
-    # Only run once per morning cycle (using the first group's day/topic)
-    # We grab the first day from the loop to decide the topic.
-    if day_groups:
-        try:
-            # Get Content (From Cache - strictly using what was just sent)
-            from backend import curriculum
-            # topic = curriculum.TOPICS.get(sample_day, f"Python Day {sample_day}") # No longer just using topic
-            
-            # Fetch the actual HTML/Markdown content
-            lesson_content = cache.get_lesson(sample_day)
-            
-            if lesson_content and linkedin_token:
-                logging.info(f"👔 Starting LinkedIn Automation for Day {sample_day}...")
-                
-                # 1. Generate Viral Hook using ACTUAL content
-                post_text = gemini.generate_linkedin_post(lesson_content)
-                
-                # 2. Post
-                from backend.linkedin_service import LinkedInService
-                linkedin = LinkedInService(linkedin_token)
-                linkedin.post_update(post_text)
-            elif not linkedin_token:
-                logging.info("Skipping LinkedIn: No LINKEDIN_ACCESS_TOKEN found.")
-            else:
-                logging.warning(f"Skipping LinkedIn: Content for Day {sample_day} not found in cache.")
-                
-        except Exception as e:
-            logging.error(f"LinkedIn Automation Failed: {e}")
+    # (Scrapped: User declined Personal Profile posting)
+    pass
 
 def run_evening_cycle(gemini, mailer, cache):
     logging.info("🌙 Starting Evening Cycle (Reminders)...")
@@ -212,13 +186,13 @@ def run_insights_cycle(gemini, mailer, cache):
          # I did add 'db' to data_manager.py earlier.
          pass
          
-    results = data_manager.db.admin_get_pending_feedback_results()
+    results = data_manager.db.admin_get_worst_pending_attempts()
     
     if not results:
-        logging.info("No pending quiz results found for analysis.")
+        logging.info("No pending quiz attempts found for analysis.")
         return
         
-    logging.info(f"Found {len(results)} pending quiz results.")
+    logging.info(f"Found {len(results)} pending quiz attempts (Worst scenarios selected).")
     
     # 2. Group by Day (To generate context-aware insights)
     day_groups = defaultdict(list)
@@ -227,54 +201,36 @@ def run_insights_cycle(gemini, mailer, cache):
         
     # 3. Process Each Day
     for day, day_results in day_groups.items():
-        logging.info(f"Analyzing Day {day} Results ({len(day_results)} students)...")
+        logging.info(f"Analyzing Day {day} Attempts ({len(day_results)} students)...")
         
         # Get Topic Context
         from backend import curriculum
         topic = curriculum.TOPICS.get(day, "Python Concepts")
         
-        # Generate Insights
-        # Note: day_results needs to have 'email'. 
-        # Currently quiz_results table has 'student_id'.
-        # WE NEED TO FETCH EMAILS for these students. 
-        # This is tricky without a Join.
-        # Fallback: We can fetch the user profile one by one or fetch all users?
-        # Let's iterate and fetch email using student_id
-        # This is slow but safe.
-        
-        enriched_results = []
-        for r in day_results:
-            try:
-                # We need a method to get email by ID.
-                # db.admin_get_user_id() gets ID by Email. 
-                # Reverse? admin_get_user_email(id)?
-                # Or just use admin_get_all_students() and map?
-                pass
-            except: pass
-            
-        # Optimization: Fetch ALL students once and create a lookup map
+        # 4. Inject Emails
         all_students = data_manager.db.admin_get_all_students()
         id_to_email = {s['id']: s['email'] for s in all_students}
         
-        valid_results = []
-        for r in day_results:
-            email = id_to_email.get(r['student_id'])
+        valid_attempts = []
+        for att in day_results:
+            sid = att.get('student_id')
+            email = id_to_email.get(sid)
             if email:
-                r['email'] = email # Inject email for Gemini/Mailer
-                valid_results.append(r)
+                att['email'] = email
+                valid_attempts.append(att)
+            else:
+                logging.warning(f"Could not find email for student ID {sid}")
         
-        if not valid_results:
+        if not valid_attempts:
             continue
             
-        # Call Gemini
-        raw_json = gemini.generate_class_insights(valid_results, topic)
+        # 5. Call Gemini
+        raw_json = gemini.generate_class_insights(valid_attempts, topic)
         
         import json
         try:
             data = json.loads(raw_json)
             feedback_list = data.get('student_feedback', [])
-            
-            sent_ids = []
             
             for item in feedback_list:
                 email = item.get('email')
@@ -286,24 +242,25 @@ def run_insights_cycle(gemini, mailer, cache):
                     <h3>💡 Quick Tip: Day {day}</h3>
                     <p>{item['message']}</p>
                     <hr>
-                    <p style="font-size:12px; color:#666;">This tip was generated by your AI Tutor based on your recent quiz performance.</p>
+                    <p style="font-size:12px; color:#666;">This tip was generated by your AI Tutor based on your quiz performance. (We analyzed your toughest attempt to give the best advice!)</p>
                 </div>
                 """
                 
-                success, msg = mailer.send_email([{'email': email}], item['subject'], html_body)
+                subject = f"Feedback on Day {day}: {item.get('subject', 'Keep going!')}"
+                
+                success, msg = mailer.send_email([{'email': email}], subject, html_body)
                 
                 if success:
-                    # Find the Result ID associated with this email
-                    # We need to map back email -> result_id
-                    # We can look at valid_results again
-                    for vr in valid_results:
-                        if vr['email'] == email:
-                            sent_ids.append(vr['id'])
-                            
-            # 4. Mark as Sent
-            if sent_ids:
-                data_manager.db.admin_mark_feedback_sent(sent_ids)
-                logging.info(f"✅ Feedback sent and tracked for {len(sent_ids)} students.")
+                    # Mark as Sent
+                    matched_sid = None
+                    for va in valid_attempts:
+                        if va['email'] == email:
+                            matched_sid = va['student_id']
+                            break
+                    
+                    if matched_sid:
+                        data_manager.db.admin_mark_feedback_sent(matched_sid, day)
+                        logging.info(f"✅ Feedback sent to {email} for Day {day}.")
                 
         except Exception as e:
             logging.error(f"Failed to process insights for Day {day}: {e}")

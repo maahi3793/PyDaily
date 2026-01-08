@@ -364,22 +364,57 @@ class SupabaseManager:
             user = self.supabase.auth.get_user(token)
             if not user: return False, "User not found"
             
-            # Using 'upsert' to ensure only the LATEST result is kept per day
-            data = {
+            # 1. Log the ATTEMPT (History) - Always Insert
+            attempt_data = {
                 "student_id": user.user.id,
                 "day": day,
                 "score": score,
-                "total_questions": total,
+                "total": total,
                 "answers_json": answers
             }
+            self.supabase.table('quiz_attempts').insert(attempt_data).execute()
+            print(f"✅ Quiz Attempt Logged for Day {day}.")
+
+            # 2. Update LEADERBOARD (High Score) - Only if better
+            # Check existing best
+            existing = self.supabase.table('quiz_results').select('score').eq('student_id', user.user.id).eq('day', day).maybe_single().execute()
             
-            # on_conflict ensures we update if (student_id, day) exists
-            res = self.supabase.table('quiz_results').upsert(data, on_conflict='student_id, day').execute()
-            print(f"✅ Quiz Saved (Upsert): {res}")
-            return True, "Saved"
+            should_update = False
+            if not existing.data:
+                should_update = True # First time
+            elif score > existing.data.get('score', 0):
+                should_update = True # New High Score!
+            
+            if should_update:
+                leaderboard_data = {
+                    "student_id": user.user.id,
+                    "day": day,
+                    "score": score,
+                    "total_questions": total,
+                    "answers_json": answers # We keep latest best answers
+                }
+                res = self.supabase.table('quiz_results').upsert(leaderboard_data, on_conflict='student_id, day').execute()
+                print(f"🏆 New Personal Best Saved! ({score}/{total})")
+                return True, "Saved (New High Score!)"
+            else:
+                return True, "Saved (Attempt Logged)"
         except Exception as e:
             print(f"❌ Save Quiz Failed: {e}")
             return False, str(e)
+
+    def get_student_quiz_history(self, token):
+        """
+        Fetches ALL quiz results for the authenticated student.
+        """
+        if not self.supabase or not token: return []
+        try:
+            self.supabase.postgrest.auth(token)
+            # RLS ensures they only see their own
+            res = self.supabase.table('quiz_results').select('*').order('day').execute()
+            return res.data
+        except Exception as e:
+            print(f"❌ History Fetch Failed: {e}")
+            return []
 
     def admin_get_quiz_results(self, day_filter=None):
         """
@@ -415,6 +450,66 @@ class SupabaseManager:
             return []
 
     # --- 5. CONTENT ARCHIVE (Daily Lessons) ---
+
+    def get_student_attempts(self, token):
+        """
+        Fetches DETAILED history (every attempt) for charts.
+        """
+        if not self.supabase or not token: return []
+        try:
+            self.supabase.postgrest.auth(token)
+            res = self.supabase.table('quiz_attempts').select('*').order('submitted_at', desc=False).execute()
+            return res.data
+        except Exception as e:
+            print(f"❌ Attempt Log Fetch Failed: {e}")
+            return []
+
+    def admin_get_worst_pending_attempts(self):
+        """
+        ADMIN: Fetches pending attempts, grouped by (student, day), selecting the WORST score.
+        Logic:
+        1. Fetch all attempts where feedback_sent=False
+        2. In Python, group by (student_id, day) and pick min score.
+        """
+        if not self.admin_supabase: return []
+        try:
+            # Fetch all pending
+            res = self.admin_supabase.table('quiz_attempts').select('*').eq('feedback_sent', False).execute()
+            raw = res.data
+            
+            # Python grouping
+            grouped = {} # Key: (student_id, day) -> Value: Worst Attempt Dict
+            
+            for row in raw:
+                key = (row['student_id'], row['day'])
+                current_worst = grouped.get(key)
+                
+                if not current_worst:
+                    grouped[key] = row
+                else:
+                    # If this row is worse (lower score), or equal score but earlier?
+                    # User asked: "pick the least scored results"
+                    if row['score'] < current_worst['score']:
+                        grouped[key] = row
+            
+            return list(grouped.values())
+        except Exception as e:
+            print(f"❌ Worst Attempt Fetch Failed: {e}")
+            return []
+
+    def admin_mark_feedback_sent(self, student_id, day):
+        """
+        Marks ALL attempts for a (student, day) as processed.
+        So we don't send feedback again for the same day's attempts.
+        """
+        if not self.admin_supabase: return False
+        try:
+            self.admin_supabase.table('quiz_attempts').update({'feedback_sent': True})\
+                .eq('student_id', student_id).eq('day', day).execute()
+            return True
+        except Exception as e:
+            print(f"❌ Mark Feedback Sent Failed: {e}")
+            return False
 
     def save_daily_content(self, day, content, topic="Python Topic"):
         """
