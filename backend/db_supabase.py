@@ -248,7 +248,7 @@ class SupabaseManager:
         if not self.admin_supabase: return []
         try:
             # Join profiles with student_data with proper error handling
-            res = self.admin_supabase.table('profiles').select('email, full_name, role, student_data(current_day, status)').eq('role', 'student').execute()
+            res = self.admin_supabase.table('profiles').select('id, email, full_name, role, student_data(current_day, status)').eq('role', 'student').execute()
             
             students = []
             for row in res.data:
@@ -258,6 +258,7 @@ class SupabaseManager:
                 elif not isinstance(s_data, dict): s_data = {}
                 
                 students.append({
+                    "id": row.get('id'), # Critical for mapping
                     "name": row.get('full_name', 'Unknown'),
                     "email": row.get('email'),
                     "day": s_data.get('current_day', 1),

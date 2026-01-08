@@ -2,6 +2,10 @@ import os
 import time
 import google.generativeai as genai
 import logging
+import warnings
+
+# Suppress Deprecation Warnings (valid until late 2026)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Setup Logging
 logging.basicConfig(
