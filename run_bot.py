@@ -96,8 +96,13 @@ def run_morning_cycle(gemini, mailer, cache):
                     logging.info(f"Cache Miss: Generating Day {day} Lesson...")
                     history = cache.get_topics_history(day - 1)
                     from backend import curriculum
+                    
+                    # Fetch Topic & Phase
+                    topic = curriculum.TOPICS.get(day, f"Day {day} Concept")
                     phase, phase_goal = curriculum.get_phase_info(int(day))
-                    content = gemini.generate_lesson(day, history, phase, phase_goal)
+                    
+                    # Correct Call Signature: day, topic, phase, goal, history
+                    content = gemini.generate_lesson(day, topic, phase, phase_goal, history_context=history)
             except Exception as e:
                 logging.error(f"❌ GENERATION FAILED for Day {day}: {e}")
                 logging.warning("Skipping this group to prevent bad data. Will retry next run.")

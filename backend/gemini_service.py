@@ -134,9 +134,9 @@ Friendly, Mentor-like, use emojis sparingly.
                 QUIZ REQUIREMENTS:
                 - **Difficulty**: Beginner to Intermediate (Focus on core understanding, not tricks).
                 - **Format**: JSON (Strict Check).
-                - **Questions**: EXACTLY 25 Total.
+                - **Questions**: EXACTLY 10 Total.
                 - **Type**: 100% Multiple Choice (No open-ended).
-                - **Content**: Mix of Theory (15) and Simple Code Output Prediction (10).
+                - **Content**: Mix of Theory (6) and Simple Code Output Prediction (4).
                 
                 JSON SCHEMA:
                 {{
@@ -178,8 +178,8 @@ Friendly, Mentor-like, use emojis sparingly.
                 data = json.loads(text)
                 questions = data.get('questions', [])
                 
-                if len(questions) != 25: # STRICT CHECK
-                     raise ValueError(f"Incorrect question count: {len(questions)} (Expected 25)")
+                if len(questions) != 10: # STRICT CHECK
+                     raise ValueError(f"Incorrect question count: {len(questions)} (Expected 10)")
                 
                 for q in questions:
                     if not q.get('question'): raise ValueError("Empty Question Text")

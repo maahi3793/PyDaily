@@ -39,10 +39,13 @@ class LessonManager:
                 return f.read()
         return None
 
-    def save_lesson(self, day, content):
+    def save_lesson(self, day, content, topic_override=None):
         """Saves generated lesson to DB AND File."""
-        # 1. Extract Topic
-        topic = self._extract_topic(content)
+        # 1. Extract Topic (or use override)
+        if topic_override:
+            topic = topic_override
+        else:
+            topic = self._extract_topic(content)
         
         # 2. Save to DB (Primary)
         self.db.save_daily_content(day, content, topic)
