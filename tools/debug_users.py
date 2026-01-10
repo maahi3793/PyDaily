@@ -20,15 +20,22 @@ def list_users():
         
         print(f"\n--- AUTH USERS ({len(users)}) ---")
         for u in users:
-            print(f"ID: {u.id} | Email: {u.email} | Confirmed: {u.email_confirmed_at is not None}")
-            
-            # Check Profile Role
-            try:
-                prof = db.admin_supabase.table('profiles').select('role').eq('id', u.id).single().execute()
-                role = prof.data.get('role') if prof.data else "None"
-                print(f"   -> Role: {role}")
-            except:
-                print("   -> Role: [Error/Missing Profile]")
+            # Filter for specific user if needed (optional)
+            # if 'paragars' in u.email:
+            if True:
+                print(f"TARGET FOUND: {u.email}")
+                try:
+                    prof = db.admin_supabase.table('profiles').select('role, student_data(current_day, status)').eq('id', u.id).single().execute()
+                    s_data = prof.data.get('student_data')
+                    if isinstance(s_data, list) and s_data: s_data = s_data[0]
+                    elif not isinstance(s_data, dict): s_data = {}
+                    
+                    day = s_data.get('current_day', 'N/A')
+                    status = s_data.get('status', 'N/A')
+                    print(f"   => ROLE: {prof.data.get('role')} | DAY: {day} | STATUS: {status}")
+                    print(f"   => FULL DATA: {s_data}")
+                except Exception as e:
+                    print(f"   => ERROR: {e}")
                 
     except Exception as e:
         print(f"❌ Failed to list users: {e}")

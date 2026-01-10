@@ -252,15 +252,16 @@ Friendly, Mentor-like, use emojis sparingly.
             logging.error(f"Insight Gen Error: {e}")
             return '{"student_feedback": []}'
 
-    def generate_reminder(self, day_number):
-        logging.info(f"Attempting to generate REMINDER for Day {day_number}")
+    def generate_reminder(self, day_number, topic_name="General Python"):
+        logging.info(f"Attempting to generate REMINDER for Day {day_number} (Topic: {topic_name})")
         try:
             prompt = f"""
             Generate a short, encouraging evening check-in email for Day {day_number}.
+            Current Topic: {topic_name}
 
             CONTENT GOALS:
             - Ask if they finished the Challenge/Quiz?
-            - Provide a tiny, 1-sentence "Pro Tip" related to Day {day_number}'s topic.
+            - Provide a tiny, 1-sentence "Pro Tip" related to {topic_name}.
             - Motivate them for tomorrow.
 
             STRICT FORMATTING RULES:

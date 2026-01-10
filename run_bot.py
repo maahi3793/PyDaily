@@ -154,8 +154,13 @@ def run_evening_cycle(gemini, mailer, cache):
 
     day_groups = group_contacts_by_day(sent_contacts)
 
+    from backend import curriculum # Import curriculum map
+    
     for day, group in day_groups.items():
         logging.info(f"Processing Day {day} Reminders for {len(group)} students...")
+        
+        # Get Topic explicitly to avoid "hallucinations"
+        topic = curriculum.TOPICS.get(day, "Python Concepts")
 
         # 1. Get/Generate Content
         content = cache.get_reminder(day)
@@ -169,8 +174,8 @@ def run_evening_cycle(gemini, mailer, cache):
                 is_stale = True
         
         if not content or is_stale:
-            if not is_stale: logging.info(f"Cache Miss: Generating Day {day} Reminder...")
-            content = gemini.generate_reminder(day)
+            if not is_stale: logging.info(f"Cache Miss: Generating Day {day} Reminder (Topic: {topic})...")
+            content = gemini.generate_reminder(day, topic_name=topic)
             
             # Double check generated content
             if f"Day {day}" not in content:
