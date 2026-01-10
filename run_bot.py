@@ -159,9 +159,25 @@ def run_evening_cycle(gemini, mailer, cache):
 
         # 1. Get/Generate Content
         content = cache.get_reminder(day)
-        if not content:
-            logging.info(f"Cache Miss: Generating Day {day} Reminder...")
+        
+        # VALIDATION: Check if content matches the Day (Ref Issue: "11th day getting 10th day mail")
+        # If the content explicitly mentions "Day X" and X != day, force regen.
+        is_stale = False
+        if content:
+            if f"Day {day}" not in content and f"Day {day-1}" in content:
+                logging.warning(f"⚠️ Stale/Invalid Reminder Detected for Day {day} (Found 'Day {day-1}'). forcing Regen.")
+                is_stale = True
+        
+        if not content or is_stale:
+            if not is_stale: logging.info(f"Cache Miss: Generating Day {day} Reminder...")
             content = gemini.generate_reminder(day)
+            
+            # Double check generated content
+            if f"Day {day}" not in content:
+                logging.warning(f"⚠️ Generated content missing 'Day {day}'. Appending header.")
+                # Force header just in case
+                content = f"<h3>🌙 Nightly Check-in: Day {day}</h3>\n" + content
+                
             cache.save_reminder(day, content)
         
         # 2. Send
