@@ -289,12 +289,33 @@ Friendly, Mentor-like, use emojis sparingly.
     def generate_motivation(self):
         logging.info("Attempting to generate MID-DAY motivation")
         try:
-            prompt = """
+            import random
+            themes = [
+            themes = [
+                # Global / Universal Themes
+                "Stoic Philosophy", "Space Exploration", "Nature & Growth", "Engineering Marvels",
+                "Sports Psychology", "Scientific Discovery", "Art & Creativity", "The History of Computing",
+                "Mountaineering & Endurance", "Jazz & Improperisation",
+                
+                # Indian Context Themes (Mixed In)
+                "Indian Mathematics (Ramanujan)", "Ancient Wisdom (Yoga/Vedas)", 
+                "ISRO & Frugal Innovation", "The Art of Practice (Abhyasa)"
+            ]
+            theme = random.choice(themes)
+            
+            prompt = f"""
             Generate a short, powerful "Mid-Day Boost" email for coding students.
+            THEME for today: {theme}.
             
             CONTENT:
-            - A punchy, famous quote about persistence, logic, or building things (e.g. Steve Jobs, Grace Hopper, Linus Torvalds).
-            - A brief 2-sentence commentary: "It's noon. You might be stuck. That's part of the process. Keep going."
+            - A punchy, interesting quote related to {theme} that can be applied to coding/persistence. 
+            - PREFERENCE: Feature a diverse mix of global voices (Western, Eastern, Modern, Ancient).
+            - A brief 2-sentence commentary connecting the quote to programming/learning.
+            
+            NEGATIVE CONSTRAINTS:
+            - DO NOT use overused clichés.
+            - DO NOT use Steve Jobs, Bill Gates, or Zuckerberg.
+            - Keep it FRESH and EDUCATIONAL.
             
             STRICT FORMATTING:
             1. HTML Card format similar to above, but use an AMBER/ORANGE header (#F59E0B).
