@@ -179,8 +179,12 @@ def run_evening_cycle(gemini, mailer, cache):
                 is_stale = True
         
         if not content or is_stale:
-            if not is_stale: logging.info(f"Cache Miss: Generating Day {day} Reminder (Topic: {topic})...")
-            content = gemini.generate_reminder(day, topic_name=topic)
+            # Fetch Next Topic for Accurate Teaser
+            from backend import curriculum
+            next_topic = curriculum.TOPICS.get(day + 1, "the next concept")
+            
+            if not is_stale: logging.info(f"Cache Miss: Generating Day {day} Reminder (Topic: {topic}, Next: {next_topic})...")
+            content = gemini.generate_reminder(day, topic_name=topic, next_topic_name=next_topic)
             
             # Double check generated content
             if f"Day {day}" not in content:
