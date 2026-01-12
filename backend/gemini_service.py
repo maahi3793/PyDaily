@@ -291,7 +291,6 @@ Friendly, Mentor-like, use emojis sparingly.
         try:
             import random
             themes = [
-            themes = [
                 # Global / Universal Themes
                 "Stoic Philosophy", "Space Exploration", "Nature & Growth", "Engineering Marvels",
                 "Sports Psychology", "Scientific Discovery", "Art & Creativity", "The History of Computing",
