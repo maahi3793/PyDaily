@@ -288,22 +288,36 @@ def run():
             
             st.altair_chart(chart, use_container_width=True)
             
-            # 5. Detailed Log
+            # 5. Detailed Log (Grouped by Day)
             st.markdown("#### 📜 Attempt Log")
-            st.dataframe(
-                df[['Day Name', 'Percentage', 'Score', 'Timestamp']].sort_values('Timestamp', ascending=False),
-                use_container_width=True,
-                column_config={
-                    "Percentage": st.column_config.ProgressColumn(
-                        "Score (%)",
-                        format="%.1f%%",
-                        min_value=0,
-                        max_value=100,
-                    ),
-                    "Timestamp": st.column_config.DatetimeColumn(
-                        "Submitted At",
-                        format="MMM D, h:mm a"
-                    )
-                },
-                hide_index=True
-            )
+            
+            if df.empty:
+                st.info("No quizzes taken yet.")
+            else:
+                # Group by Day (Sort by Day Descending)
+                days = sorted(df['Day'].unique(), reverse=True)
+                
+                for day in days:
+                    day_df = df[df['Day'] == day].sort_values('Timestamp', ascending=False)
+                    
+                    # Summary Metrics for this Day
+                    best = day_df['Percentage'].max()
+                    attempts = len(day_df)
+                    
+                    # Color code the header
+                    icon = "⭐" if best >= 80 else "📈" if best >= 50 else "🚧"
+                    
+                    with st.expander(f"{icon} **Day {day} Quiz**: {best:.0f}% Best Score ({attempts} Attempts)"):
+                        st.dataframe(
+                            day_df[['Percentage', 'Score', 'Timestamp']],
+                            use_container_width=True,
+                            column_config={
+                                "Percentage": st.column_config.ProgressColumn(
+                                    "Score (%)", format="%.1f%%", min_value=0, max_value=100
+                                ),
+                                "Timestamp": st.column_config.DatetimeColumn(
+                                    "Submitted At", format="MMM D, h:mm a"
+                                )
+                            },
+                            hide_index=True
+                        )
