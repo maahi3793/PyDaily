@@ -304,25 +304,42 @@ Friendly, Mentor-like, use emojis sparingly.
             theme = random.choice(themes)
             
             prompt = f"""
-            Generate a short, powerful "Mid-Day Boost" email for coding students.
-            THEME for today: {theme}.
+            You are an AI generating a daily motivation email.
+            
+            THEME: {theme}.
+            
+            TASK:
+            Generate a short, powerful "Mid-Day Boost" HTML email.
             
             CONTENT:
-            - A punchy, interesting quote related to {theme} that can be applied to coding/persistence. 
-            - PREFERENCE: Feature a diverse mix of global voices (Western, Eastern, Modern, Ancient).
-            - A brief 2-sentence commentary connecting the quote to programming/learning.
+            - A punchy quote relating {theme} to coding/resilience.
+            - A brief 2-sentence commentary.
+            - Focus on a diverse mix of global/Indian voices.
             
-            NEGATIVE CONSTRAINTS:
-            - DO NOT use overused clichés.
-            - DO NOT use Steve Jobs, Bill Gates, or Zuckerberg.
-            - Keep it FRESH and EDUCATIONAL.
+            STRICT OUTPUT RULES:
+            1. Return ONLY the HTML code.
+            2. DO NOT include any markdown formatting (no ```html fences).
+            3. DO NOT include comments, dividers, or metadata (like #### or ----).
+            4. Start the output immediately with <div style="...">.
             
-            STRICT FORMATTING:
-            1. HTML Card format similar to above, but use an AMBER/ORANGE header (#F59E0B).
-            2. Title: "⚡ Mid-Day Boost"
-            3. NO MARKDOWN.
+            HTML TEMPLATE:
+            <div style="font-family: sans-serif; max-width:600px; margin:0 auto; padding:20px; border:1px solid #ddd; border-top: 5px solid #F59E0B; border-radius:8px;">
+                <h2 style="color:#F59E0B; margin-top:0;">⚡ Mid-Day Boost</h2>
+                <blockquote style="font-size:18px; font-style:italic; color:#333; margin:20px 0; border-left:4px solid #F59E0B; padding-left:15px;">
+                    "INSERT QUOTE HERE"
+                </blockquote>
+                <p style="color:#555; line-height:1.6;">
+                    INSERT COMMENTARY HERE.
+                </p>
+                <div style="margin-top:20px; font-size:12px; color:#888; text-align:center;">
+                    PyDaily • {theme}
+                </div>
+            </div>
             """
             response = self.model.generate_content(prompt)
+            # Extra safety: Clean markdown if it slips through
+            text = response.text.replace('```html', '').replace('```', '').strip()
+            return text
             return response.text
         except Exception as e:
             logging.error(f"Gemini API Error (Motivation): {str(e)}")
