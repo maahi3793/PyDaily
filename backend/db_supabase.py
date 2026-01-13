@@ -380,9 +380,12 @@ class SupabaseManager:
             existing = self.supabase.table('quiz_results').select('score').eq('student_id', user.user.id).eq('day', day).maybe_single().execute()
             
             should_update = False
-            if not existing.data:
+            # Fix: Handle case where existing is None or existing.data is None
+            existing_data = existing.data if existing else None
+            
+            if not existing_data:
                 should_update = True # First time
-            elif score > existing.data.get('score', 0):
+            elif score > existing_data.get('score', 0):
                 should_update = True # New High Score!
             
             if should_update:
