@@ -4,6 +4,7 @@ import datetime
 import pandas as pd
 from collections import defaultdict
 from views.admin import contacts, settings
+from backend.curriculum import TOPICS
 
 def render_dashboard():
     """
@@ -64,7 +65,9 @@ def render_dashboard():
     
     if total_students > 0:
         avg_day = sum([c.get('day', 1) for c in contacts_list]) / total_students
-        progress_val = min(avg_day / 100.0, 1.0)
+        # Dynamic Total
+        total_course_days = max(TOPICS.keys()) if TOPICS else 100
+        progress_val = min(avg_day / float(total_course_days), 1.0)
     else:
         avg_day = 0
         progress_val = 0
@@ -145,7 +148,7 @@ def render_dashboard():
     <div class="progress-card">
         <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 8px;">
             <div style="font-weight: 600; color: #374151;">Cohort Progress</div>
-            <div style="font-size: 1.25rem; font-weight: 800; color: #4F46E5;">Day {int(avg_day)} <span style="font-size:0.9rem; color:#9CA3AF; font-weight:500;">/ 100</span></div>
+            <div style="font-size: 1.25rem; font-weight: 800; color: #4F46E5;">Day {int(avg_day)} <span style="font-size:0.9rem; color:#9CA3AF; font-weight:500;">/ {total_course_days}</span></div>
         </div>
         <div style="margin-bottom: 12px; color: #6B7280; font-size: 0.9rem;">
             {int(progress_val*100)}% Complete
