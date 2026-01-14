@@ -260,13 +260,6 @@ def run():
                     st.markdown("---")
                     st.markdown(item['instruction']) # Support Markdown
                     
-                    st.markdown("#### 💻 Write your solution:")
-                    user_code = st.text_area("Python Editor", height=150, key=f"editor_{sel_day}_{curr_idx}", placeholder="# Write your code here...")
-                    
-                    # Mock Run Button
-                    if st.button("▶️ Run Code (Local)", key=f"run_{sel_day}_{curr_idx}"):
-                        st.info("⚡ Copy-paste this code into your local Python IDLE to execute it!")
-                
                 # 5. Navigation
                 c1, c2, c3 = st.columns([1, 2, 1])
                 with c1:
