@@ -127,7 +127,14 @@ def render_dashboard():
                     st.bar_chart(df_chart)
                     st.caption("Distribution of students by Day")
             with d2:
-                 st.info("💡 **Insight:** Most students are consistent. 2 students are paused.")
+                 # Dynamic Insight
+                 paused_count = len([c for c in contacts_list if c.get('status') == 'paused'])
+                 if paused_count == 0:
+                     insight_text = "All systems go! No paused students."
+                 else:
+                     insight_text = f"Attention needed: {paused_count} student(s) are paused."
+                 
+                 st.info(f"💡 **Insight:** {insight_text}")
                  
                  # Quiz Stats
                  quiz_eligible_count = len([c for c in contacts_list if c.get('day', 1) % 3 == 0 and c.get('day', 1) > 0])
