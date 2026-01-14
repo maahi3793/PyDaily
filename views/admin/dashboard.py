@@ -143,20 +143,70 @@ def render_dashboard():
                  quiz_eligible_count = len([c for c in contacts_list if c.get('day', 1) % 3 == 0 and c.get('day', 1) > 0])
                  st.metric("🎯 Students on Quiz Day", quiz_eligible_count)
 
-    # 3️⃣ PROGRESS STORY (Depth)
-    st.markdown(f"""
-    <div class="progress-card">
+    # 3️⃣ PROGRESS STORY (Snake Edition 🐍)
+    pct_val = int(progress_val * 100)
+    snake_html = f"""
+    <div style="margin-bottom: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 8px;">
             <div style="font-weight: 600; color: #374151;">Cohort Progress</div>
-            <div style="font-size: 1.25rem; font-weight: 800; color: #4F46E5;">Day {int(avg_day)} <span style="font-size:0.9rem; color:#9CA3AF; font-weight:500;">/ {total_course_days}</span></div>
+            <div style="font-size: 1rem; font-weight: 700; color: #4F46E5;">{pct_val}% Complete</div>
         </div>
-        <div style="margin-bottom: 12px; color: #6B7280; font-size: 0.9rem;">
-            {int(progress_val*100)}% Complete
+        
+        <div style="
+            background-color: #8B4513; 
+            border-radius: 20px; 
+            width: 100%; 
+            height: 28px; 
+            position: relative; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            border: 2px solid #5D4037;
+        ">
+            <!-- Snake Body -->
+            <div style="
+                background: linear-gradient(90deg, #4CAF50 0%, #388E3C 100%); 
+                width: {max(pct_val, 2)}%; 
+                height: 100%; 
+                border-radius: 18px 0 0 18px; 
+                display: flex; 
+                align-items: center; 
+                justify-content: flex-end;
+                transition: width 1s ease-in-out;
+            ">
+                <!-- Snake Head -->
+                <span style="
+                    font-size: 24px; 
+                    margin-right: -12px; 
+                    transform: scaleX(-1); 
+                    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                    z-index: 10;
+                ">🐍</span>
+            </div>
+            
+            <!-- Overlay Text -->
+            <div style="
+                position: absolute; 
+                top: 0; 
+                left: 0; 
+                width: 100%; 
+                height: 100%; 
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+                color: rgba(255,255,255,0.9); 
+                font-weight: 600; 
+                font-size: 0.85rem;
+                text-shadow: 1px 1px 2px black;
+                pointer-events: none;
+            ">
+                Day {int(avg_day)} / {total_course_days}
+            </div>
+        </div>
+        <div style="text-align: right; font-size: 0.75rem; color: #8B4513; margin-top: 4px; font-style: italic;">
+            Crawling towards Python Mastery...
         </div>
     </div>
-    """, unsafe_allow_html=True)
-
-    st.progress(progress_val)
+    """
+    st.markdown(snake_html, unsafe_allow_html=True)
     
     # --- Main Dashboard ---
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["🚀 Morning Operations", "🌙 Evening Operations", "⚡ Mid-Day Boost", "🎯 Quiz Ops", "📊 Class Insights"])
