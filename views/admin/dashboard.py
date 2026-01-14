@@ -144,70 +144,22 @@ def render_dashboard():
                  quiz_eligible_count = len([c for c in contacts_list if c.get('day', 1) % 3 == 0 and c.get('day', 1) > 0])
                  st.metric("🎯 Students on Quiz Day", quiz_eligible_count)
 
-    # 3️⃣ PROGRESS STORY (Snake Edition 🐍)
+    # 3️⃣ COHORT PROGRESS (Simple & Reliable)
+    st.write("") # Spacer
+    st.markdown("### 🏃 Cohort Trajectory")
+    
+    # Calculate Stats
     pct_val = int(progress_val * 100)
-    snake_html = textwrap.dedent(f"""
-        <div style="margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 8px;">
-                <div style="font-weight: 600; color: #374151;">Cohort Progress</div>
-                <div style="font-size: 1rem; font-weight: 700; color: #4F46E5;">{pct_val}% Complete</div>
-            </div>
-            
-            <div style="
-                background-color: #8B4513; 
-                border-radius: 20px; 
-                width: 100%; 
-                height: 28px; 
-                position: relative; 
-                box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-                border: 2px solid #5D4037;
-            ">
-                <!-- Snake Body -->
-                <div style="
-                    background: linear-gradient(90deg, #4CAF50 0%, #388E3C 100%); 
-                    width: {max(pct_val, 2)}%; 
-                    height: 100%; 
-                    border-radius: 18px 0 0 18px; 
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: flex-end;
-                    transition: width 1s ease-in-out;
-                ">
-                    <!-- Snake Head -->
-                    <span style="
-                        font-size: 24px; 
-                        margin-right: -12px; 
-                        transform: scaleX(-1); 
-                        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-                        z-index: 10;
-                    ">🐍</span>
-                </div>
-                
-                <!-- Overlay Text -->
-                <div style="
-                    position: absolute; 
-                    top: 0; 
-                    left: 0; 
-                    width: 100%; 
-                    height: 100%; 
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: center; 
-                    color: rgba(255,255,255,0.9); 
-                    font-weight: 600; 
-                    font-size: 0.85rem;
-                    text-shadow: 1px 1px 2px black;
-                    pointer-events: none;
-                ">
-                    Day {int(avg_day)} / {total_course_days}
-                </div>
-            </div>
-            <div style="text-align: right; font-size: 0.75rem; color: #8B4513; margin-top: 4px; font-style: italic;">
-                Crawling towards Python Mastery...
-            </div>
-        </div>
-    """)
-    st.markdown(snake_html, unsafe_allow_html=True)
+    
+    # Display as a clean Metric + Bar
+    p1, p2 = st.columns([3, 1])
+    with p1:
+        st.progress(progress_val)
+    with p2:
+        st.write(f"**Day {int(avg_day)} / {total_course_days}**")
+    
+    st.caption(f"The cohort is {pct_val}% through the curriculum.")
+    st.divider()
     
     # --- Main Dashboard ---
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["🚀 Morning Operations", "🌙 Evening Operations", "⚡ Mid-Day Boost", "🎯 Quiz Ops", "📊 Class Insights"])
