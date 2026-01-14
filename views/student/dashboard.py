@@ -22,6 +22,22 @@ def run():
         text-align: center;
         border: 1px solid #e5e7eb;
     }
+    .flashcard-title {
+        background: -webkit-linear-gradient(45deg, #FF512F, #DD2476);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .badge {
+        background-color: #e0f2fe;
+        color: #0369a1;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -251,13 +267,20 @@ def run():
                 curr_idx = st.session_state[idx_key]
                 item = items[curr_idx]
                 
-                # Progress
-                st.progress((curr_idx + 1) / len(items), text=f"Problem {curr_idx + 1} of {len(items)}")
+                # 4. The Flashy Card
+                is_challenge = "Daily Challenge" in item['title']
+                container_func = st.warning if is_challenge else st.info
+                icon = "🔥" if is_challenge else "💠"
                 
-                # 4. The Flashcard
-                with st.container(border=True):
-                    st.markdown(f"### {item['title']}")
+                with container_func(icon=icon):
+                    # Custom Gradient Title
+                    st.markdown(f'<div class="flashcard-title">{item["title"]}</div>', unsafe_allow_html=True)
+                    
+                    # Metadata Badge
+                    st.markdown(f'<span class="badge">Problem {curr_idx + 1} of {len(items)}</span>', unsafe_allow_html=True)
                     st.markdown("---")
+                    
+                    # Content
                     st.markdown(item['instruction']) # Support Markdown
                     
                 # 5. Navigation
