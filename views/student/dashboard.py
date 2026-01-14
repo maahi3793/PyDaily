@@ -226,31 +226,60 @@ def run():
                     st.error("⚠️ Error loading Interactive Quiz. It might be in the old legacy format.")
                     st.expander("View Legacy Content").code(quiz_content)
                     
-    # --- TAB 3: PRACTICE PROGRAMS (New Feature) ---
+    # --- TAB 3: PRACTICE PROGRAMS (Flashcard Gym) ---
     with tab_practice:
-        st.subheader("💻 Practice Code Gallery")
-        st.markdown("Run these snippets locally to build muscle memory.")
+        st.subheader("🏋️ Coding Gym")
+        st.markdown("Practice makes perfect. Cycle through today's challenges.")
         
-        # Grid Layout
         if current_day > 0:
+            # 1. Day Selector
             available_days = list(range(1, current_day + 1))
+            sel_day = st.selectbox("Select Drill Day:", reversed(available_days), index=0)
             
-            cnt = 0
-            for day in reversed(available_days):
-                 # Get code
-                 snippets = cache.extract_practice_code(day)
-                 if snippets:
-                     cnt += 1
-                     with st.expander(f"Day {day} Challenges ({len(snippets)} Programs)"):
-                         for i, code in enumerate(snippets):
-                             st.caption(f"Snippet {i+1}")
-                             st.code(code, language='python')
-                             
-            if cnt == 0:
-                st.info("No coding patterns detected in your lessons yet.")
-        else:
-            st.info("Start your journey to see code here!")
+            # 2. Fetch Items
+            items = cache.extract_practice_items(sel_day)
+            
+            if not items:
+                st.info("No specific practice problems found for this day.")
+            else:
+                # 3. Carousel Logic
+                # Unique key for this day's index
+                idx_key = f"pract_idx_{sel_day}"
+                if idx_key not in st.session_state:
+                    st.session_state[idx_key] = 0
+                
+                curr_idx = st.session_state[idx_key]
+                item = items[curr_idx]
+                
+                # Progress
+                st.progress((curr_idx + 1) / len(items), text=f"Problem {curr_idx + 1} of {len(items)}")
+                
+                # 4. The Flashcard
+                with st.container(border=True):
+                    st.markdown(f"### {item['title']}")
+                    st.markdown("---")
+                    st.markdown(item['instruction']) # Support Markdown
+                    
+                    st.markdown("#### 💻 Write your solution:")
+                    user_code = st.text_area("Python Editor", height=150, key=f"editor_{sel_day}_{curr_idx}", placeholder="# Write your code here...")
+                    
+                    # Mock Run Button
+                    if st.button("▶️ Run Code (Local)", key=f"run_{sel_day}_{curr_idx}"):
+                        st.info("⚡ Copy-paste this code into your local Python IDLE to execute it!")
+                
+                # 5. Navigation
+                c1, c2, c3 = st.columns([1, 2, 1])
+                with c1:
+                    if st.button("⬅️ Previous", key=f"prev_{sel_day}", disabled=(curr_idx == 0)):
+                         st.session_state[idx_key] -= 1
+                         st.rerun()
+                with c3:
+                    if st.button("Next ➡️", key=f"next_{sel_day}", disabled=(curr_idx == len(items) - 1)):
+                         st.session_state[idx_key] += 1
+                         st.rerun()
 
+        else:
+            st.info("Complete Day 1 to unlock the Gym!")
     # --- TAB 4: PROGRESS ---
     with tab3:
         st.subheader("📊 Your Learning Curve")

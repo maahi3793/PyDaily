@@ -142,6 +142,74 @@ class LessonManager:
             f.write(content)
         logging.info(f"Cache Saved: Motivation for {date_str}.")
 
+    def extract_practice_items(self, day):
+        """
+        Parses lesson content to find 'Daily Challenge' and 'Cumulative Practice' items.
+        Returns a list of dicts: [{'title': '...', 'instruction': '...'}]
+        """
+        content = self.get_lesson(day)
+        if not content: return []
+        
+        items = []
+        import re
+        
+        # Helper to clean HTML
+        def clean_html(text):
+            text = re.sub(r'<br\s*/?>', '\n', text)
+            text = re.sub(r'<strong>(.*?)</strong>', r'**\1**', text)
+            text = re.sub(r'<code>(.*?)</code>', r'`\1`', text)
+            text = re.sub(r'<[^>]+>', '', text) # Remove other tags
+            import html
+            return html.unescape(text).strip()
+
+        # 1. Daily Challenge
+        # Look for "Daily Challenge" header
+        dc_match = re.search(r'Daily Challenge(.*?)(<h3|$)', content, re.DOTALL | re.IGNORECASE)
+        if dc_match:
+            raw_dc = dc_match.group(1)
+            # It usually contains <p>Instructions</p> and <ol><li>Steps</li></ol>
+            # Let's just grab all list items if present, or paragraph text
+            dc_instr = clean_html(raw_dc)
+            if len(dc_instr) > 10:
+                items.append({
+                    "title": "🎯 Daily Challenge",
+                    "instruction": dc_instr
+                })
+
+        # 2. Cumulative Practice
+        # Look for "Cumulative Practice" and the following <ol>
+        cp_match = re.search(r'Cumulative Practice.*?(<ol>.*?</ol>)', content, re.DOTALL | re.IGNORECASE)
+        if cp_match:
+            ol_block = cp_match.group(1)
+            # Extract list items
+            lis = re.findall(r'<li>(.*?)</li>', ol_block, re.DOTALL)
+            for li in lis:
+                # Check for Title: Description format (<strong>Title:</strong> Description)
+                title_match = re.search(r'<strong>(.*?):?</strong>', li)
+                if title_match:
+                    title = clean_html(title_match.group(1))
+                    instr = clean_html(li.replace(title_match.group(0), ''))
+                else:
+                    title = "Practice Problem"
+                    instr = clean_html(li)
+                
+                items.append({
+                    "title": f"🏋️ {title}",
+                    "instruction": instr
+                })
+                
+        # FALLBACK: If no text items found, try the old code block extractor
+        if not items:
+            code_blocks = self.extract_practice_code(day)
+            for i, code in enumerate(code_blocks):
+                items.append({
+                    "title": f"Code Snippet {i+1}",
+                    "instruction": "Review and analyze this code:",
+                    "code": code
+                })
+                
+        return items
+
     def extract_practice_code(self, day):
         """
         Parses the stored lesson content for Day X and extracts the Python Code Block.
