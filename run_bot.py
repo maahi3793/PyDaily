@@ -98,7 +98,29 @@ def run_morning_cycle(gemini, mailer, cache):
                     from backend import curriculum
                     
                     # Fetch Topic & Phase
-                    topic = curriculum.TOPICS.get(day, f"Day {day} Concept")
+                    if day <= 179:
+                        topic = curriculum.TOPICS.get(day, f"Day {day} Concept")
+                    else:
+                        # --- INFINITE MODE (Day 180+) ---
+                        # 1. Check if we already predicted this day's topic (persistence)
+                        topic = cache.get_topic_for_day(day)
+                        
+                        if not topic:
+                            logging.info(f"🔮 Infinite Mode: Predicting Next Topic for Day {day}...")
+                            # 2. Gather context: Last 5 days
+                            past_topics = []
+                            for d in range(day - 5, day):
+                                # Try getting from DB first (for recent dynamic days), else Curriculum
+                                t = cache.get_topic_for_day(d)
+                                if not t and d <= 179:
+                                    t = curriculum.TOPICS.get(d, "Python Basics")
+                                if t:
+                                    past_topics.append(t)
+                            
+                            # 3. AI Prediction
+                            topic = gemini.predict_next_topic(past_topics)
+                            logging.info(f"✨ AI Decided Next Topic: {topic}")
+
                     phase, phase_goal = curriculum.get_phase_info(int(day))
                     
                     # Correct Call Signature: day, topic, phase, goal, history

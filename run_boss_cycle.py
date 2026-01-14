@@ -67,7 +67,24 @@ def run_boss_cycle():
         print(f"⚔️ Generating Battles for Day {day}...")
         
         # Get Topic
-        topic = PYTHON_CURRICULUM.get(day, "Advanced Python")
+        if day <= 179:
+            topic = PYTHON_CURRICULUM.get(day, "Advanced Python")
+        else:
+             # --- INFINITE MODE (Day 180+) ---
+            topic = db.get_topic_for_day(day)
+            
+            if not topic:
+                print(f"🔮 Infinite Mode: Predicting Next Topic for Day {day}...")
+                past_topics = []
+                for d in range(day - 5, day):
+                    t = db.get_topic_for_day(d)
+                    if not t and d <= 179:
+                        t = PYTHON_CURRICULUM.get(d, "Python Basics")
+                    if t:
+                        past_topics.append(t)
+                
+                topic = gemini.predict_next_topic(past_topics)
+                print(f"✨ AI Decided Next Topic: {topic}")
         
         # Call Gemini
         battles = gemini.generate_boss_battles(topic, day)
