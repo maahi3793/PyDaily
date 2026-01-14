@@ -25,19 +25,19 @@ This project uses a **Serverless-First** approach to minimize maintenance costs 
 
 ```mermaid
 graph TD
-    User((Student)) -->|Visits| Streamlit[Streamlit Cloud UI]
-    User -->|Receives| Email[Daily Email (SMTP)]
+    User(("Student")) -->|Visits| Streamlit["Streamlit Cloud UI"]
+    User -->|Receives| Email["Daily Email (SMTP)"]
     
     subgraph "Backend Engine (GitHub Actions)"
-        Morning[Morning Cycle\n02:30 UTC] -->|Gen Lesson| Gemini[Gemini 1.5 Pro]
-        Evening[Evening Cycle\n14:30 UTC] -->|Gen Teaser| Gemini
-        Boss[Boss Cycle\n03:30 UTC] -->|Gen Battle| Gemini
+        Morning["Morning Cycle\n02:30 UTC"] -->|Gen Lesson| Gemini["Gemini 1.5 Pro"]
+        Evening["Evening Cycle\n14:30 UTC"] -->|Gen Teaser| Gemini
+        Boss["Boss Cycle\n03:30 UTC"] -->|Gen Battle| Gemini
         Morning -->|Send Mail| Gmail
         Evening -->|Send Mail| Gmail
     end
 
     subgraph "Database (Supabase)"
-        DB[(PostgreSQL)]
+        DB[("PostgreSQL")]
         DB <--> Streamlit
         DB <--> Morning
         DB <--> Boss
