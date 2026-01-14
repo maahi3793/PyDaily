@@ -80,15 +80,7 @@ div.metric-sub {
 }
 
 /* --- PROGRESS BAR (Thicker) --- */
-div[data-testid="stProgress"] > div > div {
-    height: 16px !important;
-    border-radius: 999px !important;
-    background-color: #E5E7EB !important;
-}
-div[data-testid="stProgress"] > div > div > div {
-    height: 16px !important;
-    background: linear-gradient(90deg, #4F46E5 0%, #8B5CF6 100%) !important;
-}
+/* Removed broken CSS overrides to restore native Streamlit bar accuracy */
 
 /* --- EMPTY STATE (Celebratory) --- */
 div.empty-state {
