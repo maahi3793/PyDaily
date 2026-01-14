@@ -33,6 +33,7 @@ def run():
 
     # 2. Data Fetch
     db = SupabaseManager()
+    cache = LessonManager()
     profile = db.get_user_profile(token)
     
     if not profile:
@@ -88,7 +89,7 @@ def run():
     
     # 6. Interactive Learning Tabs
     st.write("")
-    tab1, tab2, tab3 = st.tabs(["📚 Knowledge Vault", "🧠 Quiz Arena", "📊 Progress"])
+    tab1, tab2, tab_practice, tab3 = st.tabs(["📚 Knowledge Vault", "🧠 Quiz Arena", "💻 Practice", "📊 Progress"])
     
     # --- TAB 1: KNOWLEDGE VAULT (Lesson Library) ---
     with tab1:
@@ -225,7 +226,32 @@ def run():
                     st.error("⚠️ Error loading Interactive Quiz. It might be in the old legacy format.")
                     st.expander("View Legacy Content").code(quiz_content)
                     
-    # --- TAB 3: PROGRESS (New Feature) ---
+    # --- TAB 3: PRACTICE PROGRAMS (New Feature) ---
+    with tab_practice:
+        st.subheader("💻 Practice Code Gallery")
+        st.markdown("Run these snippets locally to build muscle memory.")
+        
+        # Grid Layout
+        if current_day > 0:
+            available_days = list(range(1, current_day + 1))
+            
+            cnt = 0
+            for day in reversed(available_days):
+                 # Get code
+                 snippets = cache.extract_practice_code(day)
+                 if snippets:
+                     cnt += 1
+                     with st.expander(f"Day {day} Challenges ({len(snippets)} Programs)"):
+                         for i, code in enumerate(snippets):
+                             st.caption(f"Snippet {i+1}")
+                             st.code(code, language='python')
+                             
+            if cnt == 0:
+                st.info("No coding patterns detected in your lessons yet.")
+        else:
+            st.info("Start your journey to see code here!")
+
+    # --- TAB 4: PROGRESS ---
     with tab3:
         st.subheader("📊 Your Learning Curve")
         

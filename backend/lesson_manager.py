@@ -141,3 +141,34 @@ class LessonManager:
         with open(path, "w", encoding="utf-8") as f:
             f.write(content)
         logging.info(f"Cache Saved: Motivation for {date_str}.")
+
+    def extract_practice_code(self, day):
+        """
+        Parses the stored lesson content for Day X and extracts the Python Code Block.
+        Returns a list of code snippets found.
+        """
+        content = self.get_lesson(day)
+        if not content: return []
+        
+        import re
+        snippets = []
+        
+        # Pattern 1: HTML <pre><code> (Most likely from Gemini HTML)
+        # Matches <pre ...><code ...> CONTENT </code></pre>
+        html_pattern = r'<pre[^>]*><code[^>]*>(.*?)</code></pre>'
+        matches = re.finditer(html_pattern, content, re.DOTALL)
+        for m in matches:
+            code = m.group(1)
+            # Unescape HTML entities if needed (e.g. &lt; to <)
+            import html
+            code = html.unescape(code)
+            snippets.append(code.strip())
+            
+        # Pattern 2: Markdown Fences (Backups)
+        if not snippets:
+            md_pattern = r'```python(.*?)```'
+            matches = re.finditer(md_pattern, content, re.DOTALL)
+            for m in matches:
+                snippets.append(m.group(1).strip())
+                
+        return snippets
