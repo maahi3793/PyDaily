@@ -157,9 +157,7 @@ def render_dashboard():
     """, unsafe_allow_html=True)
 
     st.progress(progress_val)
-
-    st.divider()
-
+    
     # --- Main Dashboard ---
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["🚀 Morning Operations", "🌙 Evening Operations", "⚡ Mid-Day Boost", "🎯 Quiz Ops", "📊 Class Insights"])
     # === TAB 5: CLASS INSIGHTS ===
