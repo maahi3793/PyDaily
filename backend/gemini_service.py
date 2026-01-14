@@ -384,36 +384,62 @@ Friendly, Mentor-like, use emojis sparingly.
             logging.error(f"Gemini LinkedIn Gen Error: {e}")
             return "🚀 Another day, another Python concept mastered! Join the newsletter: https://pydaily.streamlit.app #Python"
 
-    def generate_boss_battles(self, topic):
-        logging.info(f"Generating BOSS BATTLES for topic: {topic}")
+    def generate_boss_battles(self, topic, day):
+        logging.info(f"Generating BOSS BATTLES for topic: {topic} (Day {day})")
+        
+        # Guardrails based on Curriculum Progress
+        constraints = ""
+        if day < 10:
+            constraints = """
+            - **STRICT SYNTAX LIMIT**: Use ONLY Variables, Strings, Integers, and basic Math.
+            - **FORBIDDEN**: NO Loops (for/while), NO Functions (def), NO Classes, NO Imports.
+            - Focus on: Logic, String Manipulation (slicing), and Type Conversion.
+            """
+        elif day < 20:
+             constraints = """
+            - **STRICT SYNTAX LIMIT**: Loops (for/while) and Lists are ALLOWED.
+            - **FORBIDDEN**: NO Functions (def), NO Classes.
+            - Focus on: Iteration, List processing, and Control Flow (if/else).
+            """
+        elif day < 70:
+             constraints = """
+            - **STRICT SYNTAX LIMIT**: Functions (def) are ALLOWED.
+            - **FORBIDDEN**: NO Classes (OOP).
+            - Focus on: Modular code, Dictionary logic, and Error Handling.
+            """
+        else:
+             constraints = "- Full Python Syntax Allowed (OOP, Classes, Decorators)."
+
         try:
             prompt = f"""
             You are a Senior System Architect creating "Boss Battle" Challenges.
             
             TOPIC: {topic}
+            DAY: {day} (Student Learning Phase)
             
             GOAL:
             Create 3 High-Difficulty, Real-World Scenarios based on this topic.
             These are for students who found the basic drills "too easy".
             
-            CONSTRAINTS:
+            CURRICULUM CONSTRAINTS (MUST FOLLOW):
+            {constraints}
+            
+            GENERAL CONSTRAINTS:
             - **No Toy Problems**: No "Print triangular stars" or "Fibonacci".
             - **Real World Context**: Banking, Data Analysis, Game Logic, Web Scrapers, Automation.
-            - **Complexity**: Must require multiple functions, state management, or edge-case handling.
+            - **Complexity**: Push the limits of the ALLOWED syntax.
             
             OUTPUT SCHEMA (JSON Array):
             [
                 {{
                     "title": "Build a Simple Blockchain",
-                    "scenario": "You are a crypto engineer. Create a class `Block` with...",
+                    "scenario": "You are a crypto engineer. Create a variable `block_hash`...",
                     "requirements": [
-                        "Class must have `previous_hash`",
-                        "Implement `calculate_hash()` using hashlib",
-                        "Create a function to validate the chain integrity"
+                        "Variable must store...",
+                        "Calculate the checksum using..."
                     ],
                     "hints": [
-                        "Use `hashlib.sha256(str.encode())`",
-                        "Store blocks in a list"
+                        "Use slicing `text[::-1]`"
                     ]
                 }}
             ]

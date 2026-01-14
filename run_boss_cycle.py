@@ -70,7 +70,7 @@ def run_boss_cycle():
         topic = PYTHON_CURRICULUM.get(day, "Advanced Python")
         
         # Call Gemini
-        battles = gemini.generate_boss_battles(topic)
+        battles = gemini.generate_boss_battles(topic, day)
         
         if battles:
             # Save
