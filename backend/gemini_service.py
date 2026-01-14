@@ -229,7 +229,12 @@ Friendly, Mentor-like, use emojis sparingly.
             TASK:
             1. Analyze each student's performance.
             2. Generate a 2-sentence "Remedial Tip" for EACH student based on their specific weak spots.
-            3. If they got a high score (>= 80%), praise them and suggest an advanced topic.
+            3. If they got a high score (>= 80%), praise them and offer a "Pro Tip" related to TODAY'S TOPIC.
+            
+            NEGATIVE CONSTRAINTS:
+            - DO NOT suggest advanced topics like Generators, Decorators, or Classes if the topic is foundational.
+            - Stick strictly to the scope of "{topic_context}".
+            - Keep advice simple and encouraging.
             
             OUTPUT SCHEMA (JSON):
             {{
