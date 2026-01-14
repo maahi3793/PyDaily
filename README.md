@@ -25,23 +25,44 @@ This project uses a **Serverless-First** approach to minimize maintenance costs 
 
 ```mermaid
 graph TD
-    User(("Student")) -->|Visits| Streamlit["Streamlit Cloud UI"]
-    User -->|Receives| Email["Daily Email (SMTP)"]
+    %% Users
+    Student(("🎓 Student"))
+    Admin(("👨‍🏫 Instructor"))
+
+    %% Frontend Layer
+    subgraph "Streamlit Cloud (Frontend)"
+        StudentUI["Student Portal\n(Lessons, Quiz, Boss Battles)"]
+        AdminUI["Admin Dashboard\n(Analytics, Settings)"]
+    end
     
-    subgraph "Backend Engine (GitHub Actions)"
-        Morning["Morning Cycle\n02:30 UTC"] -->|Gen Lesson| Gemini["Gemini 1.5 Pro"]
-        Evening["Evening Cycle\n14:30 UTC"] -->|Gen Teaser| Gemini
-        Boss["Boss Cycle\n03:30 UTC"] -->|Gen Battle| Gemini
-        Morning -->|Send Mail| Gmail
-        Evening -->|Send Mail| Gmail
+    Student -->|Learns| StudentUI
+    Admin -->|Monitors| AdminUI
+
+    %% Backend Automation Layer
+    subgraph "GitHub Actions (The Heartbeat)"
+        direction TB
+        Batch1["02:30 UTC: Morning Lesson"]
+        Batch2["03:30 UTC: Boss Battle Gen"]
+        Batch3["05:30 UTC: Quiz Analysis"]
+        Batch4["06:30 UTC: Daily Motivation"]
+        Batch5["14:30 UTC: Evening Teaser"]
     end
 
-    subgraph "Database (Supabase)"
-        DB[("PostgreSQL")]
-        DB <--> Streamlit
-        DB <--> Morning
-        DB <--> Boss
-    end
+    %% Services Layer
+    Gemini["✨ Gemini 1.5 Pro\n(Content Engine)"]
+    SMTP["📧 Gmail SMTP\n(Delivery System)"]
+    DB[("🗄️ Supabase\n(State & History)")]
+
+    %% Connections
+    Batch1 & Batch2 & Batch3 & Batch4 & Batch5 -->|Prompt| Gemini
+    Batch1 & Batch3 & Batch4 & Batch5 -->|Send| SMTP
+    Batch2 -->|Store Only| DB
+    
+    %% Data Flow
+    StudentUI <--> DB
+    AdminUI <--> DB
+    Batch1 & Batch2 & Batch3 -->|Read/Write| DB
+    SMTP -->|Delivers| Student
 ```
 
 ### 🛠️ Tech Stack
