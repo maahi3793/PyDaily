@@ -11,7 +11,7 @@
 **PyDaily** is not just a course; it's an **infinite learning engine**. Built on the philosophy of micro-learning, it delivers bite-sized Python lessons via email and interaction through a rich Student Portal.
 
 ### 🌟 Key Features
-*   **🤖 AI-Generated Curriculum:** The standard curriculum is mapped (Day 1-215), but the *content*, *examples*, and *quizzes* are generated fresh by **Google Gemini 1.5 Pro** every morning.
+*   **🤖 AI-Generated Curriculum:** The standard curriculum is mapped (Day 1-179), but the *content*, *examples*, and *quizzes* are generated fresh by **Google Gemini 1.5 Pro** every morning.
 *   **📧 Automated Email Delivery:** Students receive their daily lesson at 08:00 AM (IST) and a reminder/teaser at 08:00 PM (IST).
 *   **⚔️ Boss Battle Engine:** Advanced students face "Senior Dev" level challenges with strict syntax constraints (e.g., "Solve this without loops").
 *   **🏋️ Flashcard Gym:** An interactive coding carousel for daily drills.
@@ -87,7 +87,7 @@ PyDaily/
 │   ├── db_supabase.py       # Database Interface (CRUD)
 │   ├── gemini_service.py    # AI Prompt Engineering
 │   ├── email_service.py     # HTML Email Templates & SMTP
-│   └── curriculum.py        # 215-Day Topic Map
+│   └── curriculum.py        # 179-Day Topic Map
 ├── tools/                   # Utility Scripts (Admin ops, patches)
 ├── views/                   # Streamlit UI Components
 │   ├── student/             # Student Portal (Dashboard, Quiz, Gym)
