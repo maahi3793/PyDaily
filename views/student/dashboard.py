@@ -269,11 +269,11 @@ def run():
                 
                 # 4. The Flashy Card
                 is_challenge = "Daily Challenge" in item['title']
-                container_func = st.warning if is_challenge else st.info
+                # Revert to st.container as st.warning is not a container in older Streamlit versions
+                # We will distinguish them via the Icon/Title style instead
                 icon = "🔥" if is_challenge else "💠"
                 
-                # FIX: Remove icon= param from 'with' as it crashes on some Streamlit versions
-                with container_func():
+                with st.container(border=True):
                     # Custom Gradient Title with Icon embedded
                     st.markdown(f'<div class="flashcard-title">{icon} {item["title"]}</div>', unsafe_allow_html=True)
                     
