@@ -281,7 +281,7 @@ Friendly, Mentor-like, use emojis sparingly.
                     [Insert Content Here...]
                  </div>
                  <div style="text-align:center; padding:15px;">
-                    <a href="https://github.com/maahi3793/PyDaily" style="background-color:#27ae60; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">I'm Ready for Day {day_number + 1} 🚀</a>
+                    <a href="https://pydaily.streamlit.app" style="background-color:#27ae60; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Go to Student Portal 🚀</a>
                  </div>
                </div>
 
@@ -383,3 +383,57 @@ Friendly, Mentor-like, use emojis sparingly.
         except Exception as e:
             logging.error(f"Gemini LinkedIn Gen Error: {e}")
             return "🚀 Another day, another Python concept mastered! Join the newsletter: https://pydaily.streamlit.app #Python"
+
+    def generate_boss_battles(self, topic):
+        logging.info(f"Generating BOSS BATTLES for topic: {topic}")
+        try:
+            prompt = f"""
+            You are a Senior System Architect creating "Boss Battle" Challenges.
+            
+            TOPIC: {topic}
+            
+            GOAL:
+            Create 3 High-Difficulty, Real-World Scenarios based on this topic.
+            These are for students who found the basic drills "too easy".
+            
+            CONSTRAINTS:
+            - **No Toy Problems**: No "Print triangular stars" or "Fibonacci".
+            - **Real World Context**: Banking, Data Analysis, Game Logic, Web Scrapers, Automation.
+            - **Complexity**: Must require multiple functions, state management, or edge-case handling.
+            
+            OUTPUT SCHEMA (JSON Array):
+            [
+                {{
+                    "title": "Build a Simple Blockchain",
+                    "scenario": "You are a crypto engineer. Create a class `Block` with...",
+                    "requirements": [
+                        "Class must have `previous_hash`",
+                        "Implement `calculate_hash()` using hashlib",
+                        "Create a function to validate the chain integrity"
+                    ],
+                    "hints": [
+                        "Use `hashlib.sha256(str.encode())`",
+                        "Store blocks in a list"
+                    ]
+                }}
+            ]
+            
+            STRICT RULES:
+            1. Return ONLY the JSON Array.
+            2. Generate exactly 3 Battles.
+            3. Ensure valid JSON.
+            """
+            
+            response = self.model.generate_content(prompt)
+            text = response.text.replace('```json', '').replace('```', '').strip()
+            
+            import json
+            # Validation check
+            data = json.loads(text)
+            if not isinstance(data, list) or len(data) < 1:
+                raise ValueError("Invalid Boss Battle JSON")
+            
+            return data
+        except Exception as e:
+            logging.error(f"Boss Battle Gen Error: {e}")
+            return []

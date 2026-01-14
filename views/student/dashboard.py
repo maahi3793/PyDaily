@@ -245,58 +245,88 @@ def run():
     # --- TAB 3: PRACTICE PROGRAMS (Flashcard Gym) ---
     with tab_practice:
         st.subheader("🏋️ Coding Gym")
-        st.markdown("Practice makes perfect. Cycle through today's challenges.")
+        st.markdown("Practice makes perfect. Choose your difficulty level.")
         
-        if current_day > 0:
-            # 1. Day Selector
-            available_days = list(range(1, current_day + 1))
-            sel_day = st.selectbox("Select Drill Day:", reversed(available_days), index=0)
-            
-            # 2. Fetch Items
-            items = cache.extract_practice_items(sel_day)
-            
-            if not items:
-                st.info("No specific practice problems found for this day.")
+        tab_drill, tab_boss = st.tabs(["🧩 Daily Drill", "🔥 Boss Battles"])
+        
+        # --- TAB A: DAILY DRILL (Existing) ---
+        with tab_drill:
+            if current_day > 0:
+                # 1. Day Selector
+                available_days = list(range(1, current_day + 1))
+                sel_day = st.selectbox("Select Drill Day:", reversed(available_days), index=0, key="drill_day_sel")
+                
+                # 2. Fetch Items
+                items = cache.extract_practice_items(sel_day)
+                
+                if not items:
+                    st.info("No specific practice problems found for this day.")
+                else:
+                    # 3. Carousel Logic
+                    idx_key = f"pract_idx_{sel_day}"
+                    if idx_key not in st.session_state:
+                        st.session_state[idx_key] = 0
+                    
+                    curr_idx = st.session_state[idx_key]
+                    item = items[curr_idx]
+                    
+                    # 4. The Flashy Card
+                    is_challenge = "Daily Challenge" in item['title']
+                    icon = "🔥" if is_challenge else "💠"
+                    
+                    with st.container(border=True):
+                        # Custom Gradient Title with Icon embedded
+                        st.markdown(f'<div class="flashcard-title">{icon} {item["title"]}</div>', unsafe_allow_html=True)
+                        
+                        # Metadata Badge
+                        st.markdown(f'<span class="badge">Problem {curr_idx + 1} of {len(items)}</span>', unsafe_allow_html=True)
+                        st.markdown("---")
+                        
+                        # Content
+                        st.markdown(item['instruction']) # Support Markdown
+                        
+                    # 5. Navigation
+                    c1, c2, c3 = st.columns([1, 2, 1])
+                    with c1:
+                        if st.button("⬅️ Previous", key=f"prev_{sel_day}", disabled=(curr_idx == 0)):
+                             st.session_state[idx_key] -= 1
+                             st.rerun()
+                    with c3:
+                        if st.button("Next ➡️", key=f"next_{sel_day}", disabled=(curr_idx == len(items) - 1)):
+                             st.session_state[idx_key] += 1
+                             st.rerun()
             else:
-                # 3. Carousel Logic
-                # Unique key for this day's index
-                idx_key = f"pract_idx_{sel_day}"
-                if idx_key not in st.session_state:
-                    st.session_state[idx_key] = 0
-                
-                curr_idx = st.session_state[idx_key]
-                item = items[curr_idx]
-                
-                # 4. The Flashy Card
-                is_challenge = "Daily Challenge" in item['title']
-                # Revert to st.container as st.warning is not a container in older Streamlit versions
-                # We will distinguish them via the Icon/Title style instead
-                icon = "🔥" if is_challenge else "💠"
-                
-                with st.container(border=True):
-                    # Custom Gradient Title with Icon embedded
-                    st.markdown(f'<div class="flashcard-title">{icon} {item["title"]}</div>', unsafe_allow_html=True)
-                    
-                    # Metadata Badge
-                    st.markdown(f'<span class="badge">Problem {curr_idx + 1} of {len(items)}</span>', unsafe_allow_html=True)
-                    st.markdown("---")
-                    
-                    # Content
-                    st.markdown(item['instruction']) # Support Markdown
-                    
-                # 5. Navigation
-                c1, c2, c3 = st.columns([1, 2, 1])
-                with c1:
-                    if st.button("⬅️ Previous", key=f"prev_{sel_day}", disabled=(curr_idx == 0)):
-                         st.session_state[idx_key] -= 1
-                         st.rerun()
-                with c3:
-                    if st.button("Next ➡️", key=f"next_{sel_day}", disabled=(curr_idx == len(items) - 1)):
-                         st.session_state[idx_key] += 1
-                         st.rerun()
+                 st.info("Complete Day 1 to unlock the Gym!")
 
-        else:
-            st.info("Complete Day 1 to unlock the Gym!")
+        # --- TAB B: BOSS BATTLES (New) ---
+        with tab_boss:
+            st.markdown("### 🔥 The Boss Arena")
+            st.markdown("Real-world scenarios. No hand-holding. For the ambitious.")
+            
+            if current_day > 0:
+                available_days_boss = list(range(1, current_day + 1))
+                sel_day_boss = st.selectbox("Select Boss Day:", reversed(available_days_boss), index=0, key="boss_day_sel")
+                
+                # Fetch Battles
+                battles = db.get_boss_battles(sel_day_boss)
+                
+                if not battles:
+                    st.info(f"🛡️ No Boss Battles detected for Day {sel_day_boss} yet. The Arena is quiet...")
+                else:
+                    for i, battle in enumerate(battles):
+                        with st.expander(f"⚔️ {battle['title']}"):
+                            st.markdown(f"**Scenario:** {battle['scenario']}")
+                            
+                            st.markdown("#### 📋 Requirements:")
+                            for req in battle.get('requirements', []):
+                                st.markdown(f"- [ ] {req}")
+                                
+                            if battle.get('hints'):
+                                if st.checkbox("Show Hints 💡", key=f"hint_{sel_day_boss}_{i}"):
+                                    for h in battle['hints']:
+                                        st.markdown(f"- *{h}*")
+            else:
+                st.warning("Complete Day 1 to enter the Arena.")
     # --- TAB 4: PROGRESS ---
     with tab3:
         st.subheader("📊 Your Learning Curve")

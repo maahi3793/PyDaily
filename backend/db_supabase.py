@@ -603,3 +603,46 @@ class SupabaseManager:
         except: return None
 
 
+    # --- 7. BOSS BATTLE ENGINE ---
+
+    def save_boss_battles(self, day, topic, battles_list):
+        """
+        Saves a list of Boss Battles for a specific day.
+        battles_list = [{title, scenario, requirements, hints}, ...]
+        """
+        if not self.admin_supabase: return False, "No Admin Key"
+        try: 
+            # We insert each battle as a row
+            rows = []
+            for b in battles_list:
+                rows.append({
+                    "day": day,
+                    "topic": topic,
+                    "title": b.get("title"),
+                    "scenario": b.get("scenario"),
+                    "requirements": b.get("requirements", []),
+                    "hints": b.get("hints", [])
+                })
+            
+            if rows:
+                self.admin_supabase.table('boss_battles').insert(rows).execute()
+                print(f"🔥 {len(rows)} Boss Battles Saved for Day {day}.")
+                return True
+            return False
+            
+        except Exception as e:
+            print(f"❌ Save Boss Battles Failed: {e}")
+            return False
+
+    def get_boss_battles(self, day):
+        """
+        Fetches Boss Battles for the day.
+        """
+        client = self.supabase if self.supabase else self.admin_supabase
+        if not client: return []
+        try:
+            res = client.table('boss_battles').select('*').eq('day', day).execute()
+            return res.data
+        except Exception as e:
+            # print(f"⚠️ Boss Battle Miss (Day {day})")
+            return []
