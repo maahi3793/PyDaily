@@ -272,9 +272,10 @@ def run():
                 container_func = st.warning if is_challenge else st.info
                 icon = "🔥" if is_challenge else "💠"
                 
-                with container_func(icon=icon):
-                    # Custom Gradient Title
-                    st.markdown(f'<div class="flashcard-title">{item["title"]}</div>', unsafe_allow_html=True)
+                # FIX: Remove icon= param from 'with' as it crashes on some Streamlit versions
+                with container_func():
+                    # Custom Gradient Title with Icon embedded
+                    st.markdown(f'<div class="flashcard-title">{icon} {item["title"]}</div>', unsafe_allow_html=True)
                     
                     # Metadata Badge
                     st.markdown(f'<span class="badge">Problem {curr_idx + 1} of {len(items)}</span>', unsafe_allow_html=True)
