@@ -412,34 +412,36 @@ Friendly, Mentor-like, use emojis sparingly.
 
         try:
             prompt = f"""
-            You are a Senior System Architect creating "Boss Battle" Challenges.
+            You are a Supportive Senior Mentor creating "Boss Battle" Challenges.
             
             TOPIC: {topic}
             DAY: {day} (Student Learning Phase)
             
             GOAL:
-            Create 3 High-Difficulty, Real-World Scenarios based on this topic.
-            These are for students who found the basic drills "too easy".
+            Create 3 "Job-Ready" Coding Challenges. 
+            They should be strictly constrained (to force creative thinking) but effectively SOLVABLE and ENCOURAGING.
+            Do NOT make them "Google Interview" hard. Make them "Real Work" hard.
             
             CURRICULUM CONSTRAINTS (MUST FOLLOW):
             {constraints}
             
             GENERAL CONSTRAINTS:
-            - **No Toy Problems**: No "Print triangular stars" or "Fibonacci".
-            - **Real World Context**: Banking, Data Analysis, Game Logic, Web Scrapers, Automation.
-            - **Complexity**: Push the limits of the ALLOWED syntax.
+            - **Tone**: Fun, encouraging, slightly gamified ("You are saving the database!").
+            - **Forbidden Themes**: No Blockchain, No Cryptography, No Advanced Math, No Abstract Algorithms.
+            - **Preferred Contexts**: Data Cleaning, Text Formatting, Log Parsing, Simple Game Logic, Inventory Management.
+            - **Difficulty**: Challenging due to *constraints*, not due to *obscure logic*.
             
             OUTPUT SCHEMA (JSON Array):
             [
                 {{
-                    "title": "Build a Simple Blockchain",
-                    "scenario": "You are a crypto engineer. Create a variable `block_hash`...",
+                    "title": "Clean the User Logs",
+                    "scenario": "You are a Junior Dev. The server logs are messy. Extract the usernames...",
                     "requirements": [
-                        "Variable must store...",
-                        "Calculate the checksum using..."
+                        "Input is a raw string...",
+                        "Output must be a clean list..."
                     ],
                     "hints": [
-                        "Use slicing `text[::-1]`"
+                        "Try splitting the string by spaces first."
                     ]
                 }}
             ]
