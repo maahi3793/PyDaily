@@ -64,10 +64,11 @@ def render_dashboard():
 
     pending_count = len(pending_contacts)
     
+    # Dynamic Total (Always Calculate)
+    total_course_days = max(TOPICS.keys()) if TOPICS else 100
+
     if total_students > 0:
         avg_day = sum([c.get('day', 1) for c in contacts_list]) / total_students
-        # Dynamic Total
-        total_course_days = max(TOPICS.keys()) if TOPICS else 100
         progress_val = min(avg_day / float(total_course_days), 1.0)
     else:
         avg_day = 0
