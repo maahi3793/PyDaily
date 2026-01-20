@@ -31,6 +31,45 @@ def get_phase_info(day):
     
     return 1, PHASE_GOALS[1] # Default
 
+def get_deep_dive_attrs(day, topic):
+    """
+    Returns (url, source_name) for a smart deep dive link.
+    Returns None if no link should be shown (e.g. Quiz Day).
+    """
+    if "Quiz" in topic or "Review" in topic:
+        return None
+    
+    # URL encoded helper
+    topic_query = topic.replace(" ", "+")
+    
+    # Day 1-40: Novice (Programiz)
+    if day <= 40:
+        return (
+            f"https://www.google.com/search?q=site:programiz.com+python+{topic_query}&btnI=1",
+            "Programiz"
+        )
+    
+    # Day 41-100: Intermediate (Real Python)
+    elif day <= 100:
+        return (
+            f"https://www.google.com/search?q=site:realpython.com+{topic_query}&btnI=1",
+            "Real Python"
+        )
+        
+    # Day 101-179: Advanced (Docs)
+    elif day <= 179:
+        return (
+            f"https://www.google.com/search?q=site:docs.python.org/3+{topic_query}&btnI=1",
+            "Official Docs"
+        )
+        
+    # Day 180+: Infinite (GeeksforGeeks / StackOverflow)
+    else:
+        return (
+            f"https://www.google.com/search?q=site:geeksforgeeks.org+python+{topic_query}&btnI=1",
+            "GeeksforGeeks"
+        )
+
 # Topic Map (Auto-Generated with Quiz Intervals)
 TOPICS = {
     1: "Installation, Setup, and Your First 'Hello World'",

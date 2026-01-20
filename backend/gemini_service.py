@@ -418,7 +418,7 @@ Friendly, Mentor-like, use emojis sparingly.
             DAY: {day} (Student Learning Phase)
             
             GOAL:
-            Create 3 "Job-Ready" Coding Challenges. 
+            Create 5 "Job-Ready" Coding Challenges. 
             They should be strictly constrained (to force creative thinking) but effectively SOLVABLE and ENCOURAGING.
             Do NOT make them "Google Interview" hard. Make them "Real Work" hard.
             
@@ -448,7 +448,7 @@ Friendly, Mentor-like, use emojis sparingly.
             
             STRICT RULES:
             1. Return ONLY the JSON Array.
-            2. Generate exactly 3 Battles.
+            2. Generate exactly 5 Battles.
             3. Ensure valid JSON.
             """
             

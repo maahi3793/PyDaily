@@ -155,6 +155,28 @@ def run_morning_cycle(gemini, mailer, cache):
             """
         else:
             email_body = content
+            
+            # --- FEATURE: DEEP DIVE LINKS (Retroactive Injection) ---
+            # Try to fetch a smart link for this day/topic
+            # We use the topic from earlier variables (cached or new)
+            try:
+                # Need to lookup topic again if it wasn't fresh in this scope?
+                # Actually 'topic' var is available from the if/else block above (lines 102/106)
+                # But wait, if it was a Cache Hit (Line 89), 'topic' might not be defined in this scope!
+                # We need to ensure we have the topic name.
+                
+                current_topic_name = curriculum.TOPICS.get(day, f"Day {day} Concept")
+                # Overwrite if infinite mode logic had a better name? 
+                # For safety, let's stick to curriculum or DB lookup.
+                
+                deep_dive = curriculum.get_deep_dive_attrs(day, current_topic_name)
+                if deep_dive:
+                    dd_url, dd_source = deep_dive
+                    dd_html = mailer.get_deep_dive_html(dd_url, dd_source)
+                    email_body += dd_html
+            except Exception as e:
+                logging.warning(f"Failed to inject Deep Dive link: {e}")
+            # --------------------------------------------------------
 
         success, msg = mailer.send_email(group, subject, email_body)
         

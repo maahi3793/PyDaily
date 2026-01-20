@@ -158,4 +158,31 @@ class EmailService:
             </div>
             """
         except Exception as e:
-            return f"<p>Error formatting quiz: {e}</p>"
+    @staticmethod
+    def get_deep_dive_html(url, source_name):
+        """
+        Returns HTML snippet for the 'Deep Dive' button.
+        """
+        return f"""
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; border-top: 1px solid #eee; padding-top: 20px;">
+          <p style="color: #666; font-size: 14px;">Want to go deeper on this topic?</p>
+          
+          <a href="{url}" style="
+            display: inline-block;
+            background-color: #f0fdf4;
+            color: #166534;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            border: 1px solid #bbf7d0;
+          ">
+            📖 Read more on {source_name} &rarr;
+          </a>
+
+          <p style="color: #999; font-size: 12px; margin-top: 10px;">
+            <i>Deep dives are curated based on your current level.</i>
+          </p>
+        </div>
+        """
