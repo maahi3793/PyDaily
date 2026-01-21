@@ -158,6 +158,8 @@ class EmailService:
             </div>
             """
         except Exception as e:
+            return f"<p>Error formatting quiz: {e}</p>"
+
     @staticmethod
     def get_deep_dive_html(url, source_name):
         """
