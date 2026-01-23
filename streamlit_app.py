@@ -3,7 +3,7 @@ import streamlit as st
 # 1. Global Config (Must be first)
 st.set_page_config(
     page_title="PyDaily: The 15-Minute Python Challenge", 
-    page_icon="🐍", 
+    page_icon="assets/logo.png", 
     layout="wide",
     initial_sidebar_state="collapsed",
 )

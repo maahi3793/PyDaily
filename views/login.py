@@ -147,8 +147,8 @@ def run():
         st.write("")
         # REMOVED: Beta Badge
         
-        st.markdown('<div class="hero-title">Master Python in<br>15 Minutes a Day</div>', unsafe_allow_html=True)
-        st.markdown('<div class="hero-subtitle">The AI-powered automated challenge. Stop starting "courses" you never finish.<br><b>No burnout. Just consistency.</b></div>', unsafe_allow_html=True)
+        st.markdown('<h1 class="hero-title">Master Python in<br>15 Minutes a Day</h1>', unsafe_allow_html=True)
+        st.markdown('<h2 class="hero-subtitle">The AI-powered automated challenge. Stop starting "courses" you never finish.<br><b>No burnout. Just consistency.</b></h2>', unsafe_allow_html=True)
         
         # COMPACT FEATURES (Revised Copy)
         st.markdown("""
