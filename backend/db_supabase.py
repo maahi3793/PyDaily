@@ -658,7 +658,8 @@ class SupabaseManager:
         details: Dict/JSON of extra info
         """
         # Can use standard client (enabled for authenticated inserts) or admin client
-        client = self.supabase if self.supabase else self.admin_supabase
+        # FIX: Prioritize Admin Client to bypass RLS issues for logging.
+        client = self.admin_supabase if self.admin_supabase else self.supabase
         if not client: return
         
         try:
