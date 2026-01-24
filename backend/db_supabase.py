@@ -646,3 +646,39 @@ class SupabaseManager:
         except Exception as e:
             # print(f"⚠️ Boss Battle Miss (Day {day})")
             return []
+
+    # --- 8. ANALYTICS (Activity Logs) ---
+    
+    def log_activity(self, email, action, details=None):
+        """
+        Logs a user action to the 'activity_logs' table.
+        action: 'LOGIN', 'VIEW_LESSON', 'START_QUIZ'
+        details: Dict/JSON of extra info
+        """
+        # Can use standard client (enabled for authenticated inserts) or admin client
+        client = self.supabase if self.supabase else self.admin_supabase
+        if not client: return
+        
+        try:
+            payload = {
+                "user_email": email,
+                "action": action,
+                "details": details or {}
+            }
+            # Fire and forget (don't block UI too much)
+            client.table('activity_logs').insert(payload).execute()
+        except Exception as e:
+            print(f"⚠️ Logging Failed: {e}") 
+
+    def admin_get_activity_stats(self):
+        """
+        Fetches ALL logs for visualization.
+        """
+        if not self.admin_supabase: return []
+        try:
+            # Initial limit 1000 for performance, can paginate later
+            res = self.admin_supabase.table('activity_logs').select('*').order('created_at', desc=True).limit(1000).execute()
+            return res.data
+        except Exception as e:
+            print(f"❌ Fetch Logs Failed: {e}")
+            return []

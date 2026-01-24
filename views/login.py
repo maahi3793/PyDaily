@@ -190,6 +190,9 @@ def run():
                             st.session_state["role"] = db.get_user_role(session.session.access_token)
                             st.session_state["auth_token"] = session.session.access_token
                             st.session_state["user_email"] = email
+                            
+                            # --- ANALYTICS: LOG LOGIN ---
+                            db.log_activity(email, "LOGIN", {"role": st.session_state["role"]})
                             st.rerun()
                         else:
                             st.error("Login failed.")
