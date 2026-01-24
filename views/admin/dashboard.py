@@ -599,7 +599,30 @@ def render_dashboard():
 
             st.divider()
             
-            # --- C. LEADERBOARD ---
+            # --- C. STUDENT GEOGRAPHY ---
+            st.subheader("🌍 Student Geography (New Logs Only)")
+            # Extract City from details
+            def get_city(details):
+                if isinstance(details, dict):
+                    geo = details.get('geo', {})
+                    return geo.get('city')
+                return None
+            
+            df_logs['city'] = df_logs['details'].apply(get_city)
+            city_counts = df_logs['city'].value_counts()
+            
+            # Remove 'None' or 'Unknown'
+            if 'Unknown' in city_counts.index: city_counts = city_counts.drop('Unknown')
+            if None in city_counts.index: city_counts = city_counts.drop(None)
+            
+            if city_counts.empty:
+                st.caption("No geography data available yet.")
+            else:
+                st.bar_chart(city_counts, color="#FF4B4B") # Red for emphasis
+            
+            st.divider()
+
+            # --- D. LEADERBOARD ---
             st.subheader("🏆 Top Students (Most Active)")
             top_students = df_logs['user_email'].value_counts().head(10)
             st.table(top_students)
