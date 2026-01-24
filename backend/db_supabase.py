@@ -651,7 +651,7 @@ class SupabaseManager:
 
     # --- 8. ANALYTICS (Activity Logs) ---
     
-    def log_activity(self, email, action, details=None):
+    def log_activity(self, email, action, details=None, user_agent=None):
         """
         Logs a user action to the 'activity_logs' table.
         action: 'LOGIN', 'VIEW_LESSON', 'START_QUIZ'
@@ -666,7 +666,8 @@ class SupabaseManager:
             payload = {
                 "user_email": email,
                 "action": action,
-                "details": details or {}
+                "details": details or {},
+                "user_agent": user_agent
             }
             # Fire and forget (don't block UI too much)
             client.table('activity_logs').insert(payload).execute()

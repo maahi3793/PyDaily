@@ -20,3 +20,15 @@ def get_remote_ip():
     except Exception as e:
         return None
     return None
+
+def get_user_agent():
+    """
+    Extracts User-Agent string.
+    """
+    try:
+        headers = _get_websocket_headers()
+        if headers:
+            return headers.get("User-Agent")
+    except:
+        pass
+    return None

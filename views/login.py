@@ -208,11 +208,14 @@ def run():
                                         if data.get("status") == "success":
                                             geo_info["city"] = data.get("city")
                                             geo_info["country"] = data.get("country")
+                                
+                                # Fetch UA
+                                ua = network.get_user_agent()
                             
                                 db.log_activity(email, "LOGIN", {
                                     "role": st.session_state["role"],
                                     "geo": geo_info
-                                })
+                                }, user_agent=ua)
                             except Exception as e:
                                 # Fallback if GEO fails -> Log basic login
                                 print(f"Geo-Log Failed: {e}")
