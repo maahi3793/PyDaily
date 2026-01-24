@@ -59,3 +59,26 @@ def run():
                 st.success(msg)
             else:
                 st.error(f"Connection Failed: {msg}")
+
+    st.subheader("Database Diagnostics")
+    if st.button("🩺 Test Analytics Logging"):
+        with st.spinner("Wait..."):
+             db = data_manager.db
+             if not db.admin_supabase:
+                 st.error("❌ Admin Supabase Client is NONE. Check SUPABASE_SERVICE_KEY in .env")
+             else:
+                 st.write("✅ Admin Client Initialized.")
+                 try:
+                     # Try explicit insert
+                     res = db.admin_supabase.table('activity_logs').insert({
+                         "user_email": "admin@test.com", 
+                         "action": "TEST_DIAGNOSTIC", 
+                         "details": {"source": "settings_page"}
+                     }).execute()
+                     st.success("✅ Insert Successful! Check the dashboard now.")
+                     st.json(res.data)
+                 except Exception as e:
+                     st.error(f"❌ Insert Failed: {e}")
+                     # Print full trace to stdout for backend logs
+                     import traceback
+                     traceback.print_exc()
