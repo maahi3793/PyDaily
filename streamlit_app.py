@@ -32,6 +32,14 @@ def main():
                 st.rerun()
 
     # --- ROUTING ---
+    # 0. Public Routes (Query Param Based)
+    query_params = st.query_params
+    if query_params.get("page") == "unsubscribe":
+        from views import unsubscribe
+        unsubscribe.run()
+        return # Stop execution of main app
+
+    # 1. Private Routes (Role Based)
     if role == "guest":
         from views import login
         login.run()

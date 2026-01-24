@@ -49,12 +49,17 @@ def run_motivation_cycle(gemini, mailer, cache):
         content = gemini.generate_motivation()
         cache.save_motivation(today_str, content)
     
-    # 2. Target Audience: Everyone Active (Pending or Sent)
+    # 2. Target Audience: Everyone Active (Pending or Sent) + Subscribed to Morning
     contacts = data_manager.get_contacts()
-    active_students = [c for c in contacts if c.get('status') in ['pending', 'lesson_sent']]
+    
+    # Filter for Morning Preference
+    # Helper: Handle missing keys safely
+    active_students = [c for c in contacts 
+                       if c.get('status') in ['pending', 'lesson_sent'] 
+                       and c.get('sub_morning', True) is True]
     
     if not active_students:
-        logging.info("No active students for motivation.")
+        logging.info("No active students subscribed to Motivation.")
         return
 
     logging.info(f"Sending motivation to {len(active_students)} students...")

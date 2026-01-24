@@ -248,7 +248,7 @@ class SupabaseManager:
         if not self.admin_supabase: return []
         try:
             # Join profiles with student_data with proper error handling
-            res = self.admin_supabase.table('profiles').select('id, email, full_name, role, student_data(current_day, status)').eq('role', 'student').execute()
+            res = self.admin_supabase.table('profiles').select('id, email, full_name, role, sub_morning, sub_evening, student_data(current_day, status)').eq('role', 'student').execute()
             
             students = []
             for row in res.data:
@@ -262,7 +262,9 @@ class SupabaseManager:
                     "name": row.get('full_name', 'Unknown'),
                     "email": row.get('email'),
                     "day": s_data.get('current_day', 1),
-                    "status": s_data.get('status', 'pending')
+                    "status": s_data.get('status', 'pending'),
+                    "sub_morning": row.get('sub_morning', True),
+                    "sub_evening": row.get('sub_evening', True)
                 })
             return students
         except Exception as e:
@@ -682,3 +684,71 @@ class SupabaseManager:
         except Exception as e:
             print(f"❌ Fetch Logs Failed: {e}")
             return []
+
+    # --- 9. EMAIL PREFERENCES (Unsubscribe) ---
+    
+    def get_preferences(self, email):
+        """
+        Fetches subscription flags for a user.
+        """
+        # Can be public access technically, but better restricted.
+        # We will use Admin client for reliability in the Unsubscribe View context (public page).
+        if not self.admin_supabase: return None
+        try:
+             # Find user ID from Email first (since profiles are keyed by ID)
+             # Actually, we can select from 'profiles' if we join auth? No.
+             # Easier: Just search profiles by... wait, profiles is keyed by UUID.
+             # We need to look up UUID from Email via the Users admin API.
+             
+             # Optimization: Query 'contacts' view if it exists? 
+             # Or just use admin_get_all_students logic but filtered.
+             
+             # Hack/Fix: iterate over admin_list_users to find UUID. 
+             # (This is slow at scale but fine for <1000 users).
+             # Better: We added 'email' column to profiles? No.
+             # We rely on Supabase Auth.
+             
+             # ALTERNATIVE: Since we passed email in query param, we trust it?
+             # Let's search all users.
+             
+             uid = None
+             users = self.admin_supabase.auth.admin.list_users()
+             for u in users:
+                 if u.email == email:
+                     uid = u.id
+                     break
+            
+             if not uid: return None
+             
+             res = self.admin_supabase.table('profiles').select('sub_morning, sub_evening').eq('id', uid).single().execute()
+             return res.data
+        except Exception as e:
+            print(f"❌ Get Prefs Failed: {e}")
+            return None
+
+    def update_preferences(self, email, sub_morning, sub_evening):
+        """
+        Updates subscription flags.
+        """
+        if not self.admin_supabase: return False, "No Server Key"
+        try:
+             # 1. Resolve UUID
+             uid = None
+             users = self.admin_supabase.auth.admin.list_users()
+             for u in users:
+                 if u.email == email:
+                     uid = u.id
+                     break
+            
+             if not uid: return False, "Email not found"
+
+             # 2. Update
+             self.admin_supabase.table('profiles').update({
+                 "sub_morning": sub_morning,
+                 "sub_evening": sub_evening
+             }).eq('id', uid).execute()
+             
+             return True, "Preferences Updated"
+        except Exception as e:
+            print(f"❌ Update Prefs Failed: {e}")
+            return False, str(e)

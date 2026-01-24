@@ -41,6 +41,18 @@ class EmailService:
                     # 4. Personalization
                     student_name = recipient.get('name', 'Future Pythonista')
                     personalized_html = html_content.replace('{{NAME}}', student_name)
+                    
+                    # 5. Unsubscribe Footer
+                    import urllib.parse
+                    # Don't unsubscribe admin in test mode
+                    unsub_email = urllib.parse.quote(recipient['email'])
+                    footer = f"""
+                    <div style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 10px; font-size: 12px; color: #888; text-align: center;">
+                        <p>You received this because you are part of the PyDaily Challenge.</p>
+                        <p><a href="https://pydaily.streamlit.app/?page=unsubscribe&email={unsub_email}" style="color: #666;">Unsubscribe / Manage Preferences</a></p>
+                    </div>
+                    """
+                    personalized_html += footer
 
                     # Create FRESH message for every recipient
                     msg = MIMEMultipart()
