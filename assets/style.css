@@ -168,3 +168,25 @@ code {
     color: #ce9178 !important;
     border: 1px solid #333 !important;
 }
+
+/* --- EXPANDERS / ACCORDIONS --- */
+/* Make them pop out from the dark background */
+div[data-testid="stExpander"] {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    overflow: hidden; /* clean corners */
+}
+
+div[data-testid="stExpander"] details summary {
+    color: var(--text-main) !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 1rem !important;
+}
+
+div[data-testid="stExpander"] details summary:hover {
+    color: var(--primary) !important;
+    background-color: rgba(255,255,255,0.03) !important;
+}
+
