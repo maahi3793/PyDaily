@@ -2,19 +2,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-    --primary: #4F46E5;       /* Indigo 600 */
-    --primary-hover: #4338CA;
-    --bg-main: #F9FAFB;       /* Gray 50 */
-    --bg-card: #FFFFFF;
-    --text-main: #111827;     /* Gray 900 */
-    --text-muted: #6B7280;    /* Gray 500 */
-    --border: #E5E7EB;        /* Gray 200 */
+    /* DARK MODE PALETTE (Slate-900 Theme) */
+    --primary: #3b82f6;       /* Blue 500 */
+    --primary-hover: #2563eb; /* Blue 600 */
+    
+    --bg-main: #0f172a;       /* Slate 900 */
+    --bg-card: #1e293b;       /* Slate 800 */
+    --bg-sidebar: #020617;    /* Slate 950 (Darker) */
+    
+    --text-main: #f8fafc;     /* Slate 50 */
+    --text-muted: #94a3b8;    /* Slate 400 */
+    
+    --border: #334155;        /* Slate 700 */
+    
     --success: #10B981;       /* Emerald */
     --warning: #F59E0B;       /* Amber */
     --danger: #EF4444;        /* Red */
-    
-    --sidebar-bg: #1E1E2F;    /* Deep Navy */
-    --sidebar-text: #E5E7EB;  /* Light Gray */
 }
 
 /* Global Reset & Font */
@@ -24,33 +27,41 @@ html, body, [class*="css"] {
     color: var(--text-main) !important;
 }
 
-/* --- SIDEBAR OVERRIDE (Dark Theme) --- */
-section[data-testid="stSidebar"] {
-    background-color: var(--sidebar-bg) !important;
-    color: var(--sidebar-text) !important;
+/* --- STREAMLIT APP CONTAINER --- */
+.stApp {
+    background-color: var(--bg-main) !important;
 }
+
+/* --- SIDEBAR OVERRIDE --- */
+section[data-testid="stSidebar"] {
+    background-color: var(--bg-sidebar) !important;
+    border-right: 1px solid var(--border);
+}
+
 section[data-testid="stSidebar"] h1, 
 section[data-testid="stSidebar"] h2, 
 section[data-testid="stSidebar"] h3, 
 section[data-testid="stSidebar"] span, 
-section[data-testid="stSidebar"] p {
-    color: var(--sidebar-text) !important;
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] label {
+    color: var(--text-muted) !important;
 }
 
 /* --- CARDS (Universal) --- */
 div.metric-card {
     background-color: var(--bg-card);
-    border: 1px solid white; /* Cleaner look */
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 24px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.1); /* Darker shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     height: 100%;
 }
 
 div.metric-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary); /* Glow effect */
 }
 
 /* Card Variations (Top Borders) */
@@ -60,7 +71,7 @@ div.card-vol { border-top: 4px solid #8B5CF6 !important; /* Purple */ }
 
 /* Hierarchy */
 div.metric-value {
-    font-size: 2.5rem; /* Larger */
+    font-size: 2.5rem; 
     font-weight: 800;
     color: var(--text-main);
     line-height: 1;
@@ -79,17 +90,14 @@ div.metric-sub {
     margin-top: 8px;
 }
 
-/* --- PROGRESS BAR (Thicker) --- */
-/* Removed broken CSS overrides to restore native Streamlit bar accuracy */
-
-/* --- EMPTY STATE (Celebratory) --- */
+/* --- EMPTY STATE --- */
 div.empty-state {
     text-align: center;
     padding: 40px;
-    background: white;
+    background: var(--bg-card);
     border-radius: 16px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    border: 1px dashed #E5E7EB;
+    box-shadow: none;
+    border: 1px dashed var(--border);
 }
 div.empty-state-icon {
     font-size: 3rem;
@@ -112,24 +120,51 @@ button[kind="primary"] {
     border-radius: 8px !important;
     padding: 0.6rem 1.2rem !important;
     font-weight: 600 !important;
-    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.4) !important;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.4) !important; /* Blue shadow */
     border: none !important;
     transition: all 0.2s !important;
 }
 button[kind="primary"]:hover {
     background-color: var(--primary-hover) !important;
     transform: translateY(-1px);
-    box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.5) !important;
+    box-shadow: 0 6px 8px -1px rgba(59, 130, 246, 0.5) !important;
 }
 button[kind="secondary"] {
-    background-color: white !important;
-    border: 1px solid #D1D5DB !important;
+    background-color: transparent !important;
+    border: 1px solid var(--border) !important;
     color: var(--text-main) !important;
     font-weight: 500 !important;
 }
+button[kind="secondary"]:hover {
+    border-color: var(--text-muted) !important;
+    background-color: rgba(255,255,255,0.05) !important;
+}
 
-/* HIDE Default Streamlit Headers/Footers if possible or clutter */
-header[data-testid="stHeader"] {
-    background-color: rgba(255,255,255,0.8);
-    backdrop-filter: blur(10px);
+/* --- INPUTS & SELECTS (Dark Theme Overrides) --- */
+input, textarea, select, .stSelectbox > div > div {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border) !important;
+}
+/* Focus rings handled by Streamlit usually, but we can try */
+
+/* --- TABS --- */
+div[data-testid="stTabs"] button {
+    color: var(--text-muted);
+}
+div[data-testid="stTabs"] button[aria-selected="true"] {
+    color: var(--primary) !important;
+    border-bottom-color: var(--primary) !important;
+}
+
+/* --- HEADERS --- */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-main) !important;
+}
+
+/* Code Blocks */
+code {
+    background-color: #1e1e1e !important;
+    color: #ce9178 !important;
+    border: 1px solid #333 !important;
 }
