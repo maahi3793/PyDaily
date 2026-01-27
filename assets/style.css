@@ -190,3 +190,25 @@ div[data-testid="stExpander"] details summary:hover {
     background-color: rgba(255,255,255,0.03) !important;
 }
 
+/* --- UNIVERSAL TEXT VISIBILITY FIX --- */
+/* Force all standard text elements to use the main text color */
+.stMarkdown p, .stMarkdown li, .stText p, .stCaption {
+    color: var(--text-main) !important;
+}
+
+/* Captions should be slightly muted but still visible */
+.stCaption, div[data-testid="stCaptionContainer"] {
+    color: var(--text-muted) !important;
+}
+
+/* Widget Labels */
+label, .stSelectbox label, .stTextInput label, .stNumberInput label {
+    color: var(--text-muted) !important;
+}
+
+/* Dataframes */
+div[data-testid="stDataFrame"] {    
+    color: var(--text-main) !important;
+}
+
+
