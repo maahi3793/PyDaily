@@ -84,6 +84,9 @@ def run_morning_cycle(gemini, mailer, cache):
 
     for day, group in day_groups.items():
         logging.info(f"Processing Day {day} for {len(group)} students...")
+        
+        # Import curriculum early so it's available for Deep Dive links even on Cache Hits
+        from backend import curriculum
 
         # 1. Get/Generate Content
         content = cache.get_lesson(day)
@@ -100,7 +103,6 @@ def run_morning_cycle(gemini, mailer, cache):
                 else:
                     logging.info(f"Cache Miss: Generating Day {day} Lesson...")
                     history = cache.get_topics_history(day - 1)
-                    from backend import curriculum
                     
                     # Fetch Topic & Phase
                     if day <= 179:
