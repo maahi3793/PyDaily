@@ -2,6 +2,12 @@ import streamlit as st
 import time
 from backend.db_supabase import SupabaseManager
 from backend.lesson_manager import LessonManager
+from views.student.components.countdown import render_countdown, should_show_countdown
+from views.student.components.curriculum_preview import render_curriculum_preview
+from views.student.components.starter_kit import render_starter_kit_download
+from views.student.components.welcome_tour import render_welcome_tour, should_show_tour
+from views.student.components.skill_tree import render_skill_tree
+from views.student.components.spaced_repetition import render_spaced_repetition
 
 def run():
     st.markdown("""
@@ -61,6 +67,12 @@ def run():
     current_day = profile.get('current_day', 1)
     status = profile.get('status', 'pending')
     
+    # 2.5 Welcome Tour (First-time Day 1 users)
+    if should_show_tour(profile):
+        tour_active = render_welcome_tour()
+        if tour_active:
+            return  # Exit early - tour takes over the screen
+    
     # 3. Header
     st.markdown(f"""
     <div class="student-header">
@@ -101,6 +113,18 @@ def run():
     progress = min(current_day / 100.0, 1.0)
     st.progress(progress, text=f"Course Progress: {int(progress*100)}%")
     
+    # 5.5 Countdown Timer (for Day 1 students waiting for first lesson)
+    if current_day == 1:
+        # Check if lesson exists
+        lesson_exists = cache.get_lesson(1) is not None
+        if not lesson_exists:
+            st.write("")
+            render_countdown()
+            st.info("💡 **While you wait**, explore the tabs below to see what's coming!")
+        
+        # Always show starter kit for Day 1 (even if lesson exists)
+        render_starter_kit_download()
+    
     st.divider()
     
     # 6. Interactive Learning Tabs
@@ -117,7 +141,35 @@ def run():
         available_days = list(range(1, current_day + 1))
         
         # Default to current day
-        selected_day = st.selectbox("Select Lesson Day", available_days, index=len(available_days)-1, format_func=lambda x: f"Day {x}")
+        col_select, col_bookmark = st.columns([4, 1])
+        with col_select:
+            selected_day = st.selectbox("Select Lesson Day", available_days, index=len(available_days)-1, format_func=lambda x: f"Day {x}")
+        
+        # Bookmark Toggle
+        user_email = st.session_state.get("user_email", "")
+        is_bookmarked = db.is_bookmarked(user_email, selected_day) if user_email else False
+        
+        with col_bookmark:
+            st.write("")  # Spacer to align with selectbox
+            if is_bookmarked:
+                if st.button("⭐ Saved", key=f"bm_{selected_day}", use_container_width=True):
+                    db.remove_bookmark(user_email, selected_day)
+                    st.rerun()
+            else:
+                if st.button("☆ Save", key=f"bm_{selected_day}", use_container_width=True):
+                    db.add_bookmark(user_email, selected_day)
+                    st.toast(f"✅ Day {selected_day} bookmarked!")
+                    st.rerun()
+        
+        # Show Bookmarks Quick Access
+        bookmarks = db.get_bookmarks(user_email) if user_email else []
+        if bookmarks:
+            bookmark_days = [b['lesson_day'] for b in bookmarks]
+            with st.expander(f"⭐ Your Bookmarks ({len(bookmarks)})"):
+                for bm in bookmarks:
+                    if st.button(f"📖 Day {bm['lesson_day']}", key=f"jump_{bm['lesson_day']}"):
+                        st.session_state[f"selected_day_jump"] = bm['lesson_day']
+                        st.rerun()
         
         # 2. Render Content
         cache = LessonManager()
@@ -263,9 +315,9 @@ def run():
     # --- TAB 3: PRACTICE PROGRAMS (Flashcard Gym) ---
     with tab_practice:
         st.subheader("🏋️ Coding Gym")
-        st.markdown("Practice makes perfect. Choose your difficulty level.")
+        st.markdown("Practice makes perfect. Choose your training mode.")
         
-        tab_drill, tab_boss = st.tabs(["🧩 Daily Drill", "🔥 Boss Battles"])
+        tab_drill, tab_boss, tab_review = st.tabs(["🧩 Daily Drill", "🔥 Boss Battles", "🧠 Review Zone"])
         
         # --- TAB A: DAILY DRILL (Existing) ---
         with tab_drill:
@@ -345,9 +397,28 @@ def run():
                                         st.markdown(f"- *{h}*")
             else:
                 st.warning("Complete Day 1 to enter the Arena.")
+        
+        # --- TAB C: REVIEW ZONE (Spaced Repetition) ---
+        with tab_review:
+            if current_day >= 7:
+                render_spaced_repetition(current_day)
+            else:
+                st.info("🕐 **Review Zone unlocks at Day 7**")
+                st.markdown("Come back once you've completed a full week of learning!")
+                
     # --- TAB 4: PROGRESS ---
     with tab3:
         st.subheader("📊 Your Learning Curve")
+        
+        # Skill Tree (Interactive constellation visualization)
+        render_skill_tree(current_day)
+        
+        st.divider()
+        
+        # Curriculum Roadmap (Collapsible for experienced users, expanded for new users)
+        roadmap_expanded = current_day <= 7  # Auto-expand for first week
+        with st.expander("🗺️ View Phase Details", expanded=roadmap_expanded):
+            render_curriculum_preview(current_day)
         
         # 1. Fetch Granular History
         attempts = db.get_student_attempts(token)

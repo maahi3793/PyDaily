@@ -754,3 +754,55 @@ class SupabaseManager:
         except Exception as e:
             print(f"❌ Update Prefs Failed: {e}")
             return False, str(e)
+
+    # ---------- BOOKMARKS ----------
+    def add_bookmark(self, user_email: str, lesson_day: int, notes: str = "") -> bool:
+        """Adds a bookmark for a lesson."""
+        client = self.admin_supabase or self.supabase
+        if not client:
+            return False
+        try:
+            client.table('bookmarks').upsert({
+                "user_email": user_email,
+                "lesson_day": lesson_day,
+                "notes": notes
+            }).execute()
+            return True
+        except Exception as e:
+            print(f"❌ Add Bookmark Failed: {e}")
+            return False
+
+    def remove_bookmark(self, user_email: str, lesson_day: int) -> bool:
+        """Removes a bookmark."""
+        client = self.admin_supabase or self.supabase
+        if not client:
+            return False
+        try:
+            client.table('bookmarks').delete().eq('user_email', user_email).eq('lesson_day', lesson_day).execute()
+            return True
+        except Exception as e:
+            print(f"❌ Remove Bookmark Failed: {e}")
+            return False
+
+    def get_bookmarks(self, user_email: str) -> list:
+        """Returns list of bookmarked lesson days."""
+        client = self.admin_supabase or self.supabase
+        if not client:
+            return []
+        try:
+            res = client.table('bookmarks').select('lesson_day, notes, created_at').eq('user_email', user_email).order('lesson_day').execute()
+            return res.data if res.data else []
+        except Exception as e:
+            print(f"❌ Get Bookmarks Failed: {e}")
+            return []
+
+    def is_bookmarked(self, user_email: str, lesson_day: int) -> bool:
+        """Checks if a specific day is bookmarked."""
+        client = self.admin_supabase or self.supabase
+        if not client:
+            return False
+        try:
+            res = client.table('bookmarks').select('id').eq('user_email', user_email).eq('lesson_day', lesson_day).execute()
+            return len(res.data) > 0 if res.data else False
+        except Exception as e:
+            return False
