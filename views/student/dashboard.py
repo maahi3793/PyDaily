@@ -5,6 +5,7 @@ from backend.lesson_manager import LessonManager
 from views.student.components.countdown import render_countdown, should_show_countdown
 from views.student.components.curriculum_preview import render_curriculum_preview
 from views.student.components.starter_kit import render_starter_kit_download
+from views.student.components.expert_kit import render_expert_kit_download
 from views.student.components.welcome_tour import render_welcome_tour, should_show_tour
 from views.student.components.skill_tree import render_skill_tree
 from views.student.components.spaced_repetition import render_spaced_repetition
@@ -113,17 +114,40 @@ def run():
     progress = min(current_day / 100.0, 1.0)
     st.progress(progress, text=f"Course Progress: {int(progress*100)}%")
     
-    # 5.5 Countdown Timer (for Day 1 students waiting for first lesson)
+    # 5.5 New Features Banner (for existing users Day 2+)
+    if current_day > 1:
+        if "dismissed_new_features" not in st.session_state:
+            st.markdown("""
+            <div style="background: linear-gradient(90deg, #3b82f6, #8b5cf6); 
+                        border-radius: 12px; padding: 15px 20px; margin: 15px 0;
+                        display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <span style="font-size: 1.2rem;">🎉 <strong>New Features!</strong></span>
+                    <span style="opacity: 0.9; margin-left: 10px;">
+                        Skill Tree, Bookmarks, Review Zone & more - explore below!
+                    </span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("✕ Dismiss", key="dismiss_banner"):
+                st.session_state.dismissed_new_features = True
+                st.rerun()
+    
+    # 5.6 Countdown Timer (only for Day 1 students waiting for lesson)
     if current_day == 1:
-        # Check if lesson exists
         lesson_exists = cache.get_lesson(1) is not None
         if not lesson_exists:
             st.write("")
             render_countdown()
             st.info("💡 **While you wait**, explore the tabs below to see what's coming!")
-        
-        # Always show starter kit for Day 1 (even if lesson exists)
-        render_starter_kit_download()
+    
+    # 5.7 Resource Hub (Kits for ALL users)
+    with st.expander("📦 Resource Hub - Starter Kits & Roadmaps", expanded=(current_day <= 3)):
+        col1, col2 = st.columns(2)
+        with col1:
+            render_starter_kit_download()
+        with col2:
+            render_expert_kit_download()
     
     st.divider()
     
