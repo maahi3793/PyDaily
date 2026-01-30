@@ -224,6 +224,22 @@ def run():
                             st.rerun()
                         else:
                             st.error("Login failed.")
+                
+                # Forgot Password Section
+                st.markdown("---")
+                with st.expander("🔑 Forgot your password?"):
+                    st.write("Enter your email and we'll send you a reset link.")
+                    reset_email = st.text_input("Email address", key="reset_email", placeholder="you@example.com")
+                    if st.button("Send Reset Link", use_container_width=True):
+                        if reset_email and "@" in reset_email:
+                            with st.spinner("Sending reset link..."):
+                                success, msg = db.reset_password(reset_email)
+                                if success:
+                                    st.success("✅ Reset link sent! Check your email (including spam folder).")
+                                else:
+                                    st.error(f"❌ {msg}")
+                        else:
+                            st.warning("Please enter a valid email address.")
 
             # SIGNUP FORM
             with tab2:
