@@ -29,20 +29,44 @@ def extract_snippets(day, content):
     return snippets
 
 def get_random_feed_items(current_day, count=10):
+    """Fetches random snippets from UNLOCKED lessons."""
     db = SupabaseManager()
     items = []
+    
+    # 1. Try High-Quality "Nuggets" (AI Refined)
+    # ---------------------------------------------
     max_day = max(1, current_day)
-    days = list(range(1, max_day + 1))
-    attempts = 0
-    while len(items) < count and attempts < 30:
-        day = random.choice(days)
-        content = db.get_daily_content(day)
-        attempts += 1
-        if content:
-            snips = extract_snippets(day, content)
-            if snips:
-                items.append(random.choice(snips))
-    return items
+    try:
+        hq_nuggets = db.get_feed_nuggets(max_day, limit=count)
+        if hq_nuggets:
+            # Map DB fields to Feed fields if necessary (schema matches mostly)
+            for n in hq_nuggets:
+                items.append({
+                    "day": n['lesson_day'],
+                    "type": n['type'],
+                    "title": n['title'],
+                    "content": n['content']
+                })
+    except:
+        pass # Fallback safely
+        
+    # 2. Fill gaps with "Regex Scraping" (Legacy/Fallback)
+    # ----------------------------------------------------
+    if len(items) < count:
+        needed = count - len(items)
+        available_days = list(range(1, max_day + 1))
+        
+        attempts = 0
+        while len(items) < count and attempts < 30:
+            day = random.choice(available_days)
+            content = db.get_daily_content(day)
+            attempts += 1
+            if content:
+                snips = extract_snippets(day, content)
+                if snips:
+                    items.append(random.choice(snips))
+                    
+    return items[:count]
 
 def generate_feed_html(items):
     """Generates the Reel-style HTML with Scroll Snap."""

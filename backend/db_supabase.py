@@ -600,10 +600,39 @@ class SupabaseManager:
         client = self.supabase if self.supabase else self.admin_supabase
         if not client: return None
         try:
-            res = client.table('daily_motivations').select('content').eq('date_str', date_str).single().execute()
             return res.data.get('content') if res.data else None
         except: return None
 
+
+    # --- FEED NUGGETS ---
+    def get_feed_nuggets(self, max_day, limit=10):
+        """Fetches high-quality viral nuggets from feed_nuggets table."""
+        if not self.supabase: return []
+        try:
+            # Fetch nuggets for unlocked days, random order
+            # Note: Supabase doesn't support random() natively in simple queries easily without RPC
+            # So we fetch a slightly larger batch and shuffle in Python, or use a pseudo-random approach
+            # Ideally: .order('random()') if RPC exists, but let's stick to safe standard queries.
+            
+            # Strategy: Fetch latest added (or high virality)
+            response = self.supabase.table("feed_nuggets") \
+                .select("*") \
+                .lte("lesson_day", max_day) \
+                .order("virality_score", desc=True) \
+                .limit(limit * 3) \
+                .execute()
+                
+            data = response.data
+            if not data: return []
+            
+            # Shuffle in Python to give "Freshness" feel
+            import random
+            random.shuffle(data)
+            return data[:limit]
+            
+        except Exception as e:
+            print(f"❌ Feed Fetch Error: {e}")
+            return []
 
     # --- 7. BOSS BATTLE ENGINE ---
 
