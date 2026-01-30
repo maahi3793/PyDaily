@@ -3,263 +3,373 @@ import time
 from backend.db_supabase import SupabaseManager
 
 def run():
-    # 1. Custom CSS for Landing Page (Premium Design)
+    # Modern Login Page with Blue/Purple Accents (Matching Portal Theme)
     st.markdown("""
     <style>
-    /* IMPORT PREMIUM FONT: 'Outfit' */
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+    /* IMPORT FONTS */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     
-    /* HIDE SIDEBAR & DECORATION */
+    /* HIDE STREAMLIT CHROME */
     [data-testid="stSidebar"] { display: none; }
-    header { visibility: hidden; }
-    footer { visibility: hidden; }
+    header, footer { visibility: hidden; }
+    #MainMenu { display: none; }
     
-    /* BACKGROUND & TYPOGRAPHY */
+    /* FULL VIEWPORT, NO SCROLL */
     .stApp {
-        background-color: #F8FAFC !important;
-        font-family: 'Outfit', sans-serif !important;
-        /* Force Single Page (No Scroll) */
+        background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 50%, #ddd6fe 100%) !important;
+        font-family: 'Inter', sans-serif !important;
         height: 100vh;
         overflow: hidden;
     }
     
-    /* WATERMARK TEXT (Fixed Size) */
-    .stApp::before {
-        content: "PYTHON AI TUTOR";
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 11vw; /* Reduced from 15vw to fit better */
-        font-weight: 900;
-        z-index: 0;
-        white-space: nowrap;
-        pointer-events: none;
-        
-        /* Subtle Gradient */
-        background: linear-gradient(135deg, #E2E8F0, #F1F5F9); 
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        opacity: 0.4;
+    /* Remove default padding */
+    .block-container {
+        padding: 0 !important;
+        max-width: 100% !important;
     }
     
-    /* ANIMATIONS */
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-5px); }
-        100% { transform: translateY(0px); }
+    /* MAIN CONTAINER */
+    .login-page {
+        display: flex;
+        height: 100vh;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
     }
     
-    /* LOGO & HERO SECTION */
-    .hero-container {
-        padding-top: 5vh; /* Use VH for responsive vertical centering */
-        z-index: 10;
+    /* SPLIT LAYOUT */
+    .login-wrapper {
+        display: flex;
+        width: 100%;
+        max-width: 1100px;
+        gap: 60px;
+        align-items: center;
+    }
+    
+    /* LEFT SIDE - HERO */
+    .hero-side {
+        flex: 1.2;
         position: relative;
     }
     
-    .hero-title {
-        font-size: 3.5rem; /* Slightly smaller to prevent scroll */
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+    
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+    
+    .logo-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e293b;
+    }
+    
+    .hero-headline {
+        font-size: 3.2rem;
         font-weight: 800;
+        color: #0f172a;
         line-height: 1.1;
-        /* Vibrant Gradient */
-        background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+        margin-bottom: 20px;
+    }
+    
+    .hero-headline span {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 1rem;
-        letter-spacing: -0.03em;
     }
     
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         color: #475569;
-        line-height: 1.5;
-        margin-bottom: 2rem;
-        font-weight: 400;
-        max-width: 95%;
+        line-height: 1.6;
+        margin-bottom: 30px;
+        max-width: 420px;
     }
     
-    /* COMPACT FEATURE GRID (To fit in 100vh) */
-    .feature-grid {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 2rem;
+    /* FLOATING DECORATIVE ELEMENTS */
+    .floating-elements {
+        position: absolute;
+        top: -20px;
+        right: -40px;
+        width: 200px;
+        height: 200px;
+        pointer-events: none;
     }
-    .feature-item {
+    
+    .float-icon {
+        position: absolute;
+        font-size: 2.5rem;
+        animation: float 3s ease-in-out infinite;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+    }
+    
+    .float-icon:nth-child(1) { top: 0; left: 20px; animation-delay: 0s; }
+    .float-icon:nth-child(2) { top: 60px; left: 120px; animation-delay: 0.5s; }
+    .float-icon:nth-child(3) { top: 120px; left: 40px; animation-delay: 1s; }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-12px) rotate(5deg); }
+    }
+    
+    /* FEATURE BADGES */
+    .features {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    
+    .feature-badge {
+        background: white;
+        padding: 10px 16px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #334155;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 8px;
+    }
+    
+    /* RIGHT SIDE - LOGIN CARD */
+    .login-side {
+        flex: 0.9;
+    }
+    
+    .login-card {
         background: white;
-        padding: 0.6rem 0.9rem;
-        border-radius: 10px;
-        border: 1px solid #E2E8F0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        font-weight: 600;
-        color: #334155;
-        font-size: 0.85rem;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        border: 1px solid #e2e8f0;
     }
     
-    /* LOGIN CARD (Right Column) */
-    .login-container {
-        margin-top: 15vh; /* Push down slightly but ensure it fits */
-    }
-    
-    /* BUTTON STYLING (Vibrant) */
-    button[kind="primary"] {
-        background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%);
-        border: none;
-        height: 48px;
+    .card-title {
+        font-size: 1.5rem;
         font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 8px;
+    }
+    
+    .card-subtitle {
+        font-size: 0.9rem;
+        color: #64748b;
+        margin-bottom: 24px;
+    }
+    
+    /* STREAMLIT FORM OVERRIDES */
+    .login-card input {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        padding: 14px 16px !important;
+        font-size: 1rem !important;
+    }
+    
+    .login-card input:focus {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    }
+    
+    .login-card .stButton > button {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 14px 24px !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        width: 100% !important;
+        cursor: pointer !important;
+        transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    
+    .login-card .stButton > button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3) !important;
+    }
+    
+    .divider {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 0.85rem;
+        margin: 16px 0;
+    }
+    
+    .trust-badge {
+        text-align: center;
+        color: #64748b;
+        font-size: 0.8rem;
+        margin-top: 20px;
+    }
+    
+    .trust-badge span {
+        color: #10b981;
+    }
+    
+    /* TABS OVERRIDE */
+    .stTabs [data-baseweb="tab-list"] {
+        background: #f1f5f9;
         border-radius: 12px;
-        font-size: 1rem;
-        transition: all 0.2s;
-        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-        margin-top: 0.5rem;
-    }
-    button[kind="primary"]:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+        padding: 4px;
+        gap: 0;
     }
     
-    /* TABS */
-    div[data-baseweb="tab-list"] {
-        background-color: transparent !important;
-        margin-bottom: 1rem;
+    .stTabs [data-baseweb="tab"] {
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 500;
     }
     
-    /* Inputs */
-    input {
-        background-color: #F8FAFC !important;
-        border: 1px solid #E2E8F0 !important;
+    .stTabs [aria-selected="true"] {
+        background: white !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+        .login-wrapper {
+            flex-direction: column;
+            gap: 30px;
+        }
+        .hero-headline { font-size: 2.2rem; }
+        .floating-elements { display: none; }
+        .login-card { padding: 24px; }
     }
     </style>
     """, unsafe_allow_html=True)
-
-    # 2. Main Layout (2 Columns) - Use 'large' gap
-    col_left, col_right = st.columns([1.5, 1], gap="large")
     
-    # --- LEFT COLUMN: BRANDING & PITCH ---
-    with col_left:
-        st.markdown('<div class="hero-container">', unsafe_allow_html=True)
-        
-        # LOGO
-        st.image("assets/logo.png", width=100) 
-        
-        st.write("")
-        # REMOVED: Beta Badge
-        
-        st.markdown('<h1 class="hero-title">Master Python in<br>15 Minutes a Day</h1>', unsafe_allow_html=True)
-        st.markdown('<h2 class="hero-subtitle">The AI-powered automated challenge. Stop starting "courses" you never finish.<br><b>No burnout. Just consistency.</b></h2>', unsafe_allow_html=True)
-        
-        # COMPACT FEATURES (Revised Copy)
+    # Main Layout
+    col_hero, col_login = st.columns([1.3, 1], gap="large")
+    
+    # --- LEFT: HERO SECTION ---
+    with col_hero:
         st.markdown("""
-        <div class="feature-grid">
-            <div class="feature-item">📚 Daily Micro-Lessons</div>
-            <div class="feature-item">💡 Instant AI Feedback</div>
-        </div>
-        <div class="feature-grid">
-            <div class="feature-item">🎯 Active Recall Quizzes</div>
-            <div class="feature-item">🚀 Career-Track Curriculum</div>
+        <div class="hero-side">
+            <div class="logo">
+                <div class="logo-icon">🐍</div>
+                <div class="logo-text">PyDaily</div>
+            </div>
+            
+            <h1 class="hero-headline">
+                Learn Python.<br><span>Actually.</span>
+            </h1>
+            
+            <p class="hero-subtitle">
+                Daily bite-sized lessons that actually stick. Build real skills in just 15 minutes a day. No fluff, no burnout.
+            </p>
+            
+            <div class="features">
+                <div class="feature-badge">📚 Daily Lessons</div>
+                <div class="feature-badge">🎯 Active Recall</div>
+                <div class="feature-badge">⚡ AI Feedback</div>
+            </div>
+            
+            <div class="floating-elements">
+                <div class="float-icon">🐍</div>
+                <div class="float-icon">💻</div>
+                <div class="float-icon">🚀</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
+    
+    # --- RIGHT: LOGIN CARD ---
+    with col_login:
+        st.markdown('<div class="login-card">', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">Get Started</div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-subtitle">Join thousands learning Python the smart way</div>', unsafe_allow_html=True)
         
-        st.markdown('</div>', unsafe_allow_html=True) # End hero-container
-
-    # --- RIGHT COLUMN: LOGIN/SIGNUP CARD ---
-    with col_right:
-        st.markdown('<div class="login-container">', unsafe_allow_html=True)
+        tab1, tab2 = st.tabs(["Sign In", "Sign Up"])
+        db = SupabaseManager()
         
-        # Native Container with Border
-        with st.container(border=True):
-            st.subheader("Join the Challenge")
+        # --- SIGN IN TAB ---
+        with tab1:
+            with st.form("login_form"):
+                email = st.text_input("Email", placeholder="you@example.com", label_visibility="collapsed")
+                password = st.text_input("Password", type="password", placeholder="Your password", label_visibility="collapsed")
+                submit = st.form_submit_button("Sign In →", use_container_width=True)
             
-            tab1, tab2 = st.tabs(["Sign In", "Sign Up"]) 
-            db = SupabaseManager()
-
-            # LOGIN FORM
-            with tab1:
-                with st.form("login_form"):
-                    email = st.text_input("Email", placeholder="you@example.com")
-                    password = st.text_input("Password", type="password")
-                    st.write("")
-                    submit = st.form_submit_button("Sign In ->", type="primary", use_container_width=True)
-                
-                if submit:
-                    with st.spinner("Authenticating..."):
+            if submit:
+                if email and password:
+                    with st.spinner("Signing in..."):
                         session = db.sign_in(email, password)
                         if session:
                             st.session_state["role"] = db.get_user_role(session.session.access_token)
                             st.session_state["auth_token"] = session.session.access_token
                             st.session_state["user_email"] = email
                             
-                            # --- ANALYTICS: LOG LOGIN + GEO ---
+                            # Analytics
                             try:
                                 import requests
                                 from utils import network
-                                
                                 ip = network.get_remote_ip()
                                 geo_info = {"ip": ip, "city": "Unknown", "country": "Unknown"}
-                                
                                 if ip:
-                                    # Free Tier: 45 requests/minute. Fine for login.
-                                    # Timeout essential to not block UI.
                                     resp = requests.get(f"http://ip-api.com/json/{ip}?fields=status,city,country", timeout=2)
                                     if resp.status_code == 200:
                                         data = resp.json()
                                         if data.get("status") == "success":
                                             geo_info["city"] = data.get("city")
                                             geo_info["country"] = data.get("country")
-                                
-                                # Fetch UA
                                 ua = network.get_user_agent()
+                                db.log_activity(email, "LOGIN", {"role": st.session_state["role"], "geo": geo_info}, user_agent=ua)
+                            except:
+                                db.log_activity(email, "LOGIN", {"role": st.session_state["role"]})
                             
-                                db.log_activity(email, "LOGIN", {
-                                    "role": st.session_state["role"],
-                                    "geo": geo_info
-                                }, user_agent=ua)
-                            except Exception as e:
-                                # Fallback if GEO fails -> Log basic login
-                                print(f"Geo-Log Failed: {e}")
-                                db.log_activity(email, "LOGIN", {"role": st.session_state["role"], "geo_error": str(e)})
-
                             st.rerun()
                         else:
-                            st.error("Login failed.")
-                
-                # Forgot Password Section
-                st.markdown("---")
-                with st.expander("🔑 Forgot your password?"):
-                    st.write("Enter your email and we'll send you a reset link.")
-                    reset_email = st.text_input("Email address", key="reset_email", placeholder="you@example.com")
-                    if st.button("Send Reset Link", use_container_width=True):
-                        if reset_email and "@" in reset_email:
-                            with st.spinner("Sending reset link..."):
-                                success, msg = db.reset_password(reset_email)
-                                if success:
-                                    st.success("✅ Reset link sent! Check your email (including spam folder).")
-                                else:
-                                    st.error(f"❌ {msg}")
+                            st.error("Invalid email or password")
+                else:
+                    st.warning("Please fill in all fields")
+            
+            # Forgot Password
+            with st.expander("🔑 Forgot password?", expanded=False):
+                reset_email = st.text_input("Enter your email", key="reset_email", placeholder="you@example.com", label_visibility="collapsed")
+                if st.button("Send Reset Link", key="reset_btn"):
+                    if reset_email and "@" in reset_email:
+                        success, msg = db.reset_password(reset_email)
+                        if success:
+                            st.success("✅ Check your email for reset link!")
                         else:
-                            st.warning("Please enter a valid email address.")
-
-            # SIGNUP FORM
-            with tab2:
-                st.write("Create your free account.")
-                with st.form("signup_form"):
-                    new_name = st.text_input("Name", placeholder="Your Name")
-                    new_email = st.text_input("Email")
-                    new_password = st.text_input("Choose Password", type="password")
-                    st.write("")
-                    submit_new = st.form_submit_button("Join Class (Free)", type="primary", use_container_width=True)
-                
-                if submit_new:
-                    if len(new_password) < 6:
-                        st.warning("Password min 6 chars")
+                            st.error(msg)
                     else:
-                        with st.spinner("Creating account..."):
-                            res = db.sign_up(new_email, new_password, new_name)
-                            if res:
-                                st.success("Check email to confirm.")
-                            else:
-                                st.error("Failed.")
+                        st.warning("Enter a valid email")
         
+        # --- SIGN UP TAB ---
+        with tab2:
+            with st.form("signup_form"):
+                new_name = st.text_input("Name", placeholder="Your name", label_visibility="collapsed")
+                new_email = st.text_input("Email", placeholder="you@example.com", key="signup_email", label_visibility="collapsed")
+                new_password = st.text_input("Password", type="password", placeholder="Choose a password (min 6 chars)", key="signup_pass", label_visibility="collapsed")
+                submit_new = st.form_submit_button("Start Learning Free →", use_container_width=True)
+            
+            if submit_new:
+                if not new_name or not new_email or not new_password:
+                    st.warning("Please fill in all fields")
+                elif len(new_password) < 6:
+                    st.warning("Password must be at least 6 characters")
+                else:
+                    with st.spinner("Creating your account..."):
+                        res = db.sign_up(new_email, new_password, new_name)
+                        if res:
+                            st.success("🎉 Check your email to confirm!")
+                        else:
+                            st.error("Sign up failed. Try a different email.")
+        
+        st.markdown('<div class="trust-badge"><span>✓</span> Free forever · No credit card required</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
