@@ -153,21 +153,15 @@ def run(current_day):
     st.markdown("### ⚡ Knowledge Reels")
     st.info("💡 Swipe up for next nugget!") # Hint for Desktop users
     
-    # DEBUG OVERLAY (Temporary)
-    st.warning(f"DEBUG MODE: Current Day = {current_day}")
-    
     if "feed_cache" not in st.session_state:
-        items = get_random_feed_items(current_day, 12)
-        st.write(f"DEBUG: Initial Load Found {len(items)} items")
-        if items: st.write(f"Sample Item: {items[0]['title']}")
-        st.session_state.feed_cache = items
+        st.session_state.feed_cache = get_random_feed_items(current_day, 12)
     
     # Render Full Iframe
     if st.session_state.feed_cache:
         html_code = generate_feed_html(st.session_state.feed_cache)
         components.html(html_code, height=800, scrolling=False)
     else:
-        st.error("Feed Cache is Empty! Database returned nothing.")
+        st.info("You're all caught up! 🚀 Check back tomorrow for more knowledge.")
         
     # Reload Button (Outside Iframe)
     if st.button("🔄 Shuffle Feed", use_container_width=True):
