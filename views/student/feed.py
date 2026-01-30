@@ -13,10 +13,12 @@ def get_random_feed_items(current_day, count=10):
     # Only fetch from DB. No fallback.
     # Users want quality over quantity.
     max_day = max(1, current_day)
+    print(f"DEBUG: Fetching feed for Max Day: {max_day}")
     try:
         # We reuse the same db method, but the table schema has changed.
         # The 'content' field now contains full HTML.
         hq_nuggets = db.get_feed_nuggets(max_day, limit=count)
+        print(f"DEBUG: Found {len(hq_nuggets) if hq_nuggets else 0} nuggets.")
         if hq_nuggets:
             for n in hq_nuggets:
                 items.append({
@@ -26,6 +28,7 @@ def get_random_feed_items(current_day, count=10):
                 })
     except Exception as e:
         print(f"Feed Error: {e}")
+        st.error(f"DB Error: {e}")
         
     return items
 
@@ -150,13 +153,22 @@ def run(current_day):
     st.markdown("### ⚡ Knowledge Reels")
     st.info("💡 Swipe up for next nugget!") # Hint for Desktop users
     
-    if "feed_cache" not in st.session_state:
-        st.session_state.feed_cache = get_random_feed_items(current_day, 12) # Load batch of 12
-        
-    # Render Full Iframe
-    html_code = generate_feed_html(st.session_state.feed_cache)
-    components.html(html_code, height=800, scrolling=False) # Scrolling handled inside HTML
+    # DEBUG OVERLAY (Temporary)
+    st.warning(f"DEBUG MODE: Current Day = {current_day}")
     
+    if "feed_cache" not in st.session_state:
+        items = get_random_feed_items(current_day, 12)
+        st.write(f"DEBUG: Initial Load Found {len(items)} items")
+        if items: st.write(f"Sample Item: {items[0]['title']}")
+        st.session_state.feed_cache = items
+    
+    # Render Full Iframe
+    if st.session_state.feed_cache:
+        html_code = generate_feed_html(st.session_state.feed_cache)
+        components.html(html_code, height=800, scrolling=False)
+    else:
+        st.error("Feed Cache is Empty! Database returned nothing.")
+        
     # Reload Button (Outside Iframe)
     if st.button("🔄 Shuffle Feed", use_container_width=True):
         st.session_state.feed_cache = get_random_feed_items(current_day, 12)
