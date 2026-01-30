@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyDaily - Lesson Email Sample (v2)</title>
+</head>
+<body style="margin:0; padding:0; background-color:#0f172a; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0f172a; padding:20px 0;">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background:#1e293b; border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.3);">
+                    
+                    <!-- HEADER -->
+                    <tr>
+                        <td style="background:linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); padding:30px; text-align:center;">
+                            <h1 style="margin:0; color:white; font-size:28px; font-weight:700;">PyDaily</h1>
+                            <p style="margin:8px 0 0; color:rgba(255,255,255,0.8); font-size:14px;">Day 15</p>
+                        </td>
+                    </tr>
+                    
+                    <!-- PERSONALIZATION BAR -->
+                    <tr>
+                        <td style="background:#334155; padding:16px 30px; border-bottom:1px solid #475569;">
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td style="color:#94a3b8; font-size:14px;">
+                                        Hey <strong style="color:#f1f5f9;">{{NAME}}</strong>!
+                                    </td>
+                                    <td align="right">
+                                        <span style="background:#22c55e; color:white; padding:4px 12px; border-radius:12px; font-size:12px; font-weight:600;">5-day streak</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- TODAY'S TOPIC -->
+                    <tr>
+                        <td style="padding:20px 30px 10px;">
+                            <div style="background:linear-gradient(135deg, #1e3a5f 0%, #1e293b 100%); border:1px solid #334155; border-radius:12px; padding:20px;">
+                                <p style="margin:0 0 8px; color:#6366f1; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">Today's Topic</p>
+                                <h2 style="margin:0; color:#f1f5f9; font-size:22px;">String Formatting & f-Strings</h2>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- FULL LESSON CONTENT -->
+                    <tr>
+                        <td style="padding:20px 30px 30px;">
+                            <div style="color:#cbd5e1; font-size:15px; line-height:1.8;">
+                                
+                                <p>Python's f-strings (formatted string literals) are one of the most elegant ways to embed expressions inside string literals. Introduced in Python 3.6, they make string formatting cleaner and more readable.</p>
+                                
+                                <h3 style="color:#f1f5f9; font-size:18px; margin:24px 0 12px;">Basic Usage</h3>
+                                
+                                <div style="background:#0f172a; border-radius:8px; padding:16px; margin:16px 0; border-left:4px solid #6366f1;">
+                                    <code style="color:#a5b4fc; font-family:'Fira Code', monospace; font-size:14px;">
+name = "Alice"<br>
+age = 25<br>
+print(f"Hello, {name}! You are {age} years old.")
+                                    </code>
+                                </div>
+                                
+                                <p><strong style="color:#f1f5f9;">Output:</strong> <code style="background:#334155; padding:2px 6px; border-radius:4px; color:#22c55e;">Hello, Alice! You are 25 years old.</code></p>
+                                
+                                <h3 style="color:#f1f5f9; font-size:18px; margin:24px 0 12px;">Expressions Inside f-Strings</h3>
+                                
+                                <p>You can include any valid Python expression:</p>
+                                
+                                <div style="background:#0f172a; border-radius:8px; padding:16px; margin:16px 0; border-left:4px solid #22c55e;">
+                                    <code style="color:#a5b4fc; font-family:'Fira Code', monospace; font-size:14px;">
+price = 49.99<br>
+quantity = 3<br>
+print(f"Total: ${price * quantity:.2f}")
+                                    </code>
+                                </div>
+                                
+                                <p><strong style="color:#f1f5f9;">Output:</strong> <code style="background:#334155; padding:2px 6px; border-radius:4px; color:#22c55e;">Total: $149.97</code></p>
+                                
+                                <h3 style="color:#f1f5f9; font-size:18px; margin:24px 0 12px;">Pro Tips</h3>
+                                
+                                <ul style="padding-left:20px; margin:12px 0;">
+                                    <li style="margin:8px 0;">Use <code style="background:#334155; padding:2px 6px; border-radius:4px; color:#a5b4fc;">:.2f</code> for 2 decimal places</li>
+                                    <li style="margin:8px 0;">Use <code style="background:#334155; padding:2px 6px; border-radius:4px; color:#a5b4fc;">:,</code> for thousand separators</li>
+                                    <li style="margin:8px 0;">Use <code style="background:#334155; padding:2px 6px; border-radius:4px; color:#a5b4fc;">:>10</code> for right-aligned padding</li>
+                                </ul>
+                                
+                                <div style="background:#1e3a5f; border-radius:8px; padding:16px; margin:24px 0; border:1px solid #334155;">
+                                    <p style="margin:0; color:#fbbf24; font-weight:600;">Challenge:</p>
+                                    <p style="margin:8px 0 0; color:#cbd5e1;">Create a variable <code style="background:#334155; padding:2px 6px; border-radius:4px; color:#a5b4fc;">hours = 8.5</code> and print: "Worked 8.50 hours today"</p>
+                                </div>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- FOOTER -->
+                    <tr>
+                        <td style="background:#0f172a; padding:20px 30px; text-align:center; border-top:1px solid #334155;">
+                            <p style="margin:0; color:#64748b; font-size:12px;">
+                                You're receiving this because you joined PyDaily.
+                                <br><a href="#" style="color:#6366f1;">Unsubscribe</a> · <a href="#" style="color:#6366f1;">Manage Preferences</a>
+                            </p>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

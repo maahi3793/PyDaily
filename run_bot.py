@@ -39,37 +39,169 @@ def group_contacts_by_day(contact_list):
         run_motivation_cycle(gemini, mailer, cache)
 
 def run_motivation_cycle(gemini, mailer, cache):
-    logging.info("⚡ Starting Mid-Day Motivation Cycle...")
+    """
+    UPDATED: Now sends Weekly Digest on Sundays instead of generic motivation.
+    Personalized per student with their progress, quiz status, and upcoming topics.
+    No AI API calls - all data from DB and curriculum.
+    """
     import datetime
-    today_str = datetime.date.today().isoformat()
+    from backend import curriculum, data_manager
     
-    # 1. Get/Generate
-    content = cache.get_motivation(today_str)
-    if not content:
-        logging.info("Cache Miss: Generating Motivation...")
-        content = gemini.generate_motivation()
-        cache.save_motivation(today_str, content)
+    logging.info("📅 Starting Weekly Digest Cycle (Sundays)...")
     
-    # 2. Target Audience: Everyone Active (Pending or Sent) + Subscribed to Morning
+    # 1. Get all active students
     contacts = data_manager.get_contacts()
-    
-    # Filter for Morning Preference
-    # Helper: Handle missing keys safely
     active_students = [c for c in contacts 
                        if c.get('status') in ['pending', 'lesson_sent'] 
                        and c.get('sub_morning', True) is True]
     
     if not active_students:
-        logging.info("No active students subscribed to Motivation.")
+        logging.info("No active students for Weekly Digest.")
         return
-
-    logging.info(f"Sending motivation to {len(active_students)} students...")
-    success, msg = mailer.send_email(active_students, "⚡ PyDaily: Mid-Day Boost", content)
     
-    if success:
-        logging.info("✅ Motivation sent successfully.")
-    else:
-        logging.error(f"❌ Failed to send motivation: {msg}")
+    # 2. Get quiz attempts data for checking completion
+    try:
+        all_attempts = data_manager.db.supabase.table("quiz_attempts").select("student_id, day").execute()
+        attempts_by_student = {}
+        for att in (all_attempts.data or []):
+            sid = att.get('student_id')
+            if sid not in attempts_by_student:
+                attempts_by_student[sid] = set()
+            attempts_by_student[sid].add(att.get('day'))
+    except:
+        attempts_by_student = {}
+    
+    # 3. Build email for each student
+    today = datetime.date.today()
+    week_start = today - datetime.timedelta(days=7)
+    
+    for student in active_students:
+        current_day = student.get('day', 1)
+        student_id = student.get('id')
+        student_quizzes = attempts_by_student.get(student_id, set())
+        
+        # Calculate week range (last 7 days of lessons)
+        week_start_day = max(1, current_day - 7)
+        week_end_day = current_day - 1  # Up to yesterday
+        
+        # Build "This Week" section
+        this_week_html = ""
+        for d in range(week_start_day, week_end_day + 1):
+            topic = curriculum.TOPICS.get(d, f"Day {d}")
+            is_quiz = "Quiz" in topic
+            quiz_taken = d in student_quizzes
+            
+            if is_quiz:
+                if quiz_taken:
+                    # Green - Quiz taken
+                    this_week_html += f'''
+                    <tr><td style="padding:10px 0; border-bottom:1px solid #eee; background:#f0fdf4;">
+                        <span style="color:#22c55e; font-weight:bold;">✓</span>
+                        <span style="color:#333; margin-left:8px;">Day {d}:</span>
+                        <span style="color:#22c55e; font-weight:600;">{topic}</span>
+                        <span style="color:#22c55e; font-size:12px; margin-left:8px;">— Great job!</span>
+                    </td></tr>'''
+                else:
+                    # Red - Quiz pending
+                    this_week_html += f'''
+                    <tr><td style="padding:10px 0; border-bottom:1px solid #eee; background:#fef2f2;">
+                        <span style="color:#ef4444; font-weight:bold;">○</span>
+                        <span style="color:#333; margin-left:8px;">Day {d}:</span>
+                        <span style="color:#ef4444; font-weight:600;">{topic}</span>
+                        <span style="color:#ef4444; font-size:12px; margin-left:8px;">— Give it a try!</span>
+                    </td></tr>'''
+            else:
+                # Regular lesson - green check
+                this_week_html += f'''
+                <tr><td style="padding:10px 0; border-bottom:1px solid #eee;">
+                    <span style="color:#22c55e; font-weight:bold;">✓</span>
+                    <span style="color:#333; margin-left:8px;">Day {d}:</span>
+                    <span style="color:#555;">{topic}</span>
+                </td></tr>'''
+        
+        # Build "Next Week" section
+        next_week_html = ""
+        for d in range(current_day, min(current_day + 5, 300)):  # Next 5 days
+            topic = curriculum.TOPICS.get(d, f"Day {d}")
+            next_week_html += f'''
+            <tr><td style="padding:10px 0; border-bottom:1px solid #eee;">
+                <span style="color:#4F46E5;">→</span>
+                <span style="color:#333; margin-left:8px;">Day {d}:</span>
+                <span style="color:#555;">{topic}</span>
+            </td></tr>'''
+        
+        # Stats
+        days_completed = current_day - 1
+        streak = student.get('streak', 0)
+        quizzes_taken = len(student_quizzes)
+        
+        # Full email HTML
+        email_body = f'''
+        <div style="max-width:600px; margin:0 auto; font-family:sans-serif; background:white; border:1px solid #e0e0e0; border-radius:10px; overflow:hidden;">
+            <div style="background:#4F46E5; padding:25px; text-align:center;">
+                <h1 style="margin:0; color:white; font-size:24px;">PyDaily Weekly Digest</h1>
+                <p style="margin:8px 0 0; color:rgba(255,255,255,0.8); font-size:14px;">{week_start.strftime('%b %d')} - {today.strftime('%b %d, %Y')}</p>
+            </div>
+            
+            <div style="padding:25px 30px 15px;">
+                <p style="margin:0; font-size:16px; color:#333;">Hey <strong>{{{{NAME}}}}</strong>,</p>
+                <p style="margin:10px 0 0; font-size:15px; color:#555; line-height:1.6;">
+                    Here's your weekly progress recap. You're doing great — keep the momentum going!
+                </p>
+            </div>
+            
+            <div style="padding:15px 30px;">
+                <h2 style="margin:0 0 15px; font-size:18px; color:#4F46E5; border-bottom:2px solid #4F46E5; padding-bottom:8px;">This Week</h2>
+                <table width="100%" cellpadding="0" cellspacing="0">{this_week_html}</table>
+            </div>
+            
+            <div style="padding:15px 30px;">
+                <div style="background:#f3f4f6; border-radius:8px; padding:20px; text-align:center;">
+                    <table width="100%" cellpadding="0" cellspacing="0"><tr>
+                        <td style="text-align:center; padding:10px;">
+                            <div style="font-size:28px; font-weight:bold; color:#4F46E5;">{days_completed}</div>
+                            <div style="font-size:12px; color:#666; margin-top:4px;">Days Completed</div>
+                        </td>
+                        <td style="text-align:center; padding:10px; border-left:1px solid #ddd;">
+                            <div style="font-size:28px; font-weight:bold; color:#22c55e;">{streak}</div>
+                            <div style="font-size:12px; color:#666; margin-top:4px;">Day Streak</div>
+                        </td>
+                        <td style="text-align:center; padding:10px; border-left:1px solid #ddd;">
+                            <div style="font-size:28px; font-weight:bold; color:#f97316;">{quizzes_taken}</div>
+                            <div style="font-size:12px; color:#666; margin-top:4px;">Quizzes Taken</div>
+                        </td>
+                    </tr></table>
+                </div>
+            </div>
+            
+            <div style="padding:15px 30px;">
+                <h2 style="margin:0 0 15px; font-size:18px; color:#4F46E5; border-bottom:2px solid #4F46E5; padding-bottom:8px;">Coming Up</h2>
+                <table width="100%" cellpadding="0" cellspacing="0">{next_week_html}</table>
+            </div>
+            
+            <div style="padding:15px 30px;">
+                <div style="background:#fffbeb; border:1px solid #fcd34d; border-radius:8px; padding:20px;">
+                    <h3 style="margin:0 0 12px; font-size:16px; color:#b45309;">Pro Tips</h3>
+                    <ul style="margin:0; padding-left:20px; color:#78350f; font-size:14px; line-height:1.8;">
+                        <li>Check out <strong>Practice Programs</strong> in the dashboard to apply what you've learned.</li>
+                        <li>Feeling confident? Try <strong>Boss Battles</strong> for extra challenges!</li>
+                        <li>Each lesson has a <strong>Deep Dive Link</strong> at the bottom for further reading.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="padding:20px 30px; text-align:center;">
+                <a href="https://pydaily.streamlit.app" style="background-color:#4F46E5; color:white; padding:15px 40px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;">View Your Dashboard</a>
+            </div>
+        </div>
+        '''
+        
+        # Send to this individual student
+        success, msg = mailer.send_email([student], "📅 PyDaily: Your Weekly Progress", email_body)
+        if success:
+            logging.info(f"✅ Weekly Digest sent to {student.get('email')}")
+        else:
+            logging.error(f"❌ Failed to send digest to {student.get('email')}: {msg}")
 
 def run_morning_cycle(gemini, mailer, cache):
     logging.info("🌞 Starting Morning Cycle (Lessons)...")
@@ -157,18 +289,28 @@ def run_morning_cycle(gemini, mailer, cache):
         # FIX: For Quizzes, don't send the Raw JSON. Send a Dashboard Link.
         if is_quiz_day:
             email_body = f"""
-            <div style="font-family:sans-serif; max-width:600px; margin:0 auto; text-align:center; padding:30px; border:1px solid #e0e0e0; border-radius:10px;">
-                <h1 style="color:#4F46E5;">⚔️ It's Quiz Day!</h1>
-                <p style="font-size:18px; color:#333;">You have reached <strong>Day {day}</strong>. It's time to test your knowledge.</p>
-                <div style="background:#f3f4f6; padding:20px; border-radius:8px; margin:20px 0;">
-                    <p>This is an internal checkpoint. Log in to the Student Dashboard to take your Interactive Quiz.</p>
+            <div style="font-family:sans-serif; max-width:600px; margin:0 auto; padding:30px; border:1px solid #e0e0e0; border-radius:10px;">
+                <h1 style="color:#4F46E5; text-align:center;">Quiz Time!</h1>
+                <p style="font-size:16px; color:#333;">Hey <strong>{{{{NAME}}}}</strong>,</p>
+                <p style="font-size:16px; color:#333; line-height:1.6;">
+                    You've reached <strong>Day {day}</strong> — and you've been doing great! 
+                    Today's a quick checkpoint to see how much you remember.
+                </p>
+                <div style="background:#f3f4f6; padding:20px; border-radius:8px; margin:20px 0; text-align:center;">
+                    <p style="margin:0; color:#555;">Quizzes help lock in what you've learned.<br>No pressure — just practice!</p>
                 </div>
-                <a href="https://pydaily.streamlit.app" style="background-color:#4F46E5; color:white; padding:15px 30px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;">👉 Go to Dashboard</a>
-                <p style="margin-top:20px; font-size:12px; color:#888;">Complete this quiz to unlock tomorrow's lesson.</p>
+                <div style="text-align:center;">
+                    <a href="https://pydaily.streamlit.app" style="background-color:#4F46E5; color:white; padding:15px 30px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;">Take the Quiz</a>
+                </div>
+                <p style="margin-top:20px; font-size:13px; color:#888; text-align:center;">Takes about 10 minutes. You've got this!</p>
             </div>
             """
         else:
-            email_body = content
+            # Wrap lesson content with personalized greeting
+            greeting = """<div style="font-family:sans-serif; max-width:600px; margin:0 auto; padding:20px 0;">
+                <p style="font-size:16px; color:#333; margin:0 0 20px;">Hey <strong>{{NAME}}</strong>, here's today's lesson:</p>
+            </div>"""
+            email_body = greeting + content
             
             # --- FEATURE: DEEP DIVE LINKS (Retroactive Injection) ---
             # Try to fetch a smart link for this day/topic
