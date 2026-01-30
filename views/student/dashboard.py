@@ -233,6 +233,39 @@ def run():
                 clean_html = content.replace('```html', '').replace('```', '')
                 import streamlit.components.v1 as components
                 components.html(clean_html, height=700, scrolling=True)
+                
+                # --- DEEP DIVE SECTION ---
+                from backend import curriculum
+                topic_name = curriculum.TOPICS.get(selected_day, "")
+                deep_dive = curriculum.get_deep_dive_attrs(selected_day, topic_name)
+                
+                if deep_dive:
+                    dd_url, dd_source = deep_dive
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%); 
+                                border-radius: 16px; padding: 24px; margin-top: 20px;
+                                border: 1px solid #3b82f6;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <span style="font-size: 2.5rem;">🔗</span>
+                            <div>
+                                <div style="font-size: 1.2rem; font-weight: 700; color: white;">
+                                    📚 Deep Dive
+                                </div>
+                                <div style="color: #e0e7ff; margin-top: 5px;">
+                                    Want to learn more? Check out this curated resource:
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{dd_url}" target="_blank" rel="noopener" 
+                           style="display: inline-block; margin-top: 15px; 
+                                  background: white; color: #1e40af; 
+                                  padding: 12px 24px; border-radius: 8px;
+                                  text-decoration: none; font-weight: 600;
+                                  transition: transform 0.2s;">
+                            🚀 Explore on {dd_source} →
+                        </a>
+                    </div>
+                    """, unsafe_allow_html=True)
         else:
             st.info(f"Day {selected_day} content not found in cache. Ask your Admin to generate it!")
 

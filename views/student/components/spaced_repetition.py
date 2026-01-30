@@ -134,7 +134,7 @@ def render_spaced_repetition(current_day: int):
     
     # Quick tip
     st.divider()
-    st.info("💡 **Tip**: After clicking Review, switch to the **📚 Knowledge Vault** tab to see the lesson!")
+    st.info("🎯 **Quick Tip**: Head over to the **📚 Knowledge Vault** tab to dive into any lesson. Happy reviewing!")
     
     # Learning tip (dynamic from pool)
     tip_index = current_day % len(LEARNING_TIPS)
