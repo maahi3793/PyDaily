@@ -14,25 +14,28 @@ def run():
     header { visibility: hidden; }
     footer { visibility: hidden; }
     
-    /* FULL PAGE - NO SCROLL */
+    /* FULL PAGE - NO SCROLL INITIALLY, BUT ALLOW IF CONTENT EXPANDS */
     html, body {
         height: 100vh !important;
-        overflow: hidden !important;
+        overflow-y: auto !important; /* Allow scroll if needed (expander) */
+        scrollbar-width: none; /* Firefox */
+    }
+    
+    /* Hide Scrollbar (Chrome/Safari) */
+    html::-webkit-scrollbar, body::-webkit-scrollbar, .stApp::-webkit-scrollbar {
+        display: none;
     }
     
     .stApp {
         background: linear-gradient(135deg, #faf5ff 0%, #ede9fe 50%, #ddd6fe 100%) !important;
         font-family: 'Outfit', sans-serif !important;
-        height: 100vh !important;
-        max-height: 100vh !important;
-        overflow: hidden !important;
+        min-height: 100vh !important;
     }
     
     .block-container {
         padding-top: 2rem !important;
-        padding-bottom: 0 !important;
-        max-height: 100vh !important;
-        overflow: hidden !important;
+        padding-bottom: 2rem !important;
+        max-width: 100% !important;
     }
     
     /* HERO SECTION */
@@ -83,33 +86,38 @@ def run():
     
     /* LOGIN CARD */
     .login-container {
-        margin-top: 8vh;
+        margin-top: 5vh; /* Reduced top margin to give more room */
     }
     
-    /* PILL TABS */
-    .stTabs [data-baseweb="tab-list"] {
+    /* PILL TABS - 50/50 SPLIT */
+    div[data-baseweb="tab-list"] {
         background: #f1f5f9 !important;
         border-radius: 12px !important;
         padding: 4px !important;
         gap: 0 !important;
+        display: flex !important;
+        width: 100% !important;
     }
     
-    .stTabs [data-baseweb="tab"] {
+    button[data-baseweb="tab"] {
         background: transparent !important;
         border-radius: 10px !important;
-        padding: 8px 20px !important;
-        font-weight: 500 !important;
+        padding: 8px 0 !important;
+        font-weight: 600 !important;
         color: #64748b !important;
+        flex: 1 !important; /* Force 50% width */
+        text-align: center !important;
+        justify-content: center !important;
     }
     
-    .stTabs [aria-selected="true"] {
+    button[aria-selected="true"] {
         background: white !important;
         color: #0f172a !important;
         box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
     }
     
-    .stTabs [data-baseweb="tab-highlight"],
-    .stTabs [data-baseweb="tab-border"] {
+    div[data-baseweb="tab-highlight"],
+    div[data-baseweb="tab-border"] {
         display: none !important;
     }
     
