@@ -86,8 +86,15 @@ def render_curriculum_preview(current_day: int = 1):
         border-color: var(--accent-color);
     }
     .phase-card.locked {
-        opacity: 0.5;
-        filter: grayscale(50%);
+        opacity: 0.7;
+        border-color: #475569;
+    }
+    .phase-card.locked .phase-name {
+        color: #94a3b8;
+    }
+    .phase-card.locked .topic-tag {
+        background: rgba(71, 85, 105, 0.5);
+        color: #94a3b8;
     }
     .phase-card.current {
         border: 2px solid #3B82F6;

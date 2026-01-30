@@ -4,8 +4,20 @@ Surfaces review prompts for topics that haven't been reviewed recently.
 Based on the SM-2 algorithm principle: review items at increasing intervals.
 """
 import streamlit as st
+import random
 from datetime import datetime, timedelta
 from backend import curriculum
+
+# Rotating tips for variety
+LEARNING_TIPS = [
+    "💡 **Spaced Repetition Tip**: Reviewing topics at increasing intervals helps move information from short-term to long-term memory. Even a quick 5-minute review can significantly boost retention!",
+    "💡 **Memory Hack**: The forgetting curve shows we lose 50% of new info within a day. A quick review resets that curve and strengthens memory!",
+    "💡 **Pro Tip**: Teach what you learn! Explaining concepts to others (or even to yourself) is one of the most effective ways to solidify your understanding.",
+    "💡 **Active Recall**: Instead of re-reading, try to recall the topic from memory first. This strengthens neural pathways far more effectively!",
+    "💡 **Interleaving**: Mix up your review topics rather than focusing on one at a time. This improves long-term retention and problem-solving!",
+    "💡 **The 2-Minute Rule**: If a review takes less than 2 minutes, do it now. Small consistent efforts compound into massive knowledge gains!",
+]
+
 
 def get_review_candidates(current_day: int, viewed_days: list = None):
     """
@@ -116,13 +128,14 @@ def render_spaced_repetition(current_day: int):
             
             with col_action:
                 if st.button("📖 Review", key=f"review_{item['day']}", use_container_width=True):
-                    st.session_state["selected_review_day"] = item['day']
-                    st.info(f"👆 Go to **Knowledge Vault** tab and select **Day {item['day']}** to review!")
+                    # Set the day in session state and switch to Knowledge Vault
+                    st.session_state["jump_to_lesson"] = item['day']
+                    st.session_state["active_main_tab"] = 0  # Knowledge Vault tab index
+                    st.rerun()
     
-    # Learning tip
+    # Learning tip (dynamic from pool)
     st.divider()
-    st.markdown("""
-    > 💡 **Spaced Repetition Tip**: Reviewing topics at increasing intervals helps move 
-    > information from short-term to long-term memory. Even a quick 5-minute review can 
-    > significantly boost retention!
-    """)
+    
+    # Use day as seed for consistent tip per session
+    tip_index = current_day % len(LEARNING_TIPS)
+    st.markdown(f"> {LEARNING_TIPS[tip_index]}")

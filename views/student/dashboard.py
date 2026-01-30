@@ -164,10 +164,17 @@ def run():
         # Day list: 1 to current_day
         available_days = list(range(1, current_day + 1))
         
-        # Default to current day
+        # Check for jump from Review Zone
+        jump_day = st.session_state.pop("jump_to_lesson", None)
+        if jump_day and jump_day in available_days:
+            default_index = available_days.index(jump_day)
+            st.success(f"📖 Jumped to **Day {jump_day}** for review!")
+        else:
+            default_index = len(available_days) - 1  # Default to current day
+        
         col_select, col_bookmark = st.columns([4, 1])
         with col_select:
-            selected_day = st.selectbox("Select Lesson Day", available_days, index=len(available_days)-1, format_func=lambda x: f"Day {x}")
+            selected_day = st.selectbox("Select Lesson Day", available_days, index=default_index, format_func=lambda x: f"Day {x}")
         
         # Bookmark Toggle
         user_email = st.session_state.get("user_email", "")
