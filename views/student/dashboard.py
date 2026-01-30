@@ -9,6 +9,7 @@ from views.student.components.expert_kit import render_expert_kit_download
 from views.student.components.welcome_tour import render_welcome_tour, should_show_tour
 from views.student.components.skill_tree import render_skill_tree
 from views.student.components.spaced_repetition import render_spaced_repetition
+from views.student import feed
 
 def run():
     st.markdown("""
@@ -153,7 +154,7 @@ def run():
     
     # 6. Interactive Learning Tabs
     st.write("")
-    tab1, tab2, tab_practice, tab3 = st.tabs(["📚 Knowledge Vault", "🧠 Quiz Arena", "💻 Practice", "📊 Progress"])
+    tab1, tab2, tab_feed, tab_practice, tab3 = st.tabs(["📚 Knowledge Vault", "🧠 Quiz Arena", "⚡ Scroll", "💻 Practice", "📊 Progress"])
     
     # --- TAB 1: KNOWLEDGE VAULT (Lesson Library) ---
     with tab1:
@@ -376,6 +377,10 @@ def run():
                     st.error("⚠️ Error loading Interactive Quiz. It might be in the old legacy format.")
                     st.expander("View Legacy Content").code(quiz_content)
                     
+    # --- TAB FEED: INFINITE SCROLL ---
+    with tab_feed:
+        feed.run(current_day)
+
     # --- TAB 3: PRACTICE PROGRAMS (Flashcard Gym) ---
     with tab_practice:
         st.subheader("🏋️ Coding Gym")
