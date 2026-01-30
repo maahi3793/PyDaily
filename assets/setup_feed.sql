@@ -31,7 +31,7 @@ CREATE INDEX idx_feed_nuggets_day_topic ON feed_nuggets(lesson_day, topic);
 ALTER TABLE feed_nuggets ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Enable read access for all users" ON feed_nuggets
-    FOR SELECT USING (auth.role() = 'authenticated');
+    FOR SELECT USING (true);
 
 CREATE POLICY "Enable write access for service role only" ON feed_nuggets
     FOR ALL USING (auth.role() = 'service_role');
