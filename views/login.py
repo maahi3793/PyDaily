@@ -1,264 +1,380 @@
 import streamlit as st
-import time
 from backend.db_supabase import SupabaseManager
 
 def run():
-    # Modern Login Page CSS
+    # ============================================
+    # MODERN LOGIN PAGE - V3 DESIGN (Blue/Purple)
+    # ============================================
     st.markdown("""
     <style>
-    /* IMPORT FONTS */
+    /* FONTS */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     
     /* HIDE STREAMLIT CHROME */
-    [data-testid="stSidebar"] { display: none; }
-    header, footer { visibility: hidden; }
-    #MainMenu { display: none; }
+    [data-testid="stSidebar"], header, footer, #MainMenu { display: none !important; }
     
-    /* FULL VIEWPORT, NO SCROLL */
+    /* NO SCROLL - FIXED VIEWPORT */
+    html, body, .stApp {
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
     .stApp {
-        background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 50%, #ddd6fe 100%) !important;
+        background: linear-gradient(135deg, #faf5ff 0%, #ede9fe 40%, #ddd6fe 100%) !important;
         font-family: 'Inter', sans-serif !important;
-        min-height: 100vh;
     }
     
-    /* Override dark theme for login */
-    .stApp, .stApp * {
-        color: #1e293b !important;
+    .block-container {
+        padding: 0 !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
     
-    /* Form inputs */
-    .stTextInput input {
-        background: #f8fafc !important;
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 12px !important;
-        padding: 12px 16px !important;
-        color: #1e293b !important;
+    /* FORCE TEXT COLORS */
+    h1, h2, h3, p, span, label, .stMarkdown { color: #1e293b !important; }
+    
+    /* ============ LAYOUT ============ */
+    .main-wrapper {
+        display: flex;
+        width: 100%;
+        max-width: 1000px;
+        align-items: center;
+        gap: 40px;
+        padding: 20px;
     }
     
-    .stTextInput input:focus {
-        border-color: #3b82f6 !important;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+    .hero-section {
+        flex: 1.1;
     }
     
-    .stTextInput input::placeholder {
-        color: #94a3b8 !important;
+    .login-section {
+        flex: 0.9;
     }
     
-    /* Buttons */
-    .stButton > button, .stFormSubmitButton > button {
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 12px !important;
-        padding: 12px 24px !important;
-        font-size: 1rem !important;
-        font-weight: 600 !important;
-        transition: transform 0.2s, box-shadow 0.2s !important;
+    /* ============ HERO ============ */
+    .logo-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 24px;
     }
     
-    .stButton > button:hover, .stFormSubmitButton > button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3) !important;
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
     }
     
-    /* Tabs */
+    .logo-name {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1e293b;
+    }
+    
+    .hero-title {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.15;
+        margin-bottom: 16px;
+    }
+    
+    .hero-title .gradient {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        color: #64748b;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+    
+    .badges {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+    
+    .badge {
+        background: white;
+        padding: 8px 14px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #475569;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        border: 1px solid #e2e8f0;
+    }
+    
+    .illustration {
+        margin-top: 10px;
+    }
+    
+    .float-icons {
+        display: flex;
+        gap: 20px;
+        font-size: 2rem;
+    }
+    
+    .float-icons span {
+        animation: bob 2.5s ease-in-out infinite;
+    }
+    .float-icons span:nth-child(2) { animation-delay: 0.4s; }
+    .float-icons span:nth-child(3) { animation-delay: 0.8s; }
+    
+    @keyframes bob {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+    
+    /* ============ LOGIN CARD ============ */
+    .login-card {
+        background: white;
+        border-radius: 20px;
+        padding: 32px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        border: 1px solid #e2e8f0;
+    }
+    
+    .card-header {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 4px;
+    }
+    
+    .card-sub {
+        font-size: 0.85rem;
+        color: #64748b;
+        margin-bottom: 20px;
+    }
+    
+    /* CUSTOM PILL TABS - Override Streamlit */
     .stTabs [data-baseweb="tab-list"] {
         background: #f1f5f9 !important;
         border-radius: 12px !important;
         padding: 4px !important;
+        gap: 0 !important;
+        border: none !important;
     }
     
     .stTabs [data-baseweb="tab"] {
+        background: transparent !important;
         border-radius: 10px !important;
+        padding: 10px 24px !important;
+        font-weight: 500 !important;
+        font-size: 0.9rem !important;
         color: #64748b !important;
+        border: none !important;
+    }
+    
+    .stTabs [data-baseweb="tab"]:hover {
+        color: #3b82f6 !important;
     }
     
     .stTabs [aria-selected="true"] {
         background: white !important;
+        color: #0f172a !important;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08) !important;
+    }
+    
+    .stTabs [data-baseweb="tab-highlight"], 
+    .stTabs [data-baseweb="tab-border"] {
+        display: none !important;
+    }
+    
+    /* INPUT FIELDS */
+    .stTextInput > div > div > input {
+        background: #f8fafc !important;
+        border: 1.5px solid #e2e8f0 !important;
+        border-radius: 10px !important;
+        padding: 12px 14px !important;
+        font-size: 0.95rem !important;
         color: #1e293b !important;
     }
     
-    /* Expander */
-    .stExpander {
-        background: transparent !important;
+    .stTextInput > div > div > input:focus {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 3px rgba(59,130,246,0.12) !important;
+    }
+    
+    .stTextInput > div > div > input::placeholder {
+        color: #94a3b8 !important;
+    }
+    
+    .stTextInput label { display: none !important; }
+    
+    /* BUTTONS */
+    .stButton > button, .stFormSubmitButton > button {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%) !important;
+        color: white !important;
         border: none !important;
+        border-radius: 10px !important;
+        padding: 12px 20px !important;
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        width: 100% !important;
+        transition: all 0.2s ease !important;
     }
     
-    /* Container card styling */
-    div[data-testid="stVerticalBlock"] > div[data-testid="element-container"]:has(.login-card-wrapper) {
-        background: white;
-        border-radius: 20px;
-        padding: 32px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    .stButton > button:hover, .stFormSubmitButton > button:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 16px rgba(59,130,246,0.25) !important;
     }
     
-    /* Floating animation */
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
+    /* EXPANDER */
+    .stExpander {
+        border: none !important;
+        background: transparent !important;
     }
     
-    .float-emoji {
-        display: inline-block;
-        animation: float 3s ease-in-out infinite;
+    .stExpander summary {
+        color: #3b82f6 !important;
+        font-weight: 500 !important;
     }
     
-    .float-emoji:nth-child(2) { animation-delay: 0.5s; }
-    .float-emoji:nth-child(3) { animation-delay: 1s; }
+    .trust-text {
+        text-align: center;
+        font-size: 0.8rem;
+        color: #64748b;
+        margin-top: 16px;
+    }
+    
+    .trust-text .check {
+        color: #10b981;
+    }
+    
+    /* MOBILE */
+    @media (max-width: 768px) {
+        .main-wrapper {
+            flex-direction: column;
+            padding: 16px;
+            gap: 24px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        .hero-title { font-size: 2rem; }
+        .login-card { padding: 24px; }
+        .float-icons { display: none; }
+    }
     </style>
     """, unsafe_allow_html=True)
     
-    # Main Layout
-    col_hero, col_spacer, col_login = st.columns([1.2, 0.1, 1])
+    # Layout
+    col1, col2 = st.columns([1.2, 1], gap="medium")
     
-    # --- LEFT: HERO SECTION ---
-    with col_hero:
-        st.write("")
-        st.write("")
-        
-        # Logo
-        st.image("assets/logo.png", width=60)
-        
-        st.write("")
-        
-        # Headline
+    with col1:
+        # Hero Section - All HTML for proper control
         st.markdown("""
-        <h1 style="font-size: 3rem; font-weight: 800; color: #0f172a; line-height: 1.1; margin-bottom: 16px;">
-            Learn Python.<br>
-            <span style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                Actually.
-            </span>
-        </h1>
-        """, unsafe_allow_html=True)
-        
-        # Subtitle
-        st.markdown("""
-        <p style="font-size: 1.1rem; color: #475569; line-height: 1.6; max-width: 400px; margin-bottom: 24px;">
-            Daily bite-sized lessons that actually stick.<br>
-            Build real skills in just 15 minutes a day.
-        </p>
-        """, unsafe_allow_html=True)
-        
-        # Feature badges
-        st.markdown("""
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
-            <span style="background: white; padding: 8px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; color: #334155; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-                📚 Daily Lessons
-            </span>
-            <span style="background: white; padding: 8px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; color: #334155; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-                🎯 Active Recall
-            </span>
-            <span style="background: white; padding: 8px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; color: #334155; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-                ⚡ AI Feedback
-            </span>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Floating emojis
-        st.markdown("""
-        <div style="font-size: 2.5rem; margin-top: 20px;">
-            <span class="float-emoji">🐍</span>
-            <span class="float-emoji" style="margin-left: 20px;">💻</span>
-            <span class="float-emoji" style="margin-left: 20px;">🚀</span>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # --- RIGHT: LOGIN CARD ---
-    with col_login:
-        st.write("")
-        
-        # Card container
-        with st.container(border=True):
-            st.markdown("""
-            <h2 style="font-size: 1.4rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">
-                Get Started
-            </h2>
-            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 20px;">
-                Start your Python journey today
+        <div class="hero-section">
+            <div class="logo-row">
+                <div class="logo-icon">🐍</div>
+                <div class="logo-name">PyDaily</div>
+            </div>
+            
+            <h1 class="hero-title">
+                Learn Python.<br>
+                <span class="gradient">Actually.</span>
+            </h1>
+            
+            <p class="hero-subtitle">
+                Daily bite-sized lessons that actually stick.<br>
+                Build real skills in just 15 min/day.
             </p>
-            """, unsafe_allow_html=True)
             
-            tab1, tab2 = st.tabs(["Sign In", "Sign Up"])
-            db = SupabaseManager()
+            <div class="badges">
+                <span class="badge">📚 Daily Lessons</span>
+                <span class="badge">🎯 Active Recall</span>
+                <span class="badge">⚡ AI Feedback</span>
+            </div>
             
-            # --- SIGN IN TAB ---
-            with tab1:
-                with st.form("login_form"):
-                    email = st.text_input("Email", placeholder="you@example.com")
-                    password = st.text_input("Password", type="password", placeholder="Your password")
-                    st.write("")
-                    submit = st.form_submit_button("Sign In →", use_container_width=True)
-                
-                if submit:
-                    if email and password:
-                        with st.spinner("Signing in..."):
-                            session = db.sign_in(email, password)
-                            if session:
-                                st.session_state["role"] = db.get_user_role(session.session.access_token)
-                                st.session_state["auth_token"] = session.session.access_token
-                                st.session_state["user_email"] = email
-                                
-                                try:
-                                    import requests
-                                    from utils import network
-                                    ip = network.get_remote_ip()
-                                    geo_info = {"ip": ip, "city": "Unknown", "country": "Unknown"}
-                                    if ip:
-                                        resp = requests.get(f"http://ip-api.com/json/{ip}?fields=status,city,country", timeout=2)
-                                        if resp.status_code == 200:
-                                            data = resp.json()
-                                            if data.get("status") == "success":
-                                                geo_info["city"] = data.get("city")
-                                                geo_info["country"] = data.get("country")
-                                    ua = network.get_user_agent()
-                                    db.log_activity(email, "LOGIN", {"role": st.session_state["role"], "geo": geo_info}, user_agent=ua)
-                                except:
-                                    db.log_activity(email, "LOGIN", {"role": st.session_state["role"]})
-                                
-                                st.rerun()
-                            else:
-                                st.error("Invalid email or password")
-                    else:
-                        st.warning("Please fill in all fields")
-                
-                # Forgot Password
-                st.write("")
-                with st.expander("🔑 Forgot password?"):
-                    reset_email = st.text_input("Your email", key="reset_email", placeholder="you@example.com")
-                    if st.button("Send Reset Link", key="reset_btn", use_container_width=True):
-                        if reset_email and "@" in reset_email:
-                            success, msg = db.reset_password(reset_email)
-                            if success:
-                                st.success("✅ Check your email!")
-                            else:
-                                st.error(msg)
+            <div class="float-icons">
+                <span>🐍</span>
+                <span>💻</span>
+                <span>🎯</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        # Login Card
+        st.markdown("""
+        <div class="login-card">
+            <div class="card-header">Get Started</div>
+            <div class="card-sub">Start your Python journey today</div>
+        """, unsafe_allow_html=True)
+        
+        tab1, tab2 = st.tabs(["Sign In", "Sign Up"])
+        db = SupabaseManager()
+        
+        with tab1:
+            email = st.text_input("Email", placeholder="you@example.com", key="login_email", label_visibility="collapsed")
+            password = st.text_input("Password", type="password", placeholder="Password", key="login_pass", label_visibility="collapsed")
+            
+            if st.button("Sign In →", key="login_btn", use_container_width=True):
+                if email and password:
+                    with st.spinner(""):
+                        session = db.sign_in(email, password)
+                        if session:
+                            st.session_state["role"] = db.get_user_role(session.session.access_token)
+                            st.session_state["auth_token"] = session.session.access_token
+                            st.session_state["user_email"] = email
+                            try:
+                                import requests
+                                from utils import network
+                                ip = network.get_remote_ip()
+                                geo = {"ip": ip, "city": "Unknown", "country": "Unknown"}
+                                if ip:
+                                    r = requests.get(f"http://ip-api.com/json/{ip}?fields=status,city,country", timeout=2)
+                                    if r.ok and r.json().get("status") == "success":
+                                        geo.update(r.json())
+                                db.log_activity(email, "LOGIN", {"role": st.session_state["role"], "geo": geo}, user_agent=network.get_user_agent())
+                            except:
+                                db.log_activity(email, "LOGIN", {"role": st.session_state["role"]})
+                            st.rerun()
                         else:
-                            st.warning("Enter a valid email")
+                            st.error("Invalid credentials")
+                else:
+                    st.warning("Fill in all fields")
             
-            # --- SIGN UP TAB ---
-            with tab2:
-                with st.form("signup_form"):
-                    new_name = st.text_input("Name", placeholder="Your name")
-                    new_email = st.text_input("Email", placeholder="you@example.com", key="signup_email")
-                    new_password = st.text_input("Password", type="password", placeholder="Min 6 characters", key="signup_pass")
-                    st.write("")
-                    submit_new = st.form_submit_button("Start Learning Free →", use_container_width=True)
-                
-                if submit_new:
-                    if not new_name or not new_email or not new_password:
-                        st.warning("Please fill in all fields")
-                    elif len(new_password) < 6:
-                        st.warning("Password must be at least 6 characters")
+            with st.expander("🔑 Forgot password?"):
+                reset_email = st.text_input("", placeholder="Your email", key="reset_email", label_visibility="collapsed")
+                if st.button("Send Reset Link", key="reset_btn"):
+                    if reset_email and "@" in reset_email:
+                        ok, msg = db.reset_password(reset_email)
+                        st.success("✅ Check your email!") if ok else st.error(msg)
                     else:
-                        with st.spinner("Creating account..."):
-                            res = db.sign_up(new_email, new_password, new_name)
-                            if res:
-                                st.success("🎉 Check your email to confirm!")
-                            else:
-                                st.error("Sign up failed. Try a different email.")
+                        st.warning("Enter valid email")
+        
+        with tab2:
+            new_name = st.text_input("", placeholder="Your name", key="name", label_visibility="collapsed")
+            new_email = st.text_input("", placeholder="Email", key="new_email", label_visibility="collapsed")
+            new_pass = st.text_input("", placeholder="Password (min 6 chars)", type="password", key="new_pass", label_visibility="collapsed")
             
-            st.markdown("""
-            <p style="text-align: center; color: #64748b; font-size: 0.8rem; margin-top: 16px;">
-                <span style="color: #10b981;">✓</span> Free forever · No credit card required
-            </p>
-            """, unsafe_allow_html=True)
+            if st.button("Start Learning Free →", key="signup_btn", use_container_width=True):
+                if new_name and new_email and new_pass:
+                    if len(new_pass) < 6:
+                        st.warning("Password too short")
+                    else:
+                        res = db.sign_up(new_email, new_pass, new_name)
+                        st.success("🎉 Check email to confirm!") if res else st.error("Signup failed")
+                else:
+                    st.warning("Fill in all fields")
+        
+        st.markdown('<p class="trust-text"><span class="check">✓</span> Free forever · No credit card</p>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
