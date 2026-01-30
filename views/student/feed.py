@@ -2,101 +2,223 @@ import streamlit as st
 import random
 import re
 from backend.lesson_manager import LessonManager
-from backend import curriculum
+from backend.db_supabase import SupabaseManager
+import streamlit.components.v1 as components
 
-def extract_snippets(day, html_content):
-    """Extracts engaging nuggets from lesson HTML using Regex."""
+def extract_snippets(day, content):
+    """(Same logic) Extracts engaging nuggets from lesson HTML."""
     snippets = []
-    
-    # 1. Extract Code Blocks (The meat!)
-    code_blocks = re.findall(r'<pre.*?><code.*?>(.*?)</code></pre>', html_content, re.DOTALL)
-    for i, code in enumerate(code_blocks):
-        clean_code = code.strip()
-        if len(clean_code) > 20: # Ignore tiny snippets
-            snippets.append({
-                "type": "code",
-                "day": day,
-                "content": clean_code,
-                "title": f"Snippet from Day {day}"
-            })
-
-    # 2. Extract "Daily Challenge" Sections
-    challenge_match = re.search(r'<h3.*?>.*?Daily Challenge.*?</h3>(.*?)<hr', html_content, re.DOTALL)
-    if challenge_match:
-        challenge_text = re.sub(r'<[^>]+>', '', challenge_match.group(1)).strip() # Strip HTML tags
-        challenge_text = re.sub(r'\s+', ' ', challenge_text) # Normalize whitespace
-        if len(challenge_text) > 50:
-            snippets.append({
-                "type": "challenge",
-                "day": day,
-                "content": challenge_text,
-                "title": f"🔥 Challenge: Day {day}"
-            })
-            
-    # 3. Extract Headers (Tips/Concepts)
-    headers = re.findall(r'<h3.*?>(.*?)</h3>', html_content)
+    # 1. Code
+    code_blocks = re.findall(r'<pre.*?><code.*?>(.*?)</code></pre>', content, re.DOTALL)
+    for code in code_blocks:
+        clean = code.strip()
+        if len(clean) > 20:
+            snippets.append({"type": "code", "day": day, "content": clean, "title": f"Snippet Day {day}"})
+    # 2. Challenge
+    match = re.search(r'<h3.*?>.*?Challenge.*?</h3>(.*?)<hr', content, re.DOTALL)
+    if match:
+        txt = re.sub(r'<[^>]+>', '', match.group(1)).strip() # unescape needed?
+        if len(txt) > 50:
+            snippets.append({"type": "challenge", "day": day, "content": txt, "title": f"Challenge Day {day}"})
+    # 3. Headers
+    headers = re.findall(r'<h3.*?>(.*?)</h3>', content)
     for h in headers:
-        if "Challenge" not in h and "Examples" not in h:
-            snippets.append({
-                "type": "concept",
-                "day": day,
-                "content": re.sub(r'<[^>]+>', '', h).strip(),
-                "title": f"💡 Concept: Day {day}"
-            })
-            
+        clean_h = re.sub(r'<[^>]+>', '', h).strip()
+        if "Challenge" not in clean_h and len(clean_h) > 10:
+             snippets.append({"type": "concept", "day": day, "content": clean_h, "title": f"Concept Day {day}"})
     return snippets
 
-from backend.db_supabase import SupabaseManager
-
-# ... (extract_snippets function remains the same) ...
-
-def get_random_feed_items(current_day, count=5):
-    """Fetches random snippets from UNLOCKED lessons via Supabase."""
+def get_random_feed_items(current_day, count=10):
     db = SupabaseManager()
     items = []
-    
-    # Restrict to unlocked days (1 to current_day)
-    # Ensure we have at least Day 1
     max_day = max(1, current_day)
-    available_days = list(range(1, max_day + 1))
-    
+    days = list(range(1, max_day + 1))
     attempts = 0
-    while len(items) < count and attempts < 20:
-        day = random.choice(available_days)
-        
-        # FETCH FROM SUPABASE DIRECTLY
+    while len(items) < count and attempts < 30:
+        day = random.choice(days)
         content = db.get_daily_content(day)
         attempts += 1
-        
         if content:
-            day_snippets = extract_snippets(day, content)
-            if day_snippets:
-                items.append(random.choice(day_snippets))
-                
+            snips = extract_snippets(day, content)
+            if snips:
+                items.append(random.choice(snips))
     return items
 
-# ... (render_feed_card function remains the same) ...
+def generate_feed_html(items):
+    """Generates the Reel-style HTML with Scroll Snap."""
+    
+    cards_html = ""
+    for item in items:
+        # Determine Icon & Color
+        if item['type'] == 'code':
+            icon = "💻"
+            badge_color = "#3b82f6"
+            # Escape HTML for code block
+            safe_content = item['content'].replace("<", "&lt;").replace(">", "&gt;")
+            body = f'<pre><code class="language-python">{safe_content}</code></pre>'
+        elif item['type'] == 'challenge':
+            icon = "🔥"
+            badge_color = "#ef4444"
+            body = f'<div class="text-card">{item["content"]}</div>'
+        else:
+            icon = "💡"
+            badge_color = "#a855f7"
+            body = f'<div class="text-card concept">{item["content"]}</div>'
+            
+        cards_html += f"""
+        <div class="reel-item">
+            <div class="card-content">
+                <div class="badge" style="background: {badge_color}20; color: {badge_color}; border: 1px solid {badge_color};">
+                    {icon} <span>Day {item['day']}</span>
+                </div>
+                <h3 style="color: {badge_color}">{item['title']}</h3>
+                {body}
+            </div>
+            <div class="actions">
+                <div class="action-btn">❤️</div>
+                <div class="action-btn">🔖</div>
+                <div class="action-btn">↗️</div>
+            </div>
+        </div>
+        """
+
+    return f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Highlight.js for Code Styling -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
+            
+            * {{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }}
+            
+            body {{
+                margin: 0;
+                padding: 0;
+                background: #0f172a; /* Dark Background */
+                color: white;
+                font-family: 'Outfit', sans-serif;
+                height: 100vh;
+                overflow: hidden;
+            }}
+            
+            .feed-container {{
+                height: 100vh;
+                overflow-y: scroll;
+                scroll-snap-type: y mandatory;
+                scroll-behavior: smooth;
+            }}
+            
+            /* Hide Scrollbar */
+            .feed-container::-webkit-scrollbar {{ display: none; }}
+            .feed-container {{ -ms-overflow-style: none; scrollbar-width: none; }}
+            
+            .reel-item {{
+                height: 100vh;
+                width: 100%;
+                scroll-snap-align: start;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 20px;
+                border-bottom: 1px solid #1e293b;
+                position: relative;
+            }}
+            
+            .card-content {{
+                background: #1e293b;
+                border-radius: 20px;
+                padding: 24px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                border: 1px solid #334155;
+            }}
+            
+            .badge {{
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                margin-bottom: 12px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }}
+            
+            h3 {{ margin: 0 0 15px 0; font-size: 1.2rem; }}
+            
+            /* Text Logic */
+            .text-card {{ font-size: 1.1rem; line-height: 1.6; color: #e2e8f0; }}
+            .concept {{ font-weight: 600; font-size: 1.3rem; text-align: center; color: white; }}
+            
+            /* Code Logic */
+            pre {{ margin: 0; border-radius: 12px; overflow: hidden; }}
+            code {{ font-family: monospace; font-size: 0.9rem; }}
+            
+            /* Actions (Floating Right) */
+            .actions {{
+                position: absolute;
+                right: 20px;
+                bottom: 120px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }}
+            
+            .action-btn {{
+                width: 50px;
+                height: 50px;
+                background: rgba(30, 41, 59, 0.8);
+                backdrop-filter: blur(5px);
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.5rem;
+                border: 1px solid #334155;
+                cursor: pointer;
+                transition: transform 0.2s;
+            }}
+            
+            .action-btn:active {{ transform: scale(0.9); }}
+            
+        </style>
+    </head>
+    <body>
+        <div class="feed-container">
+            {cards_html}
+            
+            <!-- End Logic -->
+            <div class="reel-item" style="align-items: center; text-align: center;">
+                 <h2 style="color: #94a3b8;">Caught up! 🚀</h2>
+                 <p style="color: #64748b;">Complete more lessons to unlock more nuggets.</p>
+            </div>
+        </div>
+        
+        <script>hljs.highlightAll();</script>
+    </body>
+    </html>
+    """
 
 def run(current_day):
-    st.subheader("⚡ Infinite Knowledge Feed")
-    st.caption(f"Doom scroll your unlocked knowledge (Days 1-{current_day}).")
+    # Setup
+    st.markdown("### ⚡ Knowledge Reels")
+    st.info("💡 Swipe up for next nugget!") # Hint for Desktop users
     
-    # Initialize Feed
-    if "feed_items" not in st.session_state:
-        st.session_state.feed_items = get_random_feed_items(current_day, 5)
+    if "feed_cache" not in st.session_state:
+        st.session_state.feed_cache = get_random_feed_items(current_day, 12) # Load batch of 12
         
-    # Render Items
-    if not st.session_state.feed_items:
-        st.info("No snippets found yet! Complete more lessons to populate your feed.")
-        if st.button("Refresh Feed", key="refresh_feed_empty"):
-             st.session_state.feed_items = get_random_feed_items(current_day, 5)
-             st.rerun()
-    else:
-        for item in st.session_state.feed_items:
-            render_feed_card(item)
-        
-    # Load More Button
-    if st.button("Load More Nuggets ⏬", use_container_width=True):
-        new_items = get_random_feed_items(current_day, 3)
-        st.session_state.feed_items.extend(new_items)
+    # Render Full Iframe
+    html_code = generate_feed_html(st.session_state.feed_cache)
+    components.html(html_code, height=800, scrolling=False) # Scrolling handled inside HTML
+    
+    # Reload Button (Outside Iframe)
+    if st.button("🔄 Shuffle Feed", use_container_width=True):
+        st.session_state.feed_cache = get_random_feed_items(current_day, 12)
         st.rerun()
