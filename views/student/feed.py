@@ -45,7 +45,8 @@ def get_random_feed_items(current_day, count=10):
                     "day": n['lesson_day'],
                     "type": n['type'],
                     "title": n['title'],
-                    "content": n['content']
+                    "content": n['content'],
+                    "source": "DB" # Explicit Source
                 })
     except:
         pass # Fallback safely
@@ -62,9 +63,10 @@ def get_random_feed_items(current_day, count=10):
             content = db.get_daily_content(day)
             attempts += 1
             if content:
-                snips = extract_snippets(day, content)
                 if snips:
-                    items.append(random.choice(snips))
+                    chosen = random.choice(snips)
+                    chosen['source'] = 'Scraper' # Explicit Source
+                    items.append(chosen)
                     
     return items[:count]
 
@@ -93,7 +95,7 @@ def generate_feed_html(items):
         <div class="reel-item">
             <div class="card-content">
                 <div class="badge" style="background: {badge_color}20; color: {badge_color}; border: 1px solid {badge_color};">
-                    {icon} <span>Day {item['day']}</span>
+                    {icon} <span>Day {item['day']}</span> • <span style="opacity:0.6; font-size:0.7em;">{item.get('source', 'DB')}</span>
                 </div>
                 <h3 style="color: {badge_color}">{item['title']}</h3>
                 {body}
