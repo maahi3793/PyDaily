@@ -76,7 +76,7 @@ def run():
         gap: 0.4rem;
         background: white;
         padding: 0.5rem 0.8rem;
-        border-radius: 50px;
+        border-radius: 10px;
         border: 1px solid #E2E8F0;
         box-shadow: 0 2px 4px rgba(0,0,0,0.04);
         font-weight: 500;
@@ -166,7 +166,7 @@ def run():
         st.write("")
         # REMOVED: Beta Badge
         
-        st.markdown('<h1 class="hero-title">1% Better<br>Every Day.</h1>', unsafe_allow_html=True)
+        st.markdown('<h1 class="hero-title">1% Better Every Day.</h1>', unsafe_allow_html=True)
         st.markdown('<h2 class="hero-subtitle">The consistent path to mastery. Build the daily habit of coding without the burnout.</h2>', unsafe_allow_html=True)
         
         # COMPACT FEATURES (Revised Copy)
