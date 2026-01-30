@@ -33,9 +33,13 @@ PyDailyEmail/
 │       └── components/  # Reusable UI widgets
 │
 ├── tools/               # Admin utility scripts (run manually)
-│   ├── generate_nuggets_v2.py  # Populate feed content
-│   ├── factory_reset.py        # DANGER: Reset all students
-│   └── promote_admin.py        # Make a user admin
+│   ├── generate_nuggets_v2.py  # Populate feed content (imported by run_bot)
+│   ├── feed_templates.py       # HTML templates for feed cards
+│   ├── admin/           # User management (promote_admin, fix_admin_account)
+│   ├── content/         # Content generation (regenerate_boss_days, cleanup_boss)
+│   ├── migrations/      # DB/Data operations (factory_reset, nuke_database)
+│   ├── debug/           # Debugging scripts (debug_users, verify_reset)
+│   └── sql/             # SQL migration files
 │
 └── assets/              # SQL migrations, static files
     ├── setup_feed.sql   # Feed table schema
