@@ -8,6 +8,7 @@ CREATE TABLE feed_nuggets (
     
     lesson_day INTEGER NOT NULL,
     topic TEXT NOT NULL,  -- e.g. "Variables", "Conditionals"
+    title TEXT NOT NULL,  -- Punchy headline
     
     -- Type: 'tip', 'mnemonic', 'snippet', 'image'
     type TEXT NOT NULL,
