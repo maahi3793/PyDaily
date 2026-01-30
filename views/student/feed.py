@@ -63,6 +63,7 @@ def get_random_feed_items(current_day, count=10):
             content = db.get_daily_content(day)
             attempts += 1
             if content:
+                snips = extract_snippets(day, content)
                 if snips:
                     chosen = random.choice(snips)
                     chosen['source'] = 'Scraper' # Explicit Source
