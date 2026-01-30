@@ -1,5 +1,5 @@
--- Feed Nuggets Table for AI-Refined Content
--- Drop table if exists to allow clean reset during dev
+-- Feed Nuggets V2 (Topic-Centric)
+-- Dropping old table to rebuild schema
 DROP TABLE IF EXISTS feed_nuggets;
 
 CREATE TABLE feed_nuggets (
@@ -7,33 +7,30 @@ CREATE TABLE feed_nuggets (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
     
     lesson_day INTEGER NOT NULL,
+    topic TEXT NOT NULL,  -- e.g. "Variables", "Conditionals"
     
-    -- Content Type: 'code', 'fact', 'trap', 'analogy'
+    -- Type: 'tip', 'mnemonic', 'snippet', 'image'
     type TEXT NOT NULL,
     
-    -- Punchy title for the card (e.g. "Traps of Day 1")
-    title TEXT NOT NULL,
+    -- The main text content. 
+    -- If type='image', this might be the caption or alt text.
+    content TEXT,
     
-    -- The main content (HTML or Code Snippet)
-    content TEXT NOT NULL,
+    -- URL for the image (if type='image')
+    media_url TEXT,
     
-    -- Viral Score (1-10) for sorting/priority
-    virality_score INTEGER DEFAULT 5,
-    
-    -- Metadata (e.g. source model used)
-    meta JSONB DEFAULT '{}'::jsonb
+    -- Sorting/Priority
+    virality_score INTEGER DEFAULT 5
 );
 
--- Index for fast lookup by day
-CREATE INDEX idx_feed_nuggets_day ON feed_nuggets(lesson_day);
+-- Optimize for "Give me all nuggets for Day X"
+CREATE INDEX idx_feed_nuggets_day_topic ON feed_nuggets(lesson_day, topic);
 
--- Enable RLS
+-- RLS Policies (Standard)
 ALTER TABLE feed_nuggets ENABLE ROW LEVEL SECURITY;
 
--- Allow Read Access to All Authenticated Users
 CREATE POLICY "Enable read access for all users" ON feed_nuggets
     FOR SELECT USING (auth.role() = 'authenticated');
 
--- Allow Insert/Update only to Service Role (Admin)
 CREATE POLICY "Enable write access for service role only" ON feed_nuggets
     FOR ALL USING (auth.role() = 'service_role');
