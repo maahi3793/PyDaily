@@ -111,5 +111,35 @@ def run_v2(start=1, end=5):
                 
     print("✨ V2 Generation Complete.")
 
+def ensure_nuggets_for_day(day):
+    """
+    Called by run_bot.py to ensure nuggets exist for a specific day.
+    Safe to call repeatedly (Idempotent).
+    """
+    db = SupabaseManager()
+    
+    # 1. Check if ANY nugget exists for this day
+    try:
+        res = db.supabase.table("feed_nuggets").select("id").eq("lesson_day", day).limit(1).execute()
+        if res.data and len(res.data) > 0:
+            return # Already exists
+    except Exception as e:
+        print(f"⚠️ [Feed Auto] Existence check failed: {e}")
+        return
+
+    # 2. Generate if missing
+    topic = TOPICS.get(day, f"Day {day} Topic")
+    
+    # Skip Quizzes or Reviews if desired (optional)
+    if "Quiz" in topic: return 
+    
+    print(f"⚡ [Feed Auto] Generating Missing Nuggets for Day {day}...")
+    try:
+        nuggets = mock_ai_generate_v2(day, topic)
+        for n in nuggets:
+            save_nugget_v2(db, day, n)
+    except Exception as e:
+        print(f"❌ [Feed Auto] Generation Failed: {e}")
+
 if __name__ == "__main__":
     run_v2(1, 10)

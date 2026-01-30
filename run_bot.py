@@ -14,6 +14,7 @@ import time
 try:
     from collections import defaultdict
     from backend import data_manager, gemini_service, email_service, lesson_manager
+    from tools.generate_nuggets_v2 import ensure_nuggets_for_day
 except ImportError as e:
     print(f"!!! CRITICAL IMPORT ERROR !!!: {e}")
     print("Files in current dir:", os.listdir('.'))
@@ -143,6 +144,12 @@ def run_morning_cycle(gemini, mailer, cache):
                  continue
 
             cache.save_lesson(day, content)
+            
+            # 1.5 Auto-Generate Feed Nuggets for this Day if missing
+            try:
+                ensure_nuggets_for_day(day)
+            except Exception as e:
+                logging.warning(f"Failed to auto-generate feed for Day {day}: {e}")
         
         # 2. Send
         subject = f"🎯 PyDaily Challenge: Day {day}" if is_quiz_day else f"🐍 PyDaily: Day {day}"
