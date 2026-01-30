@@ -166,18 +166,18 @@ def run():
         st.write("")
         # REMOVED: Beta Badge
         
-        st.markdown('<h1 class="hero-title">Master Python in<br>15 Minutes a Day</h1>', unsafe_allow_html=True)
-        st.markdown('<h2 class="hero-subtitle">The AI-powered automated challenge. Stop starting "courses" you never finish.<br><b>No burnout. Just consistency.</b></h2>', unsafe_allow_html=True)
+        st.markdown('<h1 class="hero-title">1% Better<br>Every Day.</h1>', unsafe_allow_html=True)
+        st.markdown('<h2 class="hero-subtitle">The consistent path to mastery. Build the daily habit of coding without the burnout.</h2>', unsafe_allow_html=True)
         
         # COMPACT FEATURES (Revised Copy)
         st.markdown("""
         <div class="feature-grid">
-            <div class="feature-item">📚 Daily Micro-Lessons</div>
-            <div class="feature-item">💡 Instant AI Feedback</div>
+            <div class="feature-item">🧩 Bite-sized Lessons</div>
+            <div class="feature-item">🔥 Streak & Consistency</div>
         </div>
         <div class="feature-grid">
-            <div class="feature-item">🎯 Active Recall Quizzes</div>
-            <div class="feature-item">🚀 Career-Track Curriculum</div>
+            <div class="feature-item">🧠 Smart Review</div>
+            <div class="feature-item">🚀 Career Growth</div>
         </div>
         """, unsafe_allow_html=True)
         
