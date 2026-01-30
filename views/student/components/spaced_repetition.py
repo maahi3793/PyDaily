@@ -127,15 +127,15 @@ def render_spaced_repetition(current_day: int):
                 """, unsafe_allow_html=True)
             
             with col_action:
-                if st.button("📖 Review", key=f"review_{item['day']}", use_container_width=True):
-                    # Set the day in session state and switch to Knowledge Vault
+                # Use a link button to provide direct action
+                if st.button(f"📖 Review", key=f"review_{item['day']}", use_container_width=True):
                     st.session_state["jump_to_lesson"] = item['day']
-                    st.session_state["active_main_tab"] = 0  # Knowledge Vault tab index
-                    st.rerun()
+                    st.toast(f"✅ Go to **📚 Knowledge Vault** tab - Day {item['day']} is selected!")
+    
+    # Quick tip
+    st.divider()
+    st.info("💡 **Tip**: After clicking Review, switch to the **📚 Knowledge Vault** tab to see the lesson!")
     
     # Learning tip (dynamic from pool)
-    st.divider()
-    
-    # Use day as seed for consistent tip per session
     tip_index = current_day % len(LEARNING_TIPS)
     st.markdown(f"> {LEARNING_TIPS[tip_index]}")

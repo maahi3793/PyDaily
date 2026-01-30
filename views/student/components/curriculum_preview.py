@@ -66,17 +66,18 @@ def render_curriculum_preview(current_day: int = 1):
     """
     phases = get_phase_data()
     
+    # Inject CSS once
     st.markdown("""
     <style>
     .roadmap-container {
         padding: 20px 0;
     }
     .phase-card {
-        background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255,255,255,0.05) 100%);
+        background: linear-gradient(135deg, var(--card-bg) 0%, rgba(30,41,59,0.9) 100%);
         border-radius: 16px;
         padding: 24px;
         margin-bottom: 16px;
-        border: 1px solid var(--border-color);
+        border: 2px solid var(--border-color);
         position: relative;
         overflow: hidden;
         transition: all 0.3s ease;
@@ -86,19 +87,12 @@ def render_curriculum_preview(current_day: int = 1):
         border-color: var(--accent-color);
     }
     .phase-card.locked {
-        opacity: 0.7;
-        border-color: #475569;
-    }
-    .phase-card.locked .phase-name {
-        color: #94a3b8;
-    }
-    .phase-card.locked .topic-tag {
-        background: rgba(71, 85, 105, 0.5);
-        color: #94a3b8;
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+        border-color: #64748b !important;
     }
     .phase-card.current {
-        border: 2px solid #3B82F6;
-        box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        border: 3px solid #3B82F6;
+        box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
     }
     .phase-header {
         display: flex;
@@ -114,6 +108,9 @@ def render_curriculum_preview(current_day: int = 1):
         font-weight: 700;
         color: #f8fafc;
     }
+    .phase-card.locked .phase-name {
+        color: #94a3b8;
+    }
     .phase-days {
         font-size: 0.85rem;
         color: #94a3b8;
@@ -126,11 +123,17 @@ def render_curriculum_preview(current_day: int = 1):
         margin-top: 12px;
     }
     .topic-tag {
-        background: rgba(255,255,255,0.1);
-        padding: 4px 12px;
+        background: rgba(255,255,255,0.15);
+        padding: 6px 14px;
         border-radius: 20px;
-        font-size: 0.75rem;
-        color: #cbd5e1;
+        font-size: 0.8rem;
+        color: #e2e8f0;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    .phase-card.locked .topic-tag {
+        background: #334155;
+        color: #94a3b8;
+        border-color: #475569;
     }
     .phase-status {
         position: absolute;
@@ -141,7 +144,7 @@ def render_curriculum_preview(current_day: int = 1):
     .connector {
         width: 4px;
         height: 30px;
-        background: linear-gradient(to bottom, #334155, #1e293b);
+        background: linear-gradient(to bottom, #475569, #334155);
         margin-left: 40px;
     }
     </style>
@@ -159,33 +162,38 @@ def render_curriculum_preview(current_day: int = 1):
         end_day = int(day_range[1])
         
         if current_day > end_day:
-            status = "completed"
             status_icon = "✅"
             card_class = ""
         elif current_day >= start_day:
-            status = "current"
             status_icon = "📍"
             card_class = "current"
         else:
-            status = "locked"
             status_icon = "🔒"
             card_class = "locked"
         
-        # Render phase card
-        st.markdown(f"""
-        <div class="phase-card {card_class}" style="--card-bg: {phase['color']}20; --border-color: {phase['color']}40; --accent-color: {phase['color']};">
+        # Build topic tags HTML separately to avoid f-string issues
+        topics_html = ""
+        for t in phase['topics'][:6]:
+            topics_html += f'<span class="topic-tag">{t}</span>'
+        
+        if len(phase['topics']) > 6:
+            extra = len(phase['topics']) - 6
+            topics_html += f'<span class="topic-tag">+{extra} more</span>'
+        
+        # Build card HTML
+        card_html = f'''
+        <div class="phase-card {card_class}" style="--card-bg: {phase['color']}30; --border-color: {phase['color']}60; --accent-color: {phase['color']};">
             <div class="phase-status">{status_icon}</div>
             <div class="phase-header">
                 <span class="phase-icon">{phase['icon']}</span>
                 <span class="phase-name">{phase['name']}</span>
                 <span class="phase-days">Days {phase['days']}</span>
             </div>
-            <div class="phase-topics">
-                {"".join([f'<span class="topic-tag">{t}</span>' for t in phase['topics'][:6]])}
-                {f'<span class="topic-tag">+{len(phase["topics"])-6} more</span>' if len(phase['topics']) > 6 else ''}
-            </div>
+            <div class="phase-topics">{topics_html}</div>
         </div>
-        """, unsafe_allow_html=True)
+        '''
+        
+        st.markdown(card_html, unsafe_allow_html=True)
         
         # Connector line (except after last)
         if i < len(phases) - 1:
