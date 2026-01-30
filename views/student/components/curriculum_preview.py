@@ -147,6 +147,30 @@ def render_curriculum_preview(current_day: int = 1):
         background: linear-gradient(to bottom, #475569, #334155);
         margin-left: 40px;
     }
+    
+    /* Mobile responsive */
+    @media (max-width: 480px) {
+        .phase-card {
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .phase-icon { font-size: 1.5rem; }
+        .phase-name { font-size: 1rem; }
+        .phase-days { font-size: 0.75rem; }
+        .topic-tag { 
+            padding: 4px 10px; 
+            font-size: 0.7rem; 
+        }
+        .phase-status { 
+            top: 12px; 
+            right: 12px; 
+            font-size: 1.2rem; 
+        }
+        .connector {
+            height: 20px;
+            margin-left: 25px;
+        }
+    }
     </style>
     """, unsafe_allow_html=True)
     

@@ -212,3 +212,76 @@ div[data-testid="stDataFrame"] {
 }
 
 
+/* ============================================= */
+/* MOBILE RESPONSIVE STYLES                     */
+/* ============================================= */
+
+/* Tablets and smaller */
+@media (max-width: 768px) {
+    /* Reduce padding on main container */
+    .block-container {
+        padding: 1rem 0.75rem !important;
+    }
+    
+    /* Make metrics stack better */
+    div[data-testid="metric-container"] {
+        padding: 0.5rem !important;
+    }
+    
+    /* Smaller headings on mobile */
+    h1 { font-size: 1.5rem !important; }
+    h2 { font-size: 1.25rem !important; }
+    h3 { font-size: 1.1rem !important; }
+    
+    /* Make buttons more tappable */
+    .stButton > button {
+        min-height: 44px !important;
+        padding: 0.75rem 1rem !important;
+    }
+    
+    /* Expand tab targets */
+    button[data-baseweb="tab"] {
+        padding: 0.75rem 0.5rem !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* Cards: single column on mobile */
+    .element-container .row-widget {
+        flex-direction: column !important;
+    }
+}
+
+/* Phones only */
+@media (max-width: 480px) {
+    /* Even tighter padding */
+    .block-container {
+        padding: 0.5rem !important;
+    }
+    
+    /* Sidebar: wider on mobile when open */
+    section[data-testid="stSidebar"] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Reduce expander padding */
+    div[data-testid="stExpander"] details {
+        padding: 0.5rem !important;
+    }
+    
+    /* Make select boxes larger touch targets */
+    .stSelectbox > div > div {
+        min-height: 44px !important;
+    }
+    
+    /* Progress bar thicker */
+    .stProgress > div > div {
+        height: 12px !important;
+        border-radius: 6px !important;
+    }
+    
+    /* Download buttons full width */
+    .stDownloadButton > button {
+        width: 100% !important;
+    }
+}
