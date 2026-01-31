@@ -40,14 +40,21 @@ def group_contacts_by_day(contact_list):
 
 def run_motivation_cycle(gemini, mailer, cache):
     """
-    UPDATED: Now sends Weekly Digest on Sundays instead of generic motivation.
-    Personalized per student with their progress, quiz status, and upcoming topics.
+    Weekly Digest - Sends every SUNDAY.
+    Personalized per student with progress, quiz status, and upcoming topics.
     No AI API calls - all data from DB and curriculum.
     """
     import datetime
     from backend import curriculum, data_manager
     
-    logging.info("📅 Starting Weekly Digest Cycle (Sundays)...")
+    today = datetime.date.today()
+    
+    # ========== FIX #1: Only run on Sundays ==========
+    if today.weekday() != 6:  # 6 = Sunday
+        logging.info(f"📅 Skipping Weekly Digest (Today is {today.strftime('%A')}, not Sunday)")
+        return
+    
+    logging.info("📅 Starting Weekly Digest Cycle (Sunday)...")
     
     # 1. Get all active students
     contacts = data_manager.get_contacts()
@@ -59,30 +66,47 @@ def run_motivation_cycle(gemini, mailer, cache):
         logging.info("No active students for Weekly Digest.")
         return
     
-    # 2. Get quiz attempts data for checking completion
+    # ========== FIX #2: Quiz lookup by email (more reliable) ==========
+    # Build a map of student email -> set of quiz days they've taken
+    attempts_by_email = {}
     try:
+        # Get all students first to build id->email map
+        all_profiles = data_manager.db.supabase.table("profiles").select("id, email").execute()
+        id_to_email = {p['id']: p['email'] for p in (all_profiles.data or [])}
+        
+        # Now get quiz attempts
         all_attempts = data_manager.db.supabase.table("quiz_attempts").select("student_id, day").execute()
-        attempts_by_student = {}
         for att in (all_attempts.data or []):
             sid = att.get('student_id')
-            if sid not in attempts_by_student:
-                attempts_by_student[sid] = set()
-            attempts_by_student[sid].add(att.get('day'))
-    except:
-        attempts_by_student = {}
+            email = id_to_email.get(sid)
+            if email:
+                if email not in attempts_by_email:
+                    attempts_by_email[email] = set()
+                attempts_by_email[email].add(att.get('day'))
+    except Exception as e:
+        logging.warning(f"Failed to load quiz attempts: {e}")
+        attempts_by_email = {}
     
-    # 3. Build email for each student
-    today = datetime.date.today()
     week_start = today - datetime.timedelta(days=7)
     
     for student in active_students:
         current_day = student.get('day', 1)
-        student_id = student.get('id')
-        student_quizzes = attempts_by_student.get(student_id, set())
+        student_email = student.get('email', '')
+        student_quizzes = attempts_by_email.get(student_email, set())
         
         # Calculate week range (last 7 days of lessons)
         week_start_day = max(1, current_day - 7)
         week_end_day = current_day - 1  # Up to yesterday
+        
+        # ========== FIX #4: Count total quizzes generated vs attempted ==========
+        total_quizzes_generated = 0
+        total_quizzes_attempted = 0
+        for d in range(1, current_day):  # All days up to now
+            topic = curriculum.TOPICS.get(d, "")
+            if "Quiz" in topic:
+                total_quizzes_generated += 1
+                if d in student_quizzes:
+                    total_quizzes_attempted += 1
         
         # Build "This Week" section
         this_week_html = ""
@@ -93,115 +117,121 @@ def run_motivation_cycle(gemini, mailer, cache):
             
             if is_quiz:
                 if quiz_taken:
-                    # Green - Quiz taken
                     this_week_html += f'''
-                    <tr><td style="padding:10px 0; border-bottom:1px solid #eee; background:#f0fdf4;">
+                    <tr><td style="padding:12px 10px; border-bottom:1px solid #eee; background:#f0fdf4;">
                         <span style="color:#22c55e; font-weight:bold;">✓</span>
-                        <span style="color:#333; margin-left:8px;">Day {d}:</span>
+                        <span style="color:#333; margin-left:6px;">Day {d}:</span>
                         <span style="color:#22c55e; font-weight:600;">{topic}</span>
-                        <span style="color:#22c55e; font-size:12px; margin-left:8px;">— Great job!</span>
+                        <br><span style="color:#22c55e; font-size:12px; margin-left:18px;">Great job!</span>
                     </td></tr>'''
                 else:
-                    # Red - Quiz pending
                     this_week_html += f'''
-                    <tr><td style="padding:10px 0; border-bottom:1px solid #eee; background:#fef2f2;">
+                    <tr><td style="padding:12px 10px; border-bottom:1px solid #eee; background:#fef2f2;">
                         <span style="color:#ef4444; font-weight:bold;">○</span>
-                        <span style="color:#333; margin-left:8px;">Day {d}:</span>
+                        <span style="color:#333; margin-left:6px;">Day {d}:</span>
                         <span style="color:#ef4444; font-weight:600;">{topic}</span>
-                        <span style="color:#ef4444; font-size:12px; margin-left:8px;">— Give it a try!</span>
+                        <br><span style="color:#ef4444; font-size:12px; margin-left:18px;">Give it a try!</span>
                     </td></tr>'''
             else:
-                # Regular lesson - green check
                 this_week_html += f'''
-                <tr><td style="padding:10px 0; border-bottom:1px solid #eee;">
+                <tr><td style="padding:12px 10px; border-bottom:1px solid #eee;">
                     <span style="color:#22c55e; font-weight:bold;">✓</span>
-                    <span style="color:#333; margin-left:8px;">Day {d}:</span>
+                    <span style="color:#333; margin-left:6px;">Day {d}:</span>
                     <span style="color:#555;">{topic}</span>
                 </td></tr>'''
         
-        # Build "Next Week" section
+        # Build "Coming Up" section
         next_week_html = ""
-        for d in range(current_day, min(current_day + 5, 300)):  # Next 5 days
+        for d in range(current_day, min(current_day + 5, 300)):
             topic = curriculum.TOPICS.get(d, f"Day {d}")
             next_week_html += f'''
-            <tr><td style="padding:10px 0; border-bottom:1px solid #eee;">
+            <tr><td style="padding:12px 10px; border-bottom:1px solid #eee;">
                 <span style="color:#4F46E5;">→</span>
-                <span style="color:#333; margin-left:8px;">Day {d}:</span>
+                <span style="color:#333; margin-left:6px;">Day {d}:</span>
                 <span style="color:#555;">{topic}</span>
             </td></tr>'''
         
         # Stats
         days_completed = current_day - 1
         streak = student.get('streak', 0)
-        quizzes_taken = len(student_quizzes)
         
-        # Full email HTML
+        # ========== FIX #3: Mobile-friendly HTML (stacked stats) ==========
         email_body = f'''
-        <div style="max-width:600px; margin:0 auto; font-family:sans-serif; background:white; border:1px solid #e0e0e0; border-radius:10px; overflow:hidden;">
-            <div style="background:#4F46E5; padding:25px; text-align:center;">
-                <h1 style="margin:0; color:white; font-size:24px;">PyDaily Weekly Digest</h1>
-                <p style="margin:8px 0 0; color:rgba(255,255,255,0.8); font-size:14px;">{week_start.strftime('%b %d')} - {today.strftime('%b %d, %Y')}</p>
+        <div style="max-width:600px; margin:0 auto; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#ffffff;">
+            
+            <!-- Header -->
+            <div style="background:#4F46E5; padding:24px 20px; text-align:center;">
+                <h1 style="margin:0; color:white; font-size:22px; font-weight:600;">PyDaily Weekly Digest</h1>
+                <p style="margin:6px 0 0; color:rgba(255,255,255,0.8); font-size:13px;">{week_start.strftime('%b %d')} - {today.strftime('%b %d, %Y')}</p>
             </div>
             
-            <div style="padding:25px 30px 15px;">
-                <p style="margin:0; font-size:16px; color:#333;">Hey <strong>{{{{NAME}}}}</strong>,</p>
-                <p style="margin:10px 0 0; font-size:15px; color:#555; line-height:1.6;">
-                    Here's your weekly progress recap. You're doing great — keep the momentum going!
+            <!-- Greeting -->
+            <div style="padding:20px;">
+                <p style="margin:0; font-size:15px; color:#333;">Hey <strong>{{{{NAME}}}}</strong>,</p>
+                <p style="margin:8px 0 0; font-size:14px; color:#555; line-height:1.5;">
+                    Here's your weekly progress recap. Keep the momentum going!
                 </p>
             </div>
             
-            <div style="padding:15px 30px;">
-                <h2 style="margin:0 0 15px; font-size:18px; color:#4F46E5; border-bottom:2px solid #4F46E5; padding-bottom:8px;">This Week</h2>
-                <table width="100%" cellpadding="0" cellspacing="0">{this_week_html}</table>
+            <!-- Stats Grid (Mobile Friendly - 2x2) -->
+            <div style="padding:0 20px 20px;">
+                <table width="100%" cellpadding="0" cellspacing="8" style="background:#f8fafc; border-radius:8px;">
+                    <tr>
+                        <td width="50%" style="background:#fff; border-radius:8px; padding:16px; text-align:center; border:1px solid #e2e8f0;">
+                            <div style="font-size:28px; font-weight:700; color:#4F46E5;">{days_completed}</div>
+                            <div style="font-size:11px; color:#64748b; margin-top:4px;">Days Completed</div>
+                        </td>
+                        <td width="50%" style="background:#fff; border-radius:8px; padding:16px; text-align:center; border:1px solid #e2e8f0;">
+                            <div style="font-size:28px; font-weight:700; color:#22c55e;">{streak}</div>
+                            <div style="font-size:11px; color:#64748b; margin-top:4px;">Day Streak</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="background:#fff; border-radius:8px; padding:16px; text-align:center; border:1px solid #e2e8f0;">
+                            <div style="font-size:28px; font-weight:700; color:#f97316;">{total_quizzes_attempted} <span style="font-size:16px; color:#94a3b8;">of</span> {total_quizzes_generated}</div>
+                            <div style="font-size:11px; color:#64748b; margin-top:4px;">Quizzes Attempted</div>
+                        </td>
+                    </tr>
+                </table>
             </div>
             
-            <div style="padding:15px 30px;">
-                <div style="background:#f3f4f6; border-radius:8px; padding:20px; text-align:center;">
-                    <table width="100%" cellpadding="0" cellspacing="0"><tr>
-                        <td style="text-align:center; padding:10px;">
-                            <div style="font-size:28px; font-weight:bold; color:#4F46E5;">{days_completed}</div>
-                            <div style="font-size:12px; color:#666; margin-top:4px;">Days Completed</div>
-                        </td>
-                        <td style="text-align:center; padding:10px; border-left:1px solid #ddd;">
-                            <div style="font-size:28px; font-weight:bold; color:#22c55e;">{streak}</div>
-                            <div style="font-size:12px; color:#666; margin-top:4px;">Day Streak</div>
-                        </td>
-                        <td style="text-align:center; padding:10px; border-left:1px solid #ddd;">
-                            <div style="font-size:28px; font-weight:bold; color:#f97316;">{quizzes_taken}</div>
-                            <div style="font-size:12px; color:#666; margin-top:4px;">Quizzes Taken</div>
-                        </td>
-                    </tr></table>
-                </div>
+            <!-- This Week Section -->
+            <div style="padding:0 20px 20px;">
+                <h2 style="margin:0 0 12px; font-size:16px; color:#4F46E5; border-bottom:2px solid #4F46E5; padding-bottom:6px;">This Week</h2>
+                <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">{this_week_html}</table>
             </div>
             
-            <div style="padding:15px 30px;">
-                <h2 style="margin:0 0 15px; font-size:18px; color:#4F46E5; border-bottom:2px solid #4F46E5; padding-bottom:8px;">Coming Up</h2>
-                <table width="100%" cellpadding="0" cellspacing="0">{next_week_html}</table>
+            <!-- Coming Up Section -->
+            <div style="padding:0 20px 20px;">
+                <h2 style="margin:0 0 12px; font-size:16px; color:#4F46E5; border-bottom:2px solid #4F46E5; padding-bottom:6px;">Coming Up</h2>
+                <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">{next_week_html}</table>
             </div>
             
-            <div style="padding:15px 30px;">
-                <div style="background:#fffbeb; border:1px solid #fcd34d; border-radius:8px; padding:20px;">
-                    <h3 style="margin:0 0 12px; font-size:16px; color:#b45309;">Pro Tips</h3>
-                    <ul style="margin:0; padding-left:20px; color:#78350f; font-size:14px; line-height:1.8;">
-                        <li>Check out <strong>Practice Programs</strong> in the dashboard to apply what you've learned.</li>
-                        <li>Feeling confident? Try <strong>Boss Battles</strong> for extra challenges!</li>
-                        <li>Each lesson has a <strong>Deep Dive Link</strong> at the bottom for further reading.</li>
+            <!-- Pro Tips -->
+            <div style="padding:0 20px 20px;">
+                <div style="background:#fffbeb; border:1px solid #fcd34d; border-radius:8px; padding:16px;">
+                    <h3 style="margin:0 0 10px; font-size:14px; color:#b45309;">Pro Tips</h3>
+                    <ul style="margin:0; padding-left:18px; color:#78350f; font-size:13px; line-height:1.7;">
+                        <li>Try <strong>Practice Programs</strong> in the dashboard.</li>
+                        <li>Feeling confident? Try <strong>Boss Battles</strong>!</li>
+                        <li>Check the <strong>Deep Dive Link</strong> at the end of each lesson.</li>
                     </ul>
                 </div>
             </div>
             
-            <div style="padding:20px 30px; text-align:center;">
-                <a href="https://pydaily.streamlit.app" style="background-color:#4F46E5; color:white; padding:15px 40px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;">View Your Dashboard</a>
+            <!-- CTA Button -->
+            <div style="padding:0 20px 24px; text-align:center;">
+                <a href="https://pydaily.streamlit.app" style="background:#4F46E5; color:white; padding:14px 32px; text-decoration:none; border-radius:6px; font-weight:600; font-size:14px; display:inline-block;">View Dashboard</a>
             </div>
+            
         </div>
         '''
         
-        # Send to this individual student
-        success, msg = mailer.send_email([student], "📅 PyDaily: Your Weekly Progress", email_body)
+        success, msg = mailer.send_email([student], "📅 Your Weekly Progress", email_body)
         if success:
-            logging.info(f"✅ Weekly Digest sent to {student.get('email')}")
+            logging.info(f"✅ Weekly Digest sent to {student_email}")
         else:
-            logging.error(f"❌ Failed to send digest to {student.get('email')}: {msg}")
+            logging.error(f"❌ Failed: {student_email}: {msg}")
 
 def run_morning_cycle(gemini, mailer, cache):
     logging.info("🌞 Starting Morning Cycle (Lessons)...")
