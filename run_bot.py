@@ -40,21 +40,56 @@ def group_contacts_by_day(contact_list):
 
 def run_motivation_cycle(gemini, mailer, cache):
     """
-    Weekly Digest - Sends every SUNDAY.
-    Personalized per student with progress, quiz status, and upcoming topics.
-    No AI API calls - all data from DB and curriculum.
+    Day-based routing:
+    - Saturday (weekday 5) → Send Weekly Digest
+    - Sunday-Friday → Send Motivational Quote
     """
     import datetime
     from backend import curriculum, data_manager
     
     today = datetime.date.today()
     
-    # ========== FIX #1: Only run on Sundays ==========
-    if today.weekday() != 6:  # 6 = Sunday
-        logging.info(f"📅 Skipping Weekly Digest (Today is {today.strftime('%A')}, not Sunday)")
-        return
+    # ========== DAY-BASED ROUTING ==========
+    if today.weekday() == 5:  # 5 = Saturday
+        logging.info("📅 Today is Saturday → Sending Weekly Digest...")
+        _send_weekly_digest(mailer, data_manager, curriculum, today)
+    else:
+        logging.info(f"⚡ Today is {today.strftime('%A')} → Sending Motivational Quote...")
+        _send_motivation_quote(gemini, mailer, cache, data_manager, today)
+
+
+def _send_motivation_quote(gemini, mailer, cache, data_manager, today):
+    """Send AI-generated motivational quote to all active students."""
+    today_str = today.isoformat()
     
-    logging.info("📅 Starting Weekly Digest Cycle (Sunday)...")
+    # Get or generate motivation
+    content = cache.get_motivation(today_str)
+    if not content:
+        logging.info("Cache Miss: Generating Motivation...")
+        content = gemini.generate_motivation()
+        cache.save_motivation(today_str, content)
+    
+    # Target: Active students subscribed to morning emails
+    contacts = data_manager.get_contacts()
+    active_students = [c for c in contacts 
+                       if c.get('status') in ['pending', 'lesson_sent'] 
+                       and c.get('sub_morning', True) is True]
+    
+    if not active_students:
+        logging.info("No active students for Motivation.")
+        return
+
+    logging.info(f"Sending motivation to {len(active_students)} students...")
+    success, msg = mailer.send_email(active_students, "⚡ PyDaily: Mid-Day Boost", content)
+    
+    if success:
+        logging.info("✅ Motivation sent successfully.")
+    else:
+        logging.error(f"❌ Failed to send motivation: {msg}")
+
+
+def _send_weekly_digest(mailer, data_manager, curriculum, today):
+    """Send personalized Weekly Digest to all active students (Saturdays only)."""
     
     # 1. Get all active students
     contacts = data_manager.get_contacts()
