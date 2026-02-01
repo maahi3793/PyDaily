@@ -615,11 +615,13 @@ class SupabaseManager:
             # Ideally: .order('random()') if RPC exists, but let's stick to safe standard queries.
             
             # Strategy: Fetch latest added (or high virality)
+            # Strategy: Fetch LATEST or RANDOM (by not ordering rigidly)
+            # We fetch a larger pool (e.g. 100) and shuffle in Python to ensure variety.
+            # virality_score is good, but if static, it gets boring.
             response = self.supabase.table("feed_nuggets") \
                 .select("*") \
                 .lte("lesson_day", max_day) \
-                .order("virality_score", desc=True) \
-                .limit(limit * 3) \
+                .limit(limit * 5) \
                 .execute()
                 
             data = response.data

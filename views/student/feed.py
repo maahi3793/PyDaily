@@ -19,13 +19,27 @@ def get_random_feed_items(current_day, count=10):
         # The 'content' field now contains full HTML.
         hq_nuggets = db.get_feed_nuggets(max_day, limit=count)
         print(f"DEBUG: Found {len(hq_nuggets) if hq_nuggets else 0} nuggets.")
+        
+        seen_content = set()
+        
         if hq_nuggets:
             for n in hq_nuggets:
+                html_content = n.get('content')
+                
+                # Deduplicate: Skip if we've seen this exact HTML before
+                if html_content in seen_content:
+                    continue
+                seen_content.add(html_content)
+                
                 items.append({
                     "day": n.get('lesson_day'),
-                    "html": n.get('content'), # The Rich HTML
+                    "html": html_content, 
                     "type": n.get('type')
                 })
+                
+                # Stop if we have enough
+                if len(items) >= count:
+                    break
     except Exception as e:
         print(f"Feed Error: {e}")
         st.error(f"DB Error: {e}")
