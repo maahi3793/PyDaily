@@ -115,33 +115,11 @@ def generate_feed_html(items):
                 position: relative;
             }}
             
-            /* Actions (Floating Right) */
-            .actions {{
-                position: absolute;
-                right: 20px;
-                bottom: 15vh;
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-                z-index: 10;
-            }}
-            
-            .action-btn {{
-                width: 50px;
-                height: 50px;
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                border-radius: 50%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 1.5rem;
-                border: 1px solid rgba(255,255,255,0.2);
-                cursor: pointer;
-                transition: transform 0.2s;
-            }}
-            
-            .action-btn:active {{ transform: scale(0.9); }}
+            /* Actions Removed */
+            /*
+            .actions {{ ... }}
+            .action-btn {{ ... }}
+            */
             
         </style>
     </head>
@@ -165,15 +143,20 @@ def generate_feed_html(items):
 def run(current_day):
     # Setup
     st.markdown("### ⚡ Knowledge Reels")
-    st.info("💡 Swipe up for next nugget!") # Hint for Desktop users
     
+    # MOBILE FIX: Exit Button
+    if st.button("⬅️ Back to Dashboard"):
+        st.session_state.page = "dashboard"
+        st.rerun()
+
     if "feed_cache" not in st.session_state:
         st.session_state.feed_cache = get_random_feed_items(current_day, 12)
     
     # Render Full Iframe
     if st.session_state.feed_cache:
         html_code = generate_feed_html(st.session_state.feed_cache)
-        components.html(html_code, height=800, scrolling=False)
+        # Reduced Height for Mobile Safety (600px allows seeing the Back button)
+        components.html(html_code, height=600, scrolling=False)
     else:
         st.info("You're all caught up! 🚀 Check back tomorrow for more knowledge.")
         
