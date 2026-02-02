@@ -83,17 +83,17 @@ jobs:
               minute = now.minute
               print(f"🔹 Schedule Trigger Detected. UTC Time: {hour:02d}:{minute:02d}")
               
-              # Robust Time Windows (Allowing for ~90min GitHub Delay)
+              # Robust Time Windows (Fixing Overlap Bug)
               # Morning (Sched 02:30): Accept 02:00 - 04:59
               if 2 <= hour <= 4:
                   mode = "morning"
                   
-              # Insights (Sched 05:30): Accept 05:00 - 06:14
-              elif hour == 5 or (hour == 6 and minute < 15):
+              # Insights (Sched 05:30): Accept 05:00 - 06:10 (Strict Cutoff)
+              elif hour == 5 or (hour == 6 and minute < 10):
                   mode = "insights"
                   
-              # Motivation (Sched 06:30): Accept 06:15 - 08:00
-              elif (hour == 6 and minute >= 15) or hour == 7:
+              # Motivation (Sched 06:30): Accept 06:25 - 08:00 (Buffer Zone)
+              elif (hour == 6 and minute >= 25) or hour == 7:
                   mode = "motivation"
                   
               # Evening (Sched 14:30): Accept 14:00 - 16:59
