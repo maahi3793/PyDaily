@@ -8,56 +8,51 @@ from backend.db_supabase import SupabaseManager
 class LessonManager:
     def __init__(self, lessons_dir="lessons"):
         self.lessons_dir = lessons_dir
-        self.topics_file = os.path.join(lessons_dir, "topics.json")
-        self.db = SupabaseManager() # Hybrid Cache
+        # [REMOVED] topics.json dependency
+        self.db = SupabaseManager() 
         
-        if not os.path.exists(lessons_dir):
-            os.makedirs(lessons_dir)
-            
-        # Ensure topics file exists
-        if not os.path.exists(self.topics_file):
-            with open(self.topics_file, "w") as f:
-                json.dump({}, f)
-
-    def _get_path(self, day, type="lesson"):
-        filename = f"day_{day}_{type}.html"
-        return os.path.join(self.lessons_dir, filename)
+    def validate_content(self, content):
+        """
+        Gatekeeper: Prevents saving 'Quota Exceeded' or broken content.
+        Returns (bool, message)
+        """
+        if not content: return False, "Empty Content"
+        if len(content) < 200: return False, "Content too short (<200 chars)"
+        
+        # Check for Common API Errors
+        error_keywords = ["Quota exceeded", "429 Too Many Requests", "generate_content_free_tier_requests"]
+        for k in error_keywords:
+            if k in content:
+                return False, f"API Error Detected: {k}"
+                
+        return True, "Valid"
 
     def get_lesson(self, day):
-        """Returns cached lesson content (DB first, then File)."""
-        # 1. Try DB (Persistent)
+        """Returns cached lesson content (DB Only)."""
+        # DB Only
         content = self.db.get_daily_content(day)
         if content:
             logging.info(f"Cache Hit (DB): Loaded Day {day}.")
             return content
-            
-        # 2. Try File (Local/Fallback)
-        path = self._get_path(day, "lesson")
-        if os.path.exists(path):
-            logging.info(f"Cache Hit (File): Loading Day {day}.")
-            with open(path, "r", encoding="utf-8") as f:
-                return f.read()
         return None
 
     def save_lesson(self, day, content, topic_override=None):
-        """Saves generated lesson to DB AND File."""
-        # 1. Extract Topic (or use override)
+        """Saves generated lesson to DB ONLY (If Valid)."""
+        # 1. Validation Logic
+        is_valid, msg = self.validate_content(content)
+        if not is_valid:
+            logging.error(f"⛔ Content Validation Failed for Day {day}: {msg}")
+            raise ValueError(f"Content Validation Failed: {msg}")
+
+        # 2. Extract Topic
         if topic_override:
             topic = topic_override
         else:
             topic = self._extract_topic(content)
         
-        # 2. Save to DB (Primary)
+        # 3. Save to DB
         self.db.save_daily_content(day, content, topic)
-        
-        # 3. Save HTML File (Backup)
-        path = self._get_path(day, "lesson")
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(content)
-        logging.info(f"Cache Saved: Day {day} Lesson.")
-        
-        # 4. Update Local Topics JSON (Legacy Support)
-        self._update_local_topics(day, topic)
+        logging.info(f"✅ DB Saved: Day {day} Lesson.")
 
     def _extract_topic(self, content):
         match = re.search(r"<!--\s*TOPIC:\s*(.*?)\s*-->", content, re.IGNORECASE)
@@ -65,82 +60,40 @@ class LessonManager:
              return match.group(1).strip()
         return "General Python"
 
-    def _update_local_topics(self, day, topic):
-        """Updates topics.json"""
-        try:
-            with open(self.topics_file, "r") as f:
-                data = json.load(f)
-        except:
-            data = {}
-            
-        data[str(day)] = topic
-        
-        with open(self.topics_file, "w") as f:
-            json.dump(data, f, indent=2)
-
-    def get_topics_history(self, up_to_day):
-        """Returns list of topics up to specific day."""
-        try:
-            with open(self.topics_file, "r") as f:
-                data = json.load(f)
-            
-            topics = []
-            for d, t in data.items():
-                if int(d) <= int(up_to_day):
-                    topics.append(f"Day {d}: {t}")
-            return "; ".join(topics)
-        except Exception as e:
-            logging.error(f"Error reading history: {e}")
-            return "Basic Python Concepts"
+    # [REMOVED] get_topics_history (Moved logic to run_bot using Curriculum)
 
     def get_reminder(self, day):
-        # 1. Try DB
+        # DB Only
         content = self.db.get_daily_reminder(day)
-        if content: return content
-        
-        # 2. Try File
-        path = self._get_path(day, "reminder")
-        if os.path.exists(path):
-            logging.info(f"Cache Hit: Loading Day {day} Reminder from file.")
-            with open(path, "r", encoding="utf-8") as f:
-                return f.read()
-        return None
+        return content
 
     def save_reminder(self, day, content):
-        # 1. Save to DB
+        # 1. Validate
+        is_valid, msg = self.validate_content(content)
+        if not is_valid:
+            logging.error(f"⛔ Reminder Validation Failed for Day {day}: {msg}")
+            raise ValueError(f"Reminder Validation Failed: {msg}")
+
+        # 2. Save to DB
         self.db.save_daily_reminder(day, content)
-        
-        # 2. Save to File
-        path = self._get_path(day, "reminder")
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(content)
-        logging.info(f"Cache Saved: Day {day} Reminder.")
+        logging.info(f"✅ DB Saved: Day {day} Reminder.")
 
     def get_motivation(self, date_str):
-        """Returns cached motivation for a specific date (YYYY-MM-DD)."""
-        # 1. Try DB
+        # DB Only
         content = self.db.get_daily_motivation(date_str)
-        if content: return content
-        
-        # 2. Try File
-        filename = f"motivation_{date_str}.html"
-        path = os.path.join(self.lessons_dir, filename)
-        if os.path.exists(path):
-            logging.info(f"Cache Hit: Loading Motivation for {date_str}.")
-            with open(path, "r", encoding="utf-8") as f:
-                return f.read()
-        return None
+        return content
 
     def save_motivation(self, date_str, content):
-        # 1. Save to DB
+        # 1. Validate
+        is_valid, msg = self.validate_content(content)
+        if not is_valid:
+            logging.error(f"⛔ Motivation Validation Failed: {msg}")
+            # We might be lenient with motivation, but strict is safer
+            raise ValueError(f"Motivation Validation Failed: {msg}")
+
+        # 2. Save to DB
         self.db.save_daily_motivation(date_str, content)
-        
-        # 2. Save to File
-        filename = f"motivation_{date_str}.html"
-        path = os.path.join(self.lessons_dir, filename)
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(content)
-        logging.info(f"Cache Saved: Motivation for {date_str}.")
+        logging.info(f"✅ DB Saved: Motivation for {date_str}.")
 
     def extract_practice_items(self, day):
         """

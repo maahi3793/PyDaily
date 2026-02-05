@@ -115,7 +115,7 @@ Friendly, Mentor-like, use emojis sparingly.
             logging.error(f"Gemini API Error: {str(e)}")
             return f"Error generating content: {str(e)}"
 
-    def generate_quiz(self, day_number, history_context):
+    def generate_quiz(self, day_number, recent_topics, cumulative_topics):
         logging.info(f"Attempting to generate JSON QUIZ for Day {day_number}")
         
         max_retries = 3
@@ -123,21 +123,26 @@ Friendly, Mentor-like, use emojis sparingly.
             try:
                 logging.info(f"Quiz Generation Attempt {attempt + 1}/{max_retries}")
                 
-                # Dynamic Prompt for Retry (vary slightly if needed, but standard is fine)
+                # Dynamic Prompt with Strict Constraints
                 prompt = f"""
-                Generate a BEGINNER-FRIENDLY QUIZ for a Python Student.
+                Generate a BEGINNER-FRIENDLY QUIZ for a Python Student (Day {day_number}).
                 
-                CONTEXT:
-                The student has completed Days 1-{day_number - 1}.
-                Topics Covered So Far: {history_context}
+                STRICT TOPIC SOURCE (DO NOT HALLUCINATE):
+                1. RECENT TOPICS (80% of Questions - Focus Here):
+                   {recent_topics}
+                   
+                2. CUMULATIVE TOPICS (20% of Questions - Review):
+                   {cumulative_topics}
                 
                 QUIZ REQUIREMENTS:
-                - **Difficulty**: Beginner to Intermediate (Focus on core understanding, not tricks).
+                - **Difficulty**: Beginner to Intermediate.
                 - **Format**: JSON (Strict Check).
                 - **Questions**: EXACTLY 20 Total.
+                - **Distribution**: 
+                    - ~16 Questions about "{recent_topics}".
+                    - ~4 Questions about "{cumulative_topics}".
                 - **Type**: 100% Multiple Choice (No open-ended).
                 - **Content**: Mix of Theory (12) and Simple Code Output Prediction (8).
-                - **Scope**: Cumulative. Include questions from ALL past topics, but weight the most recent 3 days heavily (60%).
                 
                 JSON SCHEMA:
                 {{

@@ -296,40 +296,48 @@ def run_morning_cycle(gemini, mailer, cache):
             try:
                 if is_quiz_day:
                     logging.info(f"🎯 Quiz Day detected: Generating Quiz for Day {day}...")
-                    history = cache.get_topics_history(day)
-                    content = gemini.generate_quiz(day, history)
+                    
+                    # [FIX] Strict Curriculum Context (80/20 Rule)
+                    # Recent: The 2 days leading up to the quiz (e.g. for Day 9: Day 7, 8)
+                    recent_days = [day-2, day-1]
+                    recent_topics = [f"Day {d}: {curriculum.TOPICS.get(str(d), 'Topic')}" for d in recent_days if d > 0]
+                    
+                    # Cumulative: All days before recent (e.g. for Day 9: Day 1..6)
+                    # We pick a random sample if list is huge? For now, list all up to day-3.
+                    all_prior_days = range(1, day-2)
+                    cumulative_topics = [f"Day {d}: {curriculum.TOPICS.get(str(d), 'Topic')}" for d in all_prior_days if d > 0 and "Quiz" not in curriculum.TOPICS.get(str(d), "")]
+                    
+                    content = gemini.generate_quiz(day, recent_topics, cumulative_topics)
                 else:
                     logging.info(f"Cache Miss: Generating Day {day} Lesson...")
-                    history = cache.get_topics_history(day - 1)
+                    
+                    # [FIX] Use Curriculum for Lesson Context too (Optional, but safer)
+                    history_str = "; ".join([f"Day {d}: {curriculum.TOPICS.get(str(d), '')}" for d in range(1, day)])
                     
                     # Fetch Topic & Phase
                     if day <= 179:
-                        topic = curriculum.TOPICS.get(day, f"Day {day} Concept")
+                        # Ensure we always stringify keys as TOPICS might have int keys or string keys
+                        # curriculum.py seems to use Integers for keys based on previous view
+                        topic = curriculum.TOPICS.get(int(day), f"Day {day} Concept")
                     else:
-                        # --- INFINITE MODE (Day 180+) ---
-                        # 1. Check if we already predicted this day's topic (persistence)
+                        # ... (Infinite Mode Logic remains similar, or we can stricter it later)
                         topic = cache.get_topic_for_day(day)
-                        
                         if not topic:
                             logging.info(f"🔮 Infinite Mode: Predicting Next Topic for Day {day}...")
-                            # 2. Gather context: Last 5 days
                             past_topics = []
                             for d in range(day - 5, day):
-                                # Try getting from DB first (for recent dynamic days), else Curriculum
                                 t = cache.get_topic_for_day(d)
                                 if not t and d <= 179:
                                     t = curriculum.TOPICS.get(d, "Python Basics")
                                 if t:
                                     past_topics.append(t)
-                            
-                            # 3. AI Prediction
                             topic = gemini.predict_next_topic(past_topics)
                             logging.info(f"✨ AI Decided Next Topic: {topic}")
 
                     phase, phase_goal = curriculum.get_phase_info(int(day))
                     
                     # Correct Call Signature: day, topic, phase, goal, history
-                    content = gemini.generate_lesson(day, topic, phase, phase_goal, history_context=history)
+                    content = gemini.generate_lesson(day, topic, phase, phase_goal, history_context=history_str)
             except Exception as e:
                 logging.error(f"❌ GENERATION FAILED for Day {day}: {e}")
                 logging.warning("Skipping this group to prevent bad data. Will retry next run.")
