@@ -11,9 +11,11 @@ st.set_page_config(
 )
 
 # 2. Cookie Manager (for persistent sessions)
-@st.cache_resource
+# Note: CookieManager uses Streamlit widgets internally, so we store it in session_state instead of caching
 def get_cookie_manager():
-    return stx.CookieManager()
+    if "cookie_manager" not in st.session_state:
+        st.session_state["cookie_manager"] = stx.CookieManager()
+    return st.session_state["cookie_manager"]
 
 cookie_manager = get_cookie_manager()
 
