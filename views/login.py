@@ -210,6 +210,13 @@ def run():
                             st.session_state["auth_token"] = session.session.access_token
                             st.session_state["user_email"] = email
                             
+                            # === SAVE TO COOKIES FOR PERSISTENT LOGIN ===
+                            try:
+                                from streamlit_app import save_auth_cookies
+                                save_auth_cookies(session.session.access_token, email)
+                            except Exception as cookie_err:
+                                print(f"⚠️ Cookie save failed: {cookie_err}")
+                            
                             # --- ANALYTICS: LOG LOGIN + GEO ---
                             try:
                                 import requests
