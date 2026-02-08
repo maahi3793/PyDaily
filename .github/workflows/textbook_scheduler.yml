@@ -71,3 +71,4 @@ jobs:
           cd PythonBook
           echo "🚀 Launching Bot... Day: ${{ steps.scope.outputs.day }}, Part: ${{ steps.scope.outputs.part }}"
           python run_textbook_bot.py --day ${{ steps.scope.outputs.day }} --part ${{ steps.scope.outputs.part }}
+          # Force Workflow Refresh v2
