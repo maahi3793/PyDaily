@@ -2,8 +2,8 @@ name: Boss Battle Scheduler
 
 on:
   schedule:
-    # Runs 1 hour after Daily Email (which is at 02:30 UTC)
-    - cron: '30 3 * * *'
+    # Runs at 09:30 UTC (15:00 IST) -> 3h after Motivation
+    - cron: '30 9 * * *'
   workflow_dispatch:
 
 jobs:

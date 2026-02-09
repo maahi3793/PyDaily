@@ -51,11 +51,14 @@ def run_motivation_cycle(gemini, mailer, cache):
     today = datetime.date.today()
     
     # ========== DAY-BASED ROUTING ==========
-    if today.weekday() == 5:  # 5 = Saturday
-        logging.info("📅 Today is Saturday → Sending Weekly Digest...")
+    is_saturday = (today.weekday() == 5)
+    logging.info(f"📅 Checking Cycle Date: {today} | Weekday: {today.weekday()} (Saturday={is_saturday})")
+    
+    if is_saturday:  # 5 = Saturday
+        logging.info("✅ TRIGGER: Saturday Detected -> Weekly Digest Mode")
         _send_weekly_digest(mailer, data_manager, curriculum, today)
     else:
-        logging.info(f"⚡ Today is {today.strftime('%A')} → Sending Motivational Quote...")
+        logging.info(f"⚡ TRIGGER: Weekday Detected -> Motivation Quote Mode")
         _send_motivation_quote(gemini, mailer, cache, data_manager, today)
 
 
