@@ -574,7 +574,8 @@ def run_insights_cycle(gemini, mailer, cache):
 
 def main():
     parser = argparse.ArgumentParser(description="PyDaily Automation Bot")
-    parser.add_argument('--mode', choices=['morning', 'evening', 'motivation', 'insights'], required=True, help="Mode to run: morning (Lessons), evening (Reminders), motivation (Boost), or insights (AI Feedback)")
+    parser.add_argument('--mode', choices=['morning', 'evening', 'motivation', 'insights', 'regenerate'], required=True, help="Mode to run")
+    parser.add_argument('--day', help="Specific Day ID (Required for regeneration)")
     args = parser.parse_args()
 
     # Load Config
@@ -619,6 +620,66 @@ def main():
         run_motivation_cycle(gemini, mailer, cache)
     elif args.mode == 'insights':
         run_insights_cycle(gemini, mailer, cache)
+    elif args.mode == 'regenerate':
+        if not args.day:
+            logging.error("❌ You must specify --day for regeneration mode.")
+            sys.exit(1)
+        run_regeneration_cycle(int(args.day), gemini, mailer, cache)
+
+def run_regeneration_cycle(day, gemini, mailer, cache):
+    """
+    Forcefully regenerates content for a specific Day.
+    Updates DB/Cache.
+    Does NOT email students (safety).
+    """
+    logging.info(f"🔄 FORCE REGENERATION: Day {day}...")
+    from backend import curriculum
+
+    # 1. Determine Type (Quiz vs Lesson)
+    is_quiz_day = (day % 3 == 0) and (day > 0)
+    
+    content = None
+    subject = ""
+    
+    try:
+        if is_quiz_day:
+            logging.info(f"🎯 Regenerating Quiz for Day {day}...")
+            # Context Logic (Same as Morning Cycle)
+            recent_days = [day-2, day-1]
+            recent_topics = [f"Day {d}: {curriculum.TOPICS.get(str(d), 'Topic')}" for d in recent_days if d > 0]
+            all_prior_days = range(1, day-2)
+            cumulative_topics = [f"Day {d}: {curriculum.TOPICS.get(str(d), 'Topic')}" for d in all_prior_days if d > 0 and "Quiz" not in curriculum.TOPICS.get(str(d), "")]
+            
+            content = gemini.generate_quiz(day, recent_topics, cumulative_topics)
+            subject = f"🎯 [REGEN] Quiz Day {day}"
+        else:
+            logging.info(f"📘 Regenerating Lesson for Day {day}...")
+            # Context Logic
+            history_str = "; ".join([f"Day {d}: {curriculum.TOPICS.get(str(d), '')}" for d in range(1, day)])
+            topic = curriculum.TOPICS.get(int(day), f"Day {day} Concept") # Try int key first
+            if not topic or "Day" in topic: # Fallback
+                 topic = curriculum.TOPICS.get(str(day), f"Day {day} Concept")
+
+            phase, phase_goal = curriculum.get_phase_info(int(day))
+            
+            content = gemini.generate_lesson(day, topic, phase, phase_goal, history_context=history_str)
+            subject = f"🐍 [REGEN] Lesson Day {day}"
+
+        # 2. Save (Overwrite)
+        if content and "Error" not in content[:20]:
+            cache.save_lesson(day, content)
+            logging.info(f"✅ Content Request Saved to DB for Day {day}.")
+            
+            # 3. Notify Admin (Confirmation)
+            admin_email = mailer.admin_email
+            if admin_email:
+                mailer.send_email([{'email': admin_email}], subject, f"<h3>Regeneration Complete</h3><p>Day {day} has been updated in the database.</p><br><b>Preview:</b><br>{content[:500]}...")
+                logging.info(f"📧 Confirmation sent to Admin: {admin_email}")
+        else:
+            logging.error("❌ Content generation returned empty or error.")
+
+    except Exception as e:
+        logging.error(f"❌ REGENERATION FAILED: {e}")
 
 if __name__ == "__main__":
     main()

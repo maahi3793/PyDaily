@@ -22,6 +22,11 @@ on:
         - Quiz Insights
         - Motivation Boost
         - Evening Reminders
+        - Regenerate Content
+      target_day:
+        description: 'Day Number (Only for Regeneration)'
+        required: false
+        default: '0'
 
 jobs:
   run-bot:
@@ -74,9 +79,15 @@ jobs:
                   "Morning Lessons": "morning",
                   "Quiz Insights": "insights",
                   "Motivation Boost": "motivation",
-                  "Evening Reminders": "evening"
+                  "Evening Reminders": "evening",
+                  "Regenerate Content": "regenerate"
               }
               mode = mapping.get(manual_action, "")
+              
+              # Handle Day Input
+              target_day = "${{ github.event.inputs.target_day }}"
+              if mode == "regenerate" and target_day == "0":
+                   print("⚠️ WARNING: Regenerate selected but Day is 0. Please specify a day.")
               
           elif event_name == "schedule":
               now = datetime.datetime.utcnow()
@@ -112,8 +123,15 @@ jobs:
           # Write to GITHUB_ENV
           with open(os.environ['GITHUB_ENV'], 'a') as f:
               f.write(f"MODE={mode}\n")
+              if mode == "regenerate":
+                 f.write(f"TARGET_DAY={target_day}\n")
 
       # 🚀 EXECUTE BOT
       - name: Run Bot
         if: env.MODE != ''
-        run: python run_bot.py --mode ${{ env.MODE }}
+        run: |
+          if [ "${{ env.MODE }}" == "regenerate" ]; then
+            python run_bot.py --mode ${{ env.MODE }} --day ${{ env.TARGET_DAY }}
+          else
+            python run_bot.py --mode ${{ env.MODE }}
+          fi
