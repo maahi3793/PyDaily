@@ -39,10 +39,10 @@ jobs:
       MODE: '' # Initialize to silence linter
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           
@@ -84,22 +84,22 @@ jobs:
               minute = now.minute
               print(f"🔹 Schedule Trigger Detected. UTC Time: {hour:02d}:{minute:02d}")
               
-              # Robust Time Windows (Fixing Overlap Bug) - 3h Gaps
+              # Robust Time Windows (Widened for Delays)
               
-              # Morning (Sched 02:30): Accept 02:00 - 03:59 (Strict 2h)
-              if 2 <= hour <= 3:
+              # Morning (Sched 02:30): Accept 02:00 - 05:59 (Allow ~3.5h delay)
+              if 2 <= hour <= 5:
                   mode = "morning"
                   
-              # Motivation (Sched 06:30): Accept 06:00 - 07:59 (Strict 2h)
-              elif 6 <= hour <= 7:
+              # Motivation (Sched 06:30): Accept 06:00 - 08:59 (Stop before Boss@09:30)
+              elif 6 <= hour <= 8:
                   mode = "motivation"
                   
-              # Evening (Sched 14:30): Accept 14:00 - 15:59 (Strict 2h)
-              elif 14 <= hour <= 15:
+              # Evening (Sched 14:30): Accept 14:00 - 16:59 (Stop before Insights@17:30)
+              elif 14 <= hour <= 16:
                   mode = "evening"
 
-              # Insights (Sched 17:30): Accept 17:00 - 18:59 (Strict 2h)
-              elif 17 <= hour <= 18:
+              # Insights (Sched 17:30): Accept 17:00 - 20:59 (Huge gap until next morning)
+              elif 17 <= hour <= 20:
                   mode = "insights"
           
           if not mode:
