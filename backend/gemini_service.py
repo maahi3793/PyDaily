@@ -118,6 +118,20 @@ Friendly, Mentor-like, use emojis sparingly.
     def generate_quiz(self, day_number, recent_topics, cumulative_topics):
         logging.info(f"Attempting to generate JSON QUIZ for Day {day_number}")
         
+        # Construct a "Forbidden Topics" hint based on day number to help the model
+        # This is a heuristic: If Day < 15, NO LOOPS/IF. If Day < 30, NO FUNCTIONS.
+        negative_constraints = []
+        if day_number < 14:
+            negative_constraints.append("Control Flow (If/Else)")
+        if day_number < 19:
+            negative_constraints.append("Loops (For/While)")
+        if day_number < 31:
+            negative_constraints.append("Functions (Def)")
+        if day_number < 68:
+            negative_constraints.append("Classes/OOP")
+            
+        negative_constraint_str = ", ".join(negative_constraints)
+
         max_retries = 3
         for attempt in range(max_retries):
             try:
@@ -125,24 +139,27 @@ Friendly, Mentor-like, use emojis sparingly.
                 
                 # Dynamic Prompt with Strict Constraints
                 prompt = f"""
-                Generate a BEGINNER-FRIENDLY QUIZ for a Python Student (Day {day_number}).
+                You are a strict Exam Proctor generating a Python Quiz for a beginner student on Day {day_number}.
                 
-                STRICT TOPIC SOURCE (DO NOT HALLUCINATE):
-                1. RECENT TOPICS (80% of Questions - Focus Here):
-                   {recent_topics}
-                   
-                2. CUMULATIVE TOPICS (20% of Questions - Review):
-                   {cumulative_topics}
+                STRICT TOPIC BOUNDARIES:
+                1. RECENT TOPICS (Primary Focus): {recent_topics}
+                2. REVIEW TOPICS (Secondary): {cumulative_topics}
                 
-                QUIZ REQUIREMENTS:
-                - **Difficulty**: Beginner to Intermediate.
-                - **Format**: JSON (Strict Check).
-                - **Questions**: EXACTLY 20 Total.
-                - **Distribution**: 
-                    - ~16 Questions about "{recent_topics}".
-                    - ~4 Questions about "{cumulative_topics}".
-                - **Type**: 100% Multiple Choice (No open-ended).
-                - **Content**: Mix of Theory (12) and Simple Code Output Prediction (8).
+                CRITICAL NEGATIVE CONSTRAINTS (DO NOT IGNORE):
+                - ABSOLUTELY NO content related to: {negative_constraint_str}.
+                - Do NOT use concepts outside of the provided topic lists.
+                - If the topic is 'Strings', do NOT test Lists.
+                - If the topic is 'Variables', do NOT test If Statements.
+                
+                QUIZ SPECIFICATIONS:
+                - **Total Questions**: EXACTLY 20.
+                - **Format**: JSON.
+                - **Question Types**:
+                    - 12 Questions: Multiple Choice Theory/Concept Checks.
+                    - 8 Questions: "Guess the Output" Code Snippets (Multiple Choice).
+                - **Topic Distribution**:
+                    - 16 Questions must test RECENT TOPICS.
+                    - 4 Questions must test REVIEW TOPICS.
                 
                 JSON SCHEMA:
                 {{
@@ -150,20 +167,20 @@ Friendly, Mentor-like, use emojis sparingly.
                     "questions": [
                         {{
                             "id": 1,
-                            "question": "What is the output of...",
-                            "options": ["A) Error", "B) 10", "C) 20", "D) None"],
-                            "answer": "B) 10", 
-                            "explanation": "Because Python..."
+                            "type": "theory",  # or "code_output"
+                            "question": "What is the result of 'Hello' + 'World'?",
+                            "options": ["A) HelloWorld", "B) Hello World", "C) Error", "D) None"],
+                            "answer": "A) HelloWorld", 
+                            "explanation": "String concatenation joins strings without adding spaces."
                         }}
                     ]
                 }}
                 
                 STRICT RULES:
                 1. Return ONLY the raw JSON string.
-                2. No Markdown formatting (```json).
-                3. Ensure "options" is always a list of 4 distinct strings. DOES NOT ALLOW EMPTY STRINGS.
-                4. "answer" must match one of the "options" exactly.
-                5. double check that NO options are empty (e.g. "A) ").
+                2. No Markdown formatting.
+                3. Ensure "options" is a list of 4 distinct strings. match the "answer" exactly.
+                4. Verify that code snippets in "Guess the Output" questions DO NOT use prohibited syntax (like loops/functions).
                 """
                 
                 response = self.model.generate_content(prompt)
