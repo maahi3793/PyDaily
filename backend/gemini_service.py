@@ -118,38 +118,30 @@ Friendly, Mentor-like, use emojis sparingly.
     def generate_quiz(self, day_number, recent_topics, cumulative_topics):
         logging.info(f"Attempting to generate JSON QUIZ for Day {day_number}")
         
-        # Construct a "Forbidden Topics" hint based on day number to help the model
-        # This is a heuristic: If Day < 15, NO LOOPS/IF. If Day < 30, NO FUNCTIONS.
-        negative_constraints = []
-        if day_number < 14:
-            negative_constraints.append("Control Flow (If/Else)")
-        if day_number < 19:
-            negative_constraints.append("Loops (For/While)")
-        if day_number < 31:
-            negative_constraints.append("Functions (Def)")
-        if day_number < 68:
-            negative_constraints.append("Classes/OOP")
-            
-        negative_constraint_str = ", ".join(negative_constraints)
+        # Combine lists for a Master Scope
+        all_allowed_topics = recent_topics + cumulative_topics
+        scope_str = "\n".join([f"- {t}" for t in all_allowed_topics])
 
         max_retries = 3
         for attempt in range(max_retries):
             try:
                 logging.info(f"Quiz Generation Attempt {attempt + 1}/{max_retries}")
                 
-                # Dynamic Prompt with Strict Constraints
+                # Dynamic Prompt with Strict POSITIVE Constraints
                 prompt = f"""
                 You are a strict Exam Proctor generating a Python Quiz for a beginner student on Day {day_number}.
                 
-                STRICT TOPIC BOUNDARIES:
-                1. RECENT TOPICS (Primary Focus): {recent_topics}
-                2. REVIEW TOPICS (Secondary): {cumulative_topics}
+                *** CRITICAL SCOPE INSTRUCTION ***
+                The student has ONLY learned the following topics. 
+                You must NOT ask about anything outside this list. 
+                If a concept is not listed below, it does not exist in the student's universe yet.
                 
-                CRITICAL NEGATIVE CONSTRAINTS (DO NOT IGNORE):
-                - ABSOLUTELY NO content related to: {negative_constraint_str}.
-                - Do NOT use concepts outside of the provided topic lists.
-                - If the topic is 'Strings', do NOT test Lists.
-                - If the topic is 'Variables', do NOT test If Statements.
+                ALLOWED KNOWLEDGE BASE:
+                {scope_str}
+                
+                STRICT TOPIC SOURCES:
+                1. RECENT TOPICS (80% of Questions form here): {recent_topics}
+                2. REVIEW TOPICS (20% of Questions form here): {cumulative_topics}
                 
                 QUIZ SPECIFICATIONS:
                 - **Total Questions**: EXACTLY 20.
@@ -167,20 +159,21 @@ Friendly, Mentor-like, use emojis sparingly.
                     "questions": [
                         {{
                             "id": 1,
-                            "type": "theory",  # or "code_output"
-                            "question": "What is the result of 'Hello' + 'World'?",
-                            "options": ["A) HelloWorld", "B) Hello World", "C) Error", "D) None"],
-                            "answer": "A) HelloWorld", 
-                            "explanation": "String concatenation joins strings without adding spaces."
+                            "type": "theory",
+                            "question": "What is the result of ...",
+                            "options": ["A) ...", "B) ...", "C) ...", "D) ..."],
+                            "answer": "A) ...", 
+                            "explanation": "..."
                         }}
                     ]
                 }}
                 
                 STRICT RULES:
-                1. Return ONLY the raw JSON string.
-                2. No Markdown formatting.
-                3. Ensure "options" is a list of 4 distinct strings. match the "answer" exactly.
-                4. Verify that code snippets in "Guess the Output" questions DO NOT use prohibited syntax (like loops/functions).
+                1. Return ONLY the raw JSON string. No Markdown.
+                2. Ensure "options" is a list of 4 distinct strings.
+                3. "answer" must match one of the "options" exactly.
+                4. **SCOPE CHECK**: Before generating a question, ask yourself: "Is the syntax/concept required to answer this found in the ALLOWED KNOWLEDGE BASE?" If no, discard it.
+                5. specifically, do NOT use Loops or Functions unless "Loops" or "Functions" appear explicitly in the ALLOWED KNOWLEDGE BASE.
                 """
                 
                 response = self.model.generate_content(prompt)
