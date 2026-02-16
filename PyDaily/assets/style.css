@@ -1,0 +1,287 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    /* DARK MODE PALETTE (Slate-900 Theme) */
+    --primary: #3b82f6;       /* Blue 500 */
+    --primary-hover: #2563eb; /* Blue 600 */
+    
+    --bg-main: #0f172a;       /* Slate 900 */
+    --bg-card: #1e293b;       /* Slate 800 */
+    --bg-sidebar: #020617;    /* Slate 950 (Darker) */
+    
+    --text-main: #f8fafc;     /* Slate 50 */
+    --text-muted: #94a3b8;    /* Slate 400 */
+    
+    --border: #334155;        /* Slate 700 */
+    
+    --success: #10B981;       /* Emerald */
+    --warning: #F59E0B;       /* Amber */
+    --danger: #EF4444;        /* Red */
+}
+
+/* Global Reset & Font */
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif !important;
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+/* --- STREAMLIT APP CONTAINER --- */
+.stApp {
+    background-color: var(--bg-main) !important;
+}
+
+/* --- SIDEBAR OVERRIDE --- */
+section[data-testid="stSidebar"] {
+    background-color: var(--bg-sidebar) !important;
+    border-right: 1px solid var(--border);
+}
+
+section[data-testid="stSidebar"] h1, 
+section[data-testid="stSidebar"] h2, 
+section[data-testid="stSidebar"] h3, 
+section[data-testid="stSidebar"] span, 
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] label {
+    color: var(--text-muted) !important;
+}
+
+/* --- CARDS (Universal) --- */
+div.metric-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.1); /* Darker shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    height: 100%;
+}
+
+div.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary); /* Glow effect */
+}
+
+/* Card Variations (Top Borders) */
+div.card-queue { border-top: 4px solid var(--success) !important; }
+div.card-avg { border-top: 4px solid var(--primary) !important; }
+div.card-vol { border-top: 4px solid #8B5CF6 !important; /* Purple */ }
+
+/* Hierarchy */
+div.metric-value {
+    font-size: 2.5rem; 
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1;
+    margin-bottom: 4px;
+}
+div.metric-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+div.metric-sub {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+/* --- EMPTY STATE --- */
+div.empty-state {
+    text-align: center;
+    padding: 40px;
+    background: var(--bg-card);
+    border-radius: 16px;
+    box-shadow: none;
+    border: 1px dashed var(--border);
+}
+div.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+div.empty-state-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+div.empty-state-desc {
+    color: var(--text-muted);
+}
+
+/* --- BUTTONS --- */
+button[kind="primary"] {
+    background-color: var(--primary) !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 0.6rem 1.2rem !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.4) !important; /* Blue shadow */
+    border: none !important;
+    transition: all 0.2s !important;
+}
+button[kind="primary"]:hover {
+    background-color: var(--primary-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px -1px rgba(59, 130, 246, 0.5) !important;
+}
+button[kind="secondary"] {
+    background-color: transparent !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-main) !important;
+    font-weight: 500 !important;
+}
+button[kind="secondary"]:hover {
+    border-color: var(--text-muted) !important;
+    background-color: rgba(255,255,255,0.05) !important;
+}
+
+/* --- INPUTS & SELECTS (Dark Theme Overrides) --- */
+input, textarea, select, .stSelectbox > div > div {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border) !important;
+}
+/* Focus rings handled by Streamlit usually, but we can try */
+
+/* --- TABS --- */
+div[data-testid="stTabs"] button {
+    color: var(--text-muted);
+}
+div[data-testid="stTabs"] button[aria-selected="true"] {
+    color: var(--primary) !important;
+    border-bottom-color: var(--primary) !important;
+}
+
+/* --- HEADERS --- */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-main) !important;
+}
+
+/* Code Blocks */
+code {
+    background-color: #1e1e1e !important;
+    color: #ce9178 !important;
+    border: 1px solid #333 !important;
+}
+
+/* --- EXPANDERS / ACCORDIONS --- */
+/* Make them pop out from the dark background */
+div[data-testid="stExpander"] {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    overflow: hidden; /* clean corners */
+}
+
+div[data-testid="stExpander"] details summary {
+    color: var(--text-main) !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 1rem !important;
+}
+
+div[data-testid="stExpander"] details summary:hover {
+    color: var(--primary) !important;
+    background-color: rgba(255,255,255,0.03) !important;
+}
+
+/* --- UNIVERSAL TEXT VISIBILITY FIX --- */
+/* Force all standard text elements to use the main text color */
+.stMarkdown p, .stMarkdown li, .stText p, .stCaption {
+    color: var(--text-main) !important;
+}
+
+/* Captions should be slightly muted but still visible */
+.stCaption, div[data-testid="stCaptionContainer"] {
+    color: var(--text-muted) !important;
+}
+
+/* Widget Labels */
+label, .stSelectbox label, .stTextInput label, .stNumberInput label {
+    color: var(--text-muted) !important;
+}
+
+/* Dataframes */
+div[data-testid="stDataFrame"] {    
+    color: var(--text-main) !important;
+}
+
+
+/* ============================================= */
+/* MOBILE RESPONSIVE STYLES                     */
+/* ============================================= */
+
+/* Tablets and smaller */
+@media (max-width: 768px) {
+    /* Reduce padding on main container */
+    .block-container {
+        padding: 1rem 0.75rem !important;
+    }
+    
+    /* Make metrics stack better */
+    div[data-testid="metric-container"] {
+        padding: 0.5rem !important;
+    }
+    
+    /* Smaller headings on mobile */
+    h1 { font-size: 1.5rem !important; }
+    h2 { font-size: 1.25rem !important; }
+    h3 { font-size: 1.1rem !important; }
+    
+    /* Make buttons more tappable */
+    .stButton > button {
+        min-height: 44px !important;
+        padding: 0.75rem 1rem !important;
+    }
+    
+    /* Expand tab targets */
+    button[data-baseweb="tab"] {
+        padding: 0.75rem 0.5rem !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* Cards: single column on mobile */
+    .element-container .row-widget {
+        flex-direction: column !important;
+    }
+}
+
+/* Phones only */
+@media (max-width: 480px) {
+    /* Even tighter padding */
+    .block-container {
+        padding: 0.5rem !important;
+    }
+    
+    /* Sidebar: wider on mobile when open */
+    section[data-testid="stSidebar"] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Reduce expander padding */
+    div[data-testid="stExpander"] details {
+        padding: 0.5rem !important;
+    }
+    
+    /* Make select boxes larger touch targets */
+    .stSelectbox > div > div {
+        min-height: 44px !important;
+    }
+    
+    /* Progress bar thicker */
+    .stProgress > div > div {
+        height: 12px !important;
+        border-radius: 6px !important;
+    }
+    
+    /* Download buttons full width */
+    .stDownloadButton > button {
+        width: 100% !important;
+    }
+}
