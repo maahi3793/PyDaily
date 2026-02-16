@@ -1,7 +1,0 @@
-streamlit
-google-generativeai
-python-dotenv
-pandas
-supabase
-requests
-extra-streamlit-components

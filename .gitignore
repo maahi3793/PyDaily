@@ -20,3 +20,10 @@ state.json
 
 # Cache
 lessons/
+
+# PyNexus artifacts
+projects/PyNexus/build/
+projects/PyNexus/dist/
+*.exe
+*.pkg
+*.pyz
