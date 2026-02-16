@@ -24,8 +24,9 @@ jobs:
           python-version: '3.10'
           
       - name: Install Dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r PyDaily/requirements.txt
       
       # 🚀 EXECUTE BOSS GEN
       - name: Run Boss Generator
-        run: python run_boss_cycle.py
+        working-directory: ./PyDaily
+        run: python scripts/run_boss_cycle.py
