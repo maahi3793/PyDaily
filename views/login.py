@@ -181,6 +181,61 @@ def run():
         </div>
         """, unsafe_allow_html=True)
         
+        # --- DEMO BUTTON (Left Column) ---
+        st.write("")
+        if st.button("🎮 Try Free Demo — No Signup Required", use_container_width=True, key="demo_btn_left"):
+            st.session_state["role"] = "demo"
+            st.rerun()
+        st.caption("See real lessons, take a quiz, explore the dashboard.")
+        
+        # --- GMAIL PHONE MOCKUP ---
+        st.write("")
+        st.markdown("""
+        <div style="max-width: 280px; margin: 0 auto;">
+            <!-- Phone Frame -->
+            <div style="background: #1a1a2e; border-radius: 30px; padding: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                <!-- Status Bar -->
+                <div style="text-align: center; color: #888; font-size: 11px; padding: 6px 0 4px;">
+                    9:41 AM
+                </div>
+                <!-- Gmail Header -->
+                <div style="background: #ffffff; border-radius: 20px 20px 0 0; padding: 12px 15px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.3rem;">📧</span>
+                        <span style="font-weight: 700; font-size: 1.1rem; color: #202124;">Inbox</span>
+                        <span style="margin-left: auto; background: #ea4335; color: white; border-radius: 10px; padding: 1px 7px; font-size: 11px; font-weight: 600;">3 new</span>
+                    </div>
+                </div>
+                <!-- Email List -->
+                <div style="background: #ffffff; padding: 0;">
+                    <!-- Email 1 -->
+                    <div style="padding: 12px 15px; border-bottom: 1px solid #f0f0f0; background: #eef6ff;">
+                        <div style="font-weight: 700; font-size: 0.85rem; color: #202124;">PyDaily</div>
+                        <div style="font-size: 0.82rem; color: #202124; font-weight: 600;">🐍 Day 1: Variables & Data Types</div>
+                        <div style="font-size: 0.75rem; color: #5f6368; margin-top: 2px;">Welcome to your Python journey! Today we...</div>
+                    </div>
+                    <!-- Email 2 -->
+                    <div style="padding: 12px 15px; border-bottom: 1px solid #f0f0f0; background: #eef6ff;">
+                        <div style="font-weight: 700; font-size: 0.85rem; color: #202124;">PyDaily</div>
+                        <div style="font-size: 0.82rem; color: #202124; font-weight: 600;">⚡ Mid-Day Boost: Keep Going!</div>
+                        <div style="font-size: 0.75rem; color: #5f6368; margin-top: 2px;">"The expert was once a beginner" — here's your...</div>
+                    </div>
+                    <!-- Email 3 -->
+                    <div style="padding: 12px 15px; background: #eef6ff;">
+                        <div style="font-weight: 700; font-size: 0.85rem; color: #202124;">PyDaily</div>
+                        <div style="font-size: 0.82rem; color: #202124; font-weight: 600;">🌙 Nightly Check-in: Day 1</div>
+                        <div style="font-size: 0.75rem; color: #5f6368; margin-top: 2px;">Did you finish the challenge? Tomorrow we'll...</div>
+                    </div>
+                </div>
+                <!-- Bottom Nav -->
+                <div style="background: #ffffff; border-radius: 0 0 20px 20px; padding: 8px; text-align: center;">
+                    <span style="font-size: 0.7rem; color: #999;">📩 Mail &nbsp;&nbsp; 💬 Chat &nbsp;&nbsp; 📹 Meet</span>
+                </div>
+            </div>
+        </div>
+        <p style="text-align: center; color: #64748b; font-size: 0.8rem; margin-top: 10px;">↑ What your inbox looks like as a PyDaily student</p>
+        """, unsafe_allow_html=True)
+        
         st.markdown('</div>', unsafe_allow_html=True) # End hero-container
 
     # --- RIGHT COLUMN: LOGIN/SIGNUP CARD ---
@@ -287,5 +342,12 @@ def run():
                                 st.success("Check email to confirm.")
                             else:
                                 st.error("Failed.")
+        
+        # --- DEMO BUTTON (Below Signup) ---
+        st.divider()
+        st.caption("Not ready to sign up yet?")
+        if st.button("🎮 Explore Demo Instead", use_container_width=True, key="demo_btn_right"):
+            st.session_state["role"] = "demo"
+            st.rerun()
         
         st.markdown('</div>', unsafe_allow_html=True)
