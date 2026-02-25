@@ -136,7 +136,10 @@ def main():
     if role == "guest":
         from views import login
         login.run()
-        
+    
+    elif role == "demo":
+        from views.student import demo
+        demo.run()
     elif role == "admin":
         from views.admin import dashboard
         dashboard.run()
