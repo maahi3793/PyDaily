@@ -9,6 +9,35 @@ def run():
     /* IMPORT PREMIUM FONT: 'Outfit' */
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
     
+    /* FORCE LIGHT MODE — Override dark mode browsers */
+    .stApp, .stApp * {
+        color-scheme: light !important;
+    }
+    
+    /* Force text colors everywhere (except gradient title) */
+    .stApp p, .stApp span, .stApp label, .stApp h1:not(.hero-title), .stApp h2, .stApp h3, 
+    .stApp h4, .stApp h5, .stApp h6, .stApp div, .stApp li, .stApp td, .stApp th {
+        color: #111827 !important;
+    }
+    
+    /* Force input fields light */
+    .stApp input, .stApp textarea, .stApp select {
+        background-color: #F8FAFC !important;
+        color: #111827 !important;
+    }
+    
+    /* Force label/caption text */
+    .stApp .stCaption, .stApp small {
+        color: #64748b !important;
+    }
+    
+    /* Force containers/tabs to light bg */
+    .stApp [data-testid="stForm"], 
+    .stApp [data-testid="stExpander"],
+    .stApp [data-baseweb="tab-panel"] {
+        background-color: transparent !important;
+    }
+    
     /* HIDE SIDEBAR & DECORATION */
     [data-testid="stSidebar"] { display: none; }
     header { visibility: hidden; }
