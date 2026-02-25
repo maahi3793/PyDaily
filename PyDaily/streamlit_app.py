@@ -1,3 +1,13 @@
+import os
+import sys
+
+# Ensure working directory is always this script's folder (PyDaily/)
+# This fixes Streamlit Cloud which runs from repo root, not PyDaily/
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(_script_dir)
+if _script_dir not in sys.path:
+    sys.path.insert(0, _script_dir)
+
 import streamlit as st
 import extra_streamlit_components as stx
 from datetime import datetime, timedelta
