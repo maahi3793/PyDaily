@@ -735,6 +735,25 @@ class SupabaseManager:
             print(f"❌ Fetch Logs Failed: {e}")
             return []
 
+    def cleanup_old_activity_logs(self, days=30):
+        """
+        Deletes activity log entries older than `days` days.
+        Called during the morning cycle to keep the database lean.
+        """
+        if not self.admin_supabase: return 0
+        try:
+            from datetime import datetime, timedelta, timezone
+            cutoff = (datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
+            
+            # Delete rows older than cutoff
+            res = self.admin_supabase.table('activity_logs').delete().lt('created_at', cutoff).execute()
+            deleted_count = len(res.data) if res.data else 0
+            print(f"🧹 Cleaned up {deleted_count} activity logs older than {days} days.")
+            return deleted_count
+        except Exception as e:
+            print(f"⚠️ Activity Log Cleanup Failed: {e}")
+            return 0
+
     # --- 9. EMAIL PREFERENCES (Unsubscribe) ---
     
     def get_preferences(self, email):
