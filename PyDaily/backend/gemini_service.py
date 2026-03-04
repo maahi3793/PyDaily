@@ -1,6 +1,7 @@
 import os
 import time
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 import logging
 import warnings
 
@@ -21,11 +22,11 @@ class GeminiService:
             raise ValueError("API Key is missing")
         
         logging.info(f"Configuring Gemini with Key: {api_key[:5]}...{api_key[-3:]}")
-        genai.configure(api_key=api_key)
+        self.client = genai.Client(api_key=api_key)
         
-        self.model_name = 'gemini-flash-latest'
+        self.model_name = 'gemini-2.5-flash'
         logging.info(f"Using Model: {self.model_name}")
-        self.model = genai.GenerativeModel(self.model_name, system_instruction="""
+        self.system_instruction = """
 You are "PyDaily", an enthusiastic, expert Python Tutor bot.
 
 Your mission:
@@ -34,7 +35,7 @@ Goal: Logically progress from basics to Data Structures & Algorithms, to advance
 
 Tone:
 Friendly, Mentor-like, use emojis sparingly.
-""")
+"""
 
     def generate_lesson(self, day_number, topic, phase, phase_goal, history_context=None):
         logging.info(f"Attempting to generate lesson for Day {day_number} on topic: {topic}")
@@ -108,7 +109,13 @@ Friendly, Mentor-like, use emojis sparingly.
 
             3. NO MARKDOWN. RETURN ONLY THE HTML STRING.
             """
-            response = self.model.generate_content(prompt)
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=self.system_instruction,
+                )
+            )
             logging.info("Content generated successfully")
             return response.text
         except Exception as e:
@@ -176,7 +183,13 @@ Friendly, Mentor-like, use emojis sparingly.
                 5. specifically, do NOT use Loops or Functions unless "Loops" or "Functions" appear explicitly in the ALLOWED KNOWLEDGE BASE.
                 """
                 
-                response = self.model.generate_content(prompt)
+                response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=self.system_instruction,
+                )
+            )
                 
                 # Clean potential markdown
                 text = response.text.strip()
@@ -242,8 +255,8 @@ Friendly, Mentor-like, use emojis sparingly.
             {minified_data}
             
             TASK:
-            1. Analyze each student's performance.
-            2. Generate a 2-sentence "Remedial Tip" for EACH student based on their specific weak spots.
+            1. Analyze each student's performance based on their wrong answers.
+            2. Detect the exact, pin-point specific concept they struggled with based on their wrong answers (e.g., "List Slicing", "While Loops"). Explicitly tell them to "go through [Specific Topic Name] once again" in their message. 
             3. If they got a high score (>= 80%), praise them and offer a "Pro Tip" related to TODAY'S TOPIC.
             
             NEGATIVE CONSTRAINTS:
@@ -265,7 +278,13 @@ Friendly, Mentor-like, use emojis sparingly.
             STRICT JSON ONLY. NO MARKDOWN.
             """
             
-            response = self.model.generate_content(prompt)
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=self.system_instruction,
+                )
+            )
             text = response.text.replace('```json', '').replace('```', '').strip()
             return text
             
@@ -303,7 +322,13 @@ Friendly, Mentor-like, use emojis sparingly.
 
             2. NO MARKDOWN. RETURN ONLY THE HTML STRING.
             """
-            response = self.model.generate_content(prompt)
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=self.system_instruction,
+                )
+            )
             return response.text
         except Exception as e:
             logging.error(f"Gemini API Error (Reminder): {str(e)}")
@@ -358,7 +383,13 @@ Friendly, Mentor-like, use emojis sparingly.
                 </div>
             </div>
             """
-            response = self.model.generate_content(prompt)
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=self.system_instruction,
+                )
+            )
             # Extra safety: Clean markdown if it slips through
             text = response.text.replace('```html', '').replace('```', '').strip()
             return text
@@ -393,7 +424,13 @@ Friendly, Mentor-like, use emojis sparingly.
             Return ONLY the raw text for the post. Use Emojis (🚀, 🐍, 💡).
             """
             
-            response = self.model.generate_content(prompt)
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=self.system_instruction,
+                )
+            )
             return response.text.strip()
             
         except Exception as e:
@@ -468,7 +505,13 @@ Friendly, Mentor-like, use emojis sparingly.
             3. Ensure valid JSON.
             """
             
-            response = self.model.generate_content(prompt)
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=self.system_instruction,
+                )
+            )
             text = response.text.replace('```json', '').replace('```', '').strip()
             
             import json
