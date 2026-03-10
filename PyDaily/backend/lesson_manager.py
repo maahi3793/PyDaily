@@ -16,8 +16,8 @@ class LessonManager:
         if not content: return False, "Empty Content"
         if len(content) < 100: return False, "Content too short (<100 chars)"
         
-        # Check for Common API Errors
-        error_keywords = ["Quota exceeded", "429 Too Many Requests", "generate_content_free_tier_requests"]
+        # Check for Common API Errors (including Gemini error string prefixes)
+        error_keywords = ["Quota exceeded", "429 Too Many Requests", "generate_content_free_tier_requests", "Error generating", "503 UNAVAILABLE"]
         for k in error_keywords:
             if k in content:
                 return False, f"API Error Detected: {k}"
