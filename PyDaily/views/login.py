@@ -301,35 +301,6 @@ def run():
                             except Exception as cookie_err:
                                 print(f"⚠️ Cookie save failed: {cookie_err}")
                             
-                            # --- ANALYTICS: LOG LOGIN + GEO ---
-                            try:
-                                import requests
-                                from utils import network
-                                
-                                ip = network.get_remote_ip()
-                                geo_info = {"ip": ip, "city": "Unknown", "country": "Unknown"}
-                                
-                                if ip:
-                                    # Free Tier: 45 requests/minute. Fine for login.
-                                    # Timeout essential to not block UI.
-                                    resp = requests.get(f"http://ip-api.com/json/{ip}?fields=status,city,country", timeout=2)
-                                    if resp.status_code == 200:
-                                        data = resp.json()
-                                        if data.get("status") == "success":
-                                            geo_info["city"] = data.get("city")
-                                            geo_info["country"] = data.get("country")
-                                
-                                # Fetch UA
-                                ua = network.get_user_agent()
-                            
-                                db.log_activity(email, "LOGIN", {
-                                    "role": st.session_state["role"],
-                                    "geo": geo_info
-                                }, user_agent=ua)
-                            except Exception as e:
-                                # Fallback if GEO fails -> Log basic login
-                                print(f"Geo-Log Failed: {e}")
-                                db.log_activity(email, "LOGIN", {"role": st.session_state["role"], "geo_error": str(e)})
 
                             st.rerun()
                         else:

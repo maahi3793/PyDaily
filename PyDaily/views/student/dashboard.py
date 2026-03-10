@@ -225,11 +225,7 @@ def run():
                 </div>
                 """, unsafe_allow_html=True)
             else:
-                # --- ANALYTICS: VIEW LESSON ---
-                if f"log_lesson_{selected_day}" not in st.session_state:
-                    db.log_activity(st.session_state.get("user_email", "unknown"), "VIEW_LESSON", {"day": selected_day})
-                    st.session_state[f"log_lesson_{selected_day}"] = True
-                
+
                 # Render Standard Lesson HTML
                 clean_html = content.replace('```html', '').replace('```', '')
                 import streamlit.components.v1 as components
@@ -284,11 +280,7 @@ def run():
             # Quiz Selector
             selected_quiz_day = st.selectbox("Select Quiz", quiz_days, index=len(quiz_days)-1, format_func=lambda x: f"Day {x} Checkpoint")
             
-            # --- ANALYTICS: START QUIZ ---
-            # Debounce per session/quiz combination
-            if f"log_quiz_start_{selected_quiz_day}" not in st.session_state:
-                 db.log_activity(st.session_state["user_email"], "START_QUIZ", {"day": selected_quiz_day})
-                 st.session_state[f"log_quiz_start_{selected_quiz_day}"] = True
+
 
             # 2. Get Quiz Content
             quiz_content = cache.get_lesson(selected_quiz_day)
@@ -342,13 +334,7 @@ def run():
                                 success, msg = db.save_quiz_result(token, selected_quiz_day, correct_count, total, user_answers)
                                 if not success:
                                     st.error(f"Error saving result: {msg}")
-                                else:
-                                    # --- ANALYTICS: SUBMIT QUIZ ---
-                                    db.log_activity(st.session_state["user_email"], "SUBMIT_QUIZ", {
-                                        "day": selected_quiz_day, 
-                                        "score": correct_count, 
-                                        "total": total
-                                    })
+
 
                             # 3. Show Feedback
                             st.write("---")

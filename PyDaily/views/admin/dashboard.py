@@ -166,7 +166,7 @@ def render_dashboard():
     st.divider()
     
     # --- Main Dashboard ---
-    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["🚀 Morning Operations", "🌙 Evening Operations", "⚡ Mid-Day Boost", "🎯 Quiz Ops", "📊 Class Insights", "📈 Engagement Analytics"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["🚀 Morning Operations", "🌙 Evening Operations", "⚡ Mid-Day Boost", "🎯 Quiz Ops", "📊 Class Insights"])
     # === TAB 5: CLASS INSIGHTS ===
     with tab5:
         st.header("📊 AI Class Insights")
@@ -553,87 +553,7 @@ def render_dashboard():
                 st.balloons()
                 st.rerun()
 
-    # === TAB 6: ENGAGEMENT ANALYTICS ===
-    with tab6:
-        st.header("📈 User Engagement Analytics")
-        st.info("Visualizing student behavior patterns from the `activity_logs` table.")
-        
-        if st.button("🔄 Refresh Logs"):
-            st.rerun()
 
-        # 1. Fetch Data
-        logs = db.admin_get_activity_stats()
-        
-        if not logs:
-            st.warning("No activity logs found. Wait for students to log in!")
-        else:
-            df_logs = pd.DataFrame(logs)
-            df_logs['created_at'] = pd.to_datetime(df_logs['created_at'])
-            
-            # --- A. BIG METRICS ---
-            total_actions = len(df_logs)
-            unique_users = df_logs['user_email'].nunique()
-            # Active Last 24h
-            active_last_24h = df_logs[df_logs['created_at'] > (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=24))]['user_email'].nunique()
-
-            m1, m2, m3 = st.columns(3)
-            m1.metric("Total Events Logged", total_actions)
-            m2.metric("Unique Students Tracked", unique_users)
-            m3.metric("Active Last 24h", active_last_24h)
-            
-            st.divider()
-            
-            # --- B. CHARTS ---
-            c1, c2 = st.columns(2)
-            
-            with c1:
-                st.subheader("Action Breakdown")
-                # Bar Chart of Actions
-                action_counts = df_logs['action'].value_counts()
-                st.bar_chart(action_counts)
-                st.caption("Which features are being used?")
-                
-            with c2:
-                st.subheader("Peak Activity (UTC Hour)")
-                # Extract Hour
-                df_logs['hour'] = df_logs['created_at'].dt.hour
-                hour_counts = df_logs['hour'].value_counts().sort_index()
-                st.bar_chart(hour_counts)
-                st.caption("When are students logging in? (UTC)")
-
-            st.divider()
-            
-            # --- C. STUDENT GEOGRAPHY ---
-            st.subheader("🌍 Student Geography (New Logs Only)")
-            # Extract City from details
-            def get_city(details):
-                if isinstance(details, dict):
-                    geo = details.get('geo', {})
-                    return geo.get('city')
-                return None
-            
-            df_logs['city'] = df_logs['details'].apply(get_city)
-            city_counts = df_logs['city'].value_counts()
-            
-            # Remove 'None' or 'Unknown'
-            if 'Unknown' in city_counts.index: city_counts = city_counts.drop('Unknown')
-            if None in city_counts.index: city_counts = city_counts.drop(None)
-            
-            if city_counts.empty:
-                st.caption("No geography data available yet.")
-            else:
-                st.bar_chart(city_counts, color="#FF4B4B") # Red for emphasis
-            
-            st.divider()
-
-            # --- D. LEADERBOARD ---
-            st.subheader("🏆 Top Students (Most Active)")
-            top_students = df_logs['user_email'].value_counts().head(10)
-            st.table(top_students)
-            
-            # --- D. RAW LOGS ---
-            with st.expander("🕵️ View Raw Live Logs"):
-                st.dataframe(df_logs[['created_at', 'user_email', 'action', 'details']])
 
 def run():
     """

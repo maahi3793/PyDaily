@@ -1,0 +1,10 @@
+PYTHON CRASH COURSE
+Chapter 1: Variables
+
+A variable is a named location in the computer's memory used to store data. In Python, variables are dynamically typed, which means you do not need to explicitly declare their data type before assigning a value to them.
+
+For example, to create a variable named "age" and assign it the value 25:
+age = 25
+
+When you want to retrieve the value, you just use the variable name. Python is case-sensitive, so "Age" and "age" would be two completely different variables.
+The value of a variable can change during program execution, which is why it's called a "variable".

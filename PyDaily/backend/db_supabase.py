@@ -697,62 +697,7 @@ class SupabaseManager:
             # print(f"⚠️ Boss Battle Miss (Day {day})")
             return []
 
-    # --- 8. ANALYTICS (Activity Logs) ---
-    
-    def log_activity(self, email, action, details=None, user_agent=None):
-        """
-        Logs a user action to the 'activity_logs' table.
-        action: 'LOGIN', 'VIEW_LESSON', 'START_QUIZ'
-        details: Dict/JSON of extra info
-        """
-        # Can use standard client (enabled for authenticated inserts) or admin client
-        # FIX: Prioritize Admin Client to bypass RLS issues for logging.
-        client = self.admin_supabase if self.admin_supabase else self.supabase
-        if not client: return
-        
-        try:
-            payload = {
-                "user_email": email,
-                "action": action,
-                "details": details or {},
-                "user_agent": user_agent
-            }
-            # Fire and forget (don't block UI too much)
-            client.table('activity_logs').insert(payload).execute()
-        except Exception as e:
-            print(f"⚠️ Logging Failed: {e}") 
 
-    def admin_get_activity_stats(self):
-        """
-        Fetches ALL logs for visualization.
-        """
-        if not self.admin_supabase: return []
-        try:
-            # Initial limit 1000 for performance, can paginate later
-            res = self.admin_supabase.table('activity_logs').select('*').order('created_at', desc=True).limit(1000).execute()
-            return res.data
-        except Exception as e:
-            print(f"❌ Fetch Logs Failed: {e}")
-            return []
-
-    def cleanup_old_activity_logs(self, days=30):
-        """
-        Deletes activity log entries older than `days` days.
-        Called during the morning cycle to keep the database lean.
-        """
-        if not self.admin_supabase: return 0
-        try:
-            from datetime import datetime, timedelta, timezone
-            cutoff = (datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
-            
-            # Delete rows older than cutoff
-            res = self.admin_supabase.table('activity_logs').delete().lt('created_at', cutoff).execute()
-            deleted_count = len(res.data) if res.data else 0
-            print(f"🧹 Cleaned up {deleted_count} activity logs older than {days} days.")
-            return deleted_count
-        except Exception as e:
-            print(f"⚠️ Activity Log Cleanup Failed: {e}")
-            return 0
 
     # --- 9. EMAIL PREFERENCES (Unsubscribe) ---
     

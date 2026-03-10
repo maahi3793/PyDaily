@@ -279,9 +279,7 @@ def run_morning_cycle(gemini, mailer, cache):
     logging.info("🌞 Starting Morning Cycle (Lessons)...")
     db = SupabaseManager()
     
-    # Housekeeping: Auto-delete activity logs older than 30 days
-    db.cleanup_old_activity_logs(days=30)
-    
+
     contacts = db.admin_get_all_students()
     # Logic: Status 'pending' means they need the day's content
     pending_contacts = [c for c in contacts if c.get('status') == 'pending']
