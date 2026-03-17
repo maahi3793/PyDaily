@@ -121,7 +121,7 @@ def test_solution(capsys):
                 
             # Fallback to just 'code' if cmd check fails logic, 
             # but subprocess allows 'code' usually.
-            subprocess.Popen(["code", str(path)], shell=True)
+            subprocess.Popen([cmd, str(path)], shell=False)
             return True, f"Launched VS Code at {path}"
         except Exception as e:
             return False, f"Failed to launch VS Code: {e}"

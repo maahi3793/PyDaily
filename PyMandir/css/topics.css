@@ -1,0 +1,231 @@
+/* ================================================
+   Topics Styles
+   Planned topics list, filters, items
+   ================================================ */
+
+.topics-controls {
+    margin-bottom: var(--space-lg);
+}
+
+.topic-add-group {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.topic-add-group .input {
+    flex: 1;
+}
+
+/* ---------- Filters ---------- */
+.topics-filters {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: 20px;
+    border: 1px solid var(--gold-border);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s var(--ease-out);
+}
+
+.filter-btn:hover {
+    border-color: var(--gold-dim);
+    color: var(--text-secondary);
+}
+
+.filter-btn.active {
+    background: var(--gold-light);
+    border-color: var(--gold);
+    color: var(--gold-bright);
+}
+
+/* ---------- Topics List ---------- */
+.topics-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.topic-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-card);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius-md);
+    transition: all 0.25s var(--ease-out);
+    animation: slideUp 0.3s var(--ease-out);
+}
+
+.topic-item:hover {
+    background: var(--bg-card-hover);
+    transform: translateX(4px);
+}
+
+.topic-status-btn {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 2px solid var(--gold-border);
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s var(--ease-out);
+}
+
+.topic-status-btn[data-status="not-started"] {
+    border-color: var(--text-dim);
+    color: transparent;
+}
+
+.topic-status-btn[data-status="in-progress"] {
+    border-color: var(--warning);
+    background: rgba(224, 160, 48, 0.15);
+    color: var(--warning);
+}
+
+.topic-status-btn[data-status="completed"] {
+    border-color: var(--success);
+    background: rgba(93, 184, 93, 0.15);
+    color: var(--success);
+}
+
+.topic-name {
+    flex: 1;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.topic-item[data-status="completed"] .topic-name {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.topic-delete-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: all 0.2s var(--ease-out);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topic-item:hover .topic-delete-btn {
+    opacity: 1;
+}
+
+.topic-delete-btn:hover {
+    background: var(--terracotta-light);
+    color: var(--terracotta);
+}
+
+/* ---------- Empty State ---------- */
+.topics-empty {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-xl);
+    color: var(--text-dim);
+}
+
+.empty-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--space-md);
+    opacity: 0.5;
+}
+
+.topics-empty p {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-style: italic;
+}
+
+/* ---------- Notes Tab ---------- */
+.notes-today {
+    max-width: 700px;
+    margin-bottom: var(--space-2xl);
+}
+
+.notes-today label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+}
+
+.notes-textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: var(--space-lg);
+    background: var(--bg-card);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.25s var(--ease-out);
+    margin-bottom: var(--space-md);
+}
+
+.notes-textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-light);
+}
+
+.notes-empty {
+    text-align: center;
+    padding: var(--space-3xl);
+    color: var(--text-dim);
+}
+
+.notes-empty .empty-icon {
+    font-size: 2.5rem;
+    opacity: 0.4;
+}
+
+.note-entry {
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-card);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-sm);
+}
+
+.note-date {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--space-sm);
+}
+
+.note-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    white-space: pre-wrap;
+}

@@ -65,7 +65,8 @@ class WorkspaceService:
         # 4. Open VS Code
         try:
             # Code is usually in PATH.
-            subprocess.Popen(["code", str(job_dir)], shell=True)
+            cmd = "code.cmd" if os.name == 'nt' else "code"
+            subprocess.Popen([cmd, str(job_dir)], shell=False)
             return f"Job started at {job_dir}. Grid updated."
         except Exception as e:
             return f"Created {job_dir}, but failed to launch code: {e}"

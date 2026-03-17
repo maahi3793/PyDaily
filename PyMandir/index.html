@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PyMandir — Build your temple of Python knowledge. An ancient Indian-themed learning companion that keeps you consistent, focused, and tweeting like a pro.">
+    <title>PyMandir 🏛️ — Build Your Temple of Knowledge</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/timer.css">
+    <link rel="stylesheet" href="css/topics.css">
+    <link rel="stylesheet" href="css/tweets.css">
+</head>
+<body>
+    <!-- Ambient floating particles overlay -->
+    <div id="particles-container" class="particles-container"></div>
+
+    <!-- Hidden YouTube Om Chant Player -->
+    <div id="yt-om-container" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;pointer-events:none;">
+        <div id="yt-om-player"></div>
+    </div>
+
+    <!-- ===================== SIDEBAR NAVIGATION ===================== -->
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">🏛️</div>
+            <h1 class="brand-title">PyMandir</h1>
+            <p class="brand-subtitle">Temple of Knowledge</p>
+        </div>
+
+        <div class="nav-links">
+            <button class="nav-btn active" data-tab="dashboard">
+                <span class="nav-icon">🪔</span>
+                <span class="nav-label">Dashboard</span>
+            </button>
+            <button class="nav-btn" data-tab="timer">
+                <span class="nav-icon">⏱️</span>
+                <span class="nav-label">Focus Timer</span>
+            </button>
+            <button class="nav-btn" data-tab="topics">
+                <span class="nav-icon">📋</span>
+                <span class="nav-label">Topics</span>
+            </button>
+            <button class="nav-btn" data-tab="notes">
+                <span class="nav-icon">📝</span>
+                <span class="nav-label">Notes</span>
+            </button>
+            <button class="nav-btn" data-tab="tweets">
+                <span class="nav-icon">🐦</span>
+                <span class="nav-label">Tweets</span>
+            </button>
+            <button class="nav-btn" data-tab="stats">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">Stats</span>
+            </button>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="streak-mini">
+                <span class="streak-fire">🔥</span>
+                <span id="sidebar-streak" class="streak-count">0</span>
+                <span class="streak-label">day streak</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================== MAIN CONTENT AREA ===================== -->
+    <main id="main-content" class="main-content">
+
+        <!-- =================== DASHBOARD TAB =================== -->
+        <section id="tab-dashboard" class="tab-content active">
+            <div class="dashboard-grid">
+
+                <!-- Streak Card -->
+                <div class="card streak-card">
+                    <div class="card-glow"></div>
+                    <div class="streak-display">
+                        <span class="streak-number" id="streak-number">0</span>
+                        <span class="streak-unit">Day Streak</span>
+                    </div>
+                    <div class="streak-meta">
+                        <span class="meta-item">
+                            <span class="meta-icon">🏆</span>
+                            Best: <strong id="best-streak">0</strong>
+                        </span>
+                        <span class="meta-item">
+                            <span class="meta-icon">📅</span>
+                            Total: <strong id="total-days">0</strong> days
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Temple Visualization -->
+                <div class="card temple-card">
+                    <div class="card-glow"></div>
+                    <h2 class="card-title">
+                        <span class="title-icon">🏛️</span> Your Temple
+                        <span class="temple-stage-badge" id="temple-stage-badge">Stage 1</span>
+                    </h2>
+                    <div class="temple-container" id="temple-container">
+                        <canvas id="temple-canvas" width="500" height="350"></canvas>
+                        <div class="temple-ground"></div>
+                    </div>
+                    <div class="temple-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="temple-progress-fill"></div>
+                        </div>
+                        <span class="progress-label" id="temple-progress-label">0 / 7 days to next stage</span>
+                    </div>
+                </div>
+
+                <!-- Today's Quick Stats -->
+                <div class="card today-card">
+                    <h2 class="card-title">
+                        <span class="title-icon">☀️</span> Today
+                    </h2>
+                    <div class="today-stats">
+                        <div class="today-stat">
+                            <span class="stat-value" id="today-sessions">0</span>
+                            <span class="stat-label">Sessions</span>
+                        </div>
+                        <div class="today-stat">
+                            <span class="stat-value" id="today-focus-time">0m</span>
+                            <span class="stat-label">Focus Time</span>
+                        </div>
+                        <div class="today-stat">
+                            <span class="stat-value" id="today-topics">0</span>
+                            <span class="stat-label">Topics Done</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-glow" id="btn-start-focus">
+                        <span>🪔</span> Start Focus Session
+                    </button>
+                </div>
+
+                <!-- Wall of Shame -->
+                <div class="card shame-card" id="shame-card">
+                    <h2 class="card-title">
+                        <span class="title-icon">😤</span> Shilalekh — Wall of Shame
+                    </h2>
+                    <div class="shame-wall" id="shame-wall">
+                        <div class="shame-empty" id="shame-empty">
+                            <span class="shame-empty-icon">🙏</span>
+                            <p>The wall is clean. Keep it that way, Shilpkar.</p>
+                        </div>
+                        <!-- Shame entries injected here by JS -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =================== FOCUS TIMER TAB =================== -->
+        <section id="tab-timer" class="tab-content">
+
+            <!-- Timer Setup Screen -->
+            <div id="timer-setup" class="timer-setup">
+                <h2 class="section-title">
+                    <span class="title-icon">🪔</span> Prepare Your Session
+                </h2>
+
+                <div class="timer-presets">
+                    <button class="preset-btn active" data-focus="25" data-break="5">
+                        <span class="preset-icon">🍅</span>
+                        <span class="preset-name">Pomodoro</span>
+                        <span class="preset-time">25 / 5 min</span>
+                    </button>
+                    <button class="preset-btn" data-focus="50" data-break="10">
+                        <span class="preset-icon">🚀</span>
+                        <span class="preset-name">Deep Work</span>
+                        <span class="preset-time">50 / 10 min</span>
+                    </button>
+                    <button class="preset-btn" data-focus="15" data-break="3">
+                        <span class="preset-icon">⚡</span>
+                        <span class="preset-name">Sprint</span>
+                        <span class="preset-time">15 / 3 min</span>
+                    </button>
+                    <button class="preset-btn" data-focus="custom" data-break="custom">
+                        <span class="preset-icon">⚙️</span>
+                        <span class="preset-name">Custom</span>
+                        <span class="preset-time">Set your own</span>
+                    </button>
+                </div>
+
+                <div class="custom-timer-settings" id="custom-timer-settings">
+                    <div class="custom-input-group">
+                        <label for="custom-focus">Focus Duration (min)</label>
+                        <div class="range-with-value">
+                            <input type="range" id="custom-focus" min="5" max="120" value="25" step="5">
+                            <span class="range-value" id="custom-focus-value">25</span>
+                        </div>
+                    </div>
+                    <div class="custom-input-group">
+                        <label for="custom-break">Break Duration (min)</label>
+                        <div class="range-with-value">
+                            <input type="range" id="custom-break" min="1" max="30" value="5" step="1">
+                            <span class="range-value" id="custom-break-value">5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="session-count-group">
+                    <label>Number of Sessions</label>
+                    <div class="session-pills">
+                        <button class="session-pill" data-sessions="1">1</button>
+                        <button class="session-pill" data-sessions="2">2</button>
+                        <button class="session-pill" data-sessions="3">3</button>
+                        <button class="session-pill active" data-sessions="4">4</button>
+                        <button class="session-pill" data-sessions="5">5</button>
+                        <button class="session-pill" data-sessions="6">6</button>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-glow btn-large" id="btn-begin-session">
+                    <span>🪔</span> Light the Diya
+                </button>
+            </div>
+
+            <!-- Active Focus Screen (Diya Meditation) -->
+            <div id="timer-focus" class="timer-focus hidden">
+                <div class="focus-ambient">
+                    <div class="focus-particles" id="focus-particles"></div>
+                    <div class="diya-scene">
+                        <canvas id="diya-canvas" width="500" height="550"></canvas>
+                    </div>
+                    <div class="focus-info">
+                        <div class="focus-time" id="focus-time">25:00</div>
+                        <div class="focus-session-counter" id="focus-session-counter">Session 1 of 4</div>
+                        <div class="volume-control" id="volume-control">
+                            <span class="volume-icon" id="volume-icon">🔊</span>
+                            <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="15" step="1">
+                            <span class="volume-label" id="volume-label">Om Chant</span>
+                        </div>
+                        <button class="btn btn-ghost btn-small" id="btn-cancel-session">End Session</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Break Screen -->
+            <div id="timer-break" class="timer-break hidden">
+                <div class="break-ambient">
+                    <div class="break-scene">
+                        <canvas id="break-canvas" width="500" height="550"></canvas>
+                        <div class="break-message">
+                            <h3>Rest, Shilpkar</h3>
+                            <p>The oil is being refilled for your next session.</p>
+                        </div>
+                    </div>
+                    <div class="break-info">
+                        <div class="break-time" id="break-time">5:00</div>
+                        <button class="btn btn-ghost btn-small" id="btn-skip-break">Skip Break</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session Complete -->
+            <div id="timer-complete" class="timer-complete hidden">
+                <div class="complete-celebration">
+                    <div class="complete-icon">🔔</div>
+                    <h2 class="complete-title">Well Done, Shilpkar!</h2>
+                    <p class="complete-message">A new stone has been placed on your temple.</p>
+                    <div class="complete-stats">
+                        <div class="complete-stat">
+                            <span class="stat-value" id="complete-sessions">4</span>
+                            <span class="stat-label">Sessions</span>
+                        </div>
+                        <div class="complete-stat">
+                            <span class="stat-value" id="complete-time">100m</span>
+                            <span class="stat-label">Total Focus</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-glow" id="btn-back-dashboard">
+                        Return to Temple
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- =================== TOPICS TAB =================== -->
+        <section id="tab-topics" class="tab-content">
+            <h2 class="section-title">
+                <span class="title-icon">📋</span> Planned Topics
+            </h2>
+            <div class="topics-controls">
+                <div class="topic-add-group">
+                    <input type="text" id="topic-input" class="input" placeholder="Add a Python topic...">
+                    <button class="btn btn-primary" id="btn-add-topic">+ Add</button>
+                </div>
+            </div>
+            <div class="topics-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="not-started">Not Started</button>
+                <button class="filter-btn" data-filter="in-progress">In Progress</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+            <div class="topics-list" id="topics-list">
+                <!-- Topics injected by JS -->
+            </div>
+            <div class="topics-empty" id="topics-empty">
+                <span class="empty-icon">📜</span>
+                <p>No topics planned yet. Add your first Python topic above!</p>
+            </div>
+        </section>
+
+        <!-- =================== NOTES TAB =================== -->
+        <section id="tab-notes" class="tab-content">
+            <h2 class="section-title">
+                <span class="title-icon">📝</span> Quick Notes
+            </h2>
+            <div class="notes-today">
+                <label for="notes-textarea">Today's Notes</label>
+                <textarea id="notes-textarea" class="notes-textarea" placeholder="Jot down what you learned today..."></textarea>
+                <button class="btn btn-primary" id="btn-save-notes">Save Notes</button>
+            </div>
+            <div class="notes-history" id="notes-history">
+                <h3 class="subsection-title">Past Notes</h3>
+                <!-- Notes by date injected by JS -->
+            </div>
+            <div class="notes-empty" id="notes-empty">
+                <span class="empty-icon">🪶</span>
+                <p>No notes yet. Start writing after your focus sessions!</p>
+            </div>
+        </section>
+
+        <!-- =================== TWEETS TAB =================== -->
+        <section id="tab-tweets" class="tab-content">
+            <h2 class="section-title">
+                <span class="title-icon">🐦</span> Tweet Generator
+            </h2>
+            <div class="tweet-composer">
+                <div class="tweet-inputs">
+                    <div class="input-group">
+                        <label for="tweet-day">Day Number</label>
+                        <input type="number" id="tweet-day" class="input" placeholder="15" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="tweet-topic">Topic Studied</label>
+                        <input type="text" id="tweet-topic" class="input" placeholder="List Comprehensions">
+                    </div>
+                    <div class="input-group">
+                        <label for="tweet-takeaway">Key Takeaway</label>
+                        <textarea id="tweet-takeaway" class="input textarea" placeholder="A cleaner way to create lists in one line..."></textarea>
+                    </div>
+                </div>
+                <div class="tweet-templates">
+                    <label>Template Style</label>
+                    <div class="template-pills">
+                        <button class="template-pill active" data-template="summary">📝 Summary</button>
+                        <button class="template-pill" data-template="tip">💡 Tip</button>
+                        <button class="template-pill" data-template="milestone">🎉 Milestone</button>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-glow" id="btn-generate-tweet">
+                    <span>✨</span> Generate Tweet
+                </button>
+            </div>
+
+            <div class="tweet-preview-container hidden" id="tweet-preview-container">
+                <h3 class="subsection-title">Preview</h3>
+                <div class="tweet-preview" id="tweet-preview">
+                    <!-- Generated tweet appears here -->
+                </div>
+                <div class="tweet-actions">
+                    <button class="btn btn-primary" id="btn-copy-tweet">📋 Copy to Clipboard</button>
+                    <button class="btn btn-ghost" id="btn-save-tweet">💾 Save Tweet</button>
+                </div>
+            </div>
+
+            <div class="tweet-history" id="tweet-history">
+                <h3 class="subsection-title">Saved Tweets</h3>
+                <!-- Past tweets injected by JS -->
+            </div>
+        </section>
+
+        <!-- =================== STATS TAB =================== -->
+        <section id="tab-stats" class="tab-content">
+            <h2 class="section-title">
+                <span class="title-icon">📊</span> Stats & Achievements
+            </h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-card-icon">🔥</span>
+                    <span class="stat-card-value" id="stat-current-streak">0</span>
+                    <span class="stat-card-label">Current Streak</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-card-icon">🏆</span>
+                    <span class="stat-card-value" id="stat-best-streak">0</span>
+                    <span class="stat-card-label">Best Streak</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-card-icon">📅</span>
+                    <span class="stat-card-value" id="stat-total-days">0</span>
+                    <span class="stat-card-label">Total Days</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-card-icon">⏱️</span>
+                    <span class="stat-card-value" id="stat-total-hours">0h</span>
+                    <span class="stat-card-label">Focus Hours</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-card-icon">🪔</span>
+                    <span class="stat-card-value" id="stat-total-sessions">0</span>
+                    <span class="stat-card-label">Total Sessions</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-card-icon">😤</span>
+                    <span class="stat-card-value" id="stat-shame-count">0</span>
+                    <span class="stat-card-label">Shame Entries</span>
+                </div>
+            </div>
+
+            <div class="achievements-section">
+                <h3 class="subsection-title">🏅 Achievements</h3>
+                <div class="achievements-grid" id="achievements-grid">
+                    <!-- Achievement cards injected by JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===================== SCRIPTS ===================== -->
+    <script src="js/storage.js"></script>
+    <script src="js/achievements.js"></script>
+    <script src="js/temple.js"></script>
+    <script src="js/shame.js"></script>
+    <script src="js/diya.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/topics.js"></script>
+    <script src="js/notes.js"></script>
+    <script src="js/tweets.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

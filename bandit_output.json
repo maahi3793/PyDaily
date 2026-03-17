@@ -1,0 +1,3817 @@
+{
+  "errors": [],
+  "generated_at": "2026-03-17T23:14:24Z",
+  "metrics": {
+    "_totals": {
+      "CONFIDENCE.HIGH": 87,
+      "CONFIDENCE.LOW": 1,
+      "CONFIDENCE.MEDIUM": 4,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 2,
+      "SEVERITY.LOW": 89,
+      "SEVERITY.MEDIUM": 1,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 12858,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 0,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\config.py": {
+      "CONFIDENCE.HIGH": 1,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 1,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 2,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 68,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\curriculum.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 225,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\db_supabase.py": {
+      "CONFIDENCE.HIGH": 2,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 1,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 3,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 620,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\email_service.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 166,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\gemini_service.py": {
+      "CONFIDENCE.HIGH": 1,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 1,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 422,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\lesson_manager.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 136,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\reset_cohort.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 18,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\wipe_cache.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 24,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\app_state.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 3,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\components\\capstone_board.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 302,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\components\\capstone_card.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 110,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\components\\reader_view.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 49,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\components\\sidebar.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 81,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\components\\ticket_board.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 72,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\debug_fetch.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 17,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\debug_main.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 15,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\debug_mentor.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 15,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\inspect_styles.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 12,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\inspect_styles_file.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 13,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\main.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 121,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\main_debug.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 11,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\admin_service.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 139,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\auth.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 73,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\capstone_service.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 42,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\content_manager.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 131,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\local_session.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 45,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\progress_tracker.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 99,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\scaffolder.py": {
+      "CONFIDENCE.HIGH": 5,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 1,
+      "SEVERITY.LOW": 4,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 131,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\workspace.py": {
+      "CONFIDENCE.HIGH": 5,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 1,
+      "SEVERITY.LOW": 4,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 69,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\test_container.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 10,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\utils\\__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 0,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\utils\\html_renderer.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 192,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\views\\admin_dashboard.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 161,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\views\\build_lab.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 72,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\views\\dashboard.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 111,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\views\\home.py": {
+      "CONFIDENCE.HIGH": 1,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 1,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 342,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\views\\kanban_board.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 417,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\views\\library.py": {
+      "CONFIDENCE.HIGH": 1,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 1,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 215,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\views\\login.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 99,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\assets\\__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 0,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\assets\\book_style.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 102,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\backend\\__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 0,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\backend\\curriculum.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 225,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\backend\\db_textbook.py": {
+      "CONFIDENCE.HIGH": 1,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 1,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 275,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\backend\\gemini_textbook.py": {
+      "CONFIDENCE.HIGH": 1,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 1,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 124,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\backend\\generator.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 200,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\backend\\image_extractor.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 49,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\backend\\pdf_exporter.py": {
+      "CONFIDENCE.HIGH": 2,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 2,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 48,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\check_db.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 14,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\cleanup_textbook_tables.py": {
+      "CONFIDENCE.HIGH": 4,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 4,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 32,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\prompts\\__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 0,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\run_textbook_bot.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 101,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\streamlit_app.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 58,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py": {
+      "CONFIDENCE.HIGH": 49,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 49,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 176,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\admin_reset_textbook.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 25,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\audit_exercises_table.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 52,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\backfill_q35_robust.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 81,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\check_image_db.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 16,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\check_q35_data.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 26,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\create_assets.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 33,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\daily_report.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 55,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\debug_check_enrichment.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 15,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\debug_count_exercises.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 15,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\debug_day1_counts.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 24,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\debug_day3_part3.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 21,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\debug_storage.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 1,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 1,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 41,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\enrich_exercises.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 70,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\extract_textbook_exercises.py": {
+      "CONFIDENCE.HIGH": 1,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 1,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 70,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\finalize_state.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 12,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\fix_day2.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 49,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\fix_exercises_db.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 20,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\fix_starter_code.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 31,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\generate_q35_day.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 25,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\ingest_external_json.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 47,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\inspect_chapter_content.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 11,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\inspect_chapters.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 19,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\inspect_daily_content.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 25,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\inspect_textbook_db.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 17,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\inspect_textbook_failure.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 20,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\inspect_textbook_structure.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 27,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\list_models.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 14,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\make_bucket_public.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 19,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\manual_insert_day3_p3.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 23,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\migrate_boss_battles.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 67,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\repair_images.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 47,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\reset_start_days.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 13,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\seed_day0.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 47,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\simple_count.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 12,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\test_gemini.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 15,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\test_import_curriculum.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 13,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\test_upload.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 23,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\views\\__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 0,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\views\\chapter_view.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 217,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\views\\dashboard.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 81,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\views\\image_manager.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 63,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\views\\sidebar.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 15,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\run_bot.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 521,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\scripts\\run_boss_cycle.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 74,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\streamlit_app.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 118,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 0,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\admin\\fix_admin_account.py": {
+      "CONFIDENCE.HIGH": 1,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 2,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 3,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 59,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\admin\\promote_admin.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 30,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\admin\\restore_admin.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 32,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\cleanup_feed.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 23,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\content\\cleanup_boss.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 14,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\content\\clear_motivations.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 19,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\content\\finalize_curriculum.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 45,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\content\\generate_day_6.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 31,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\content\\refactor_curriculum.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 26,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\content\\regenerate_boss_days.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 52,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\content\\regenerate_reminders.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 31,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\debug\\debug_users.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 32,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\debug\\test_boss_gen.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 27,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\debug\\test_quiz_gen.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 64,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\debug\\verify_reset.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 31,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\feed_templates.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 140,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\generate_nuggets_v2.py": {
+      "CONFIDENCE.HIGH": 2,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 2,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 68,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\migrations\\delete_content_range.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 18,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\migrations\\factory_reset.py": {
+      "CONFIDENCE.HIGH": 3,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 3,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 82,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\migrations\\hard_reset_course.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 48,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\migrations\\migrate_db.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 49,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\migrations\\nuke_and_regenerate_all.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 53,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\migrations\\nuke_database.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 25,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\migrations\\patch_email_links.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 33,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\static_feed_content.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 259,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\utils\\network.py": {
+      "CONFIDENCE.HIGH": 3,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 3,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 42,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\admin\\contacts.py": {
+      "CONFIDENCE.HIGH": 2,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 2,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 124,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\admin\\dashboard.py": {
+      "CONFIDENCE.HIGH": 1,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 1,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 393,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\admin\\settings.py": {
+      "CONFIDENCE.HIGH": 1,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 1,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 68,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\login.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 292,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\student\\components\\__init__.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 0,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\student\\components\\countdown.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 114,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\student\\components\\curriculum_preview.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 206,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\student\\components\\expert_kit.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 287,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\student\\components\\skill_tree.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 132,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\student\\components\\spaced_repetition.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 104,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\student\\components\\starter_kit.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 216,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\student\\components\\welcome_tour.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 199,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\student\\dashboard.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 416,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\student\\demo.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 298,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\student\\feed.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 125,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\unsubscribe.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 70,
+      "nosec": 0,
+      "skipped_tests": 0
+    }
+  },
+  "results": [
+    {
+      "code": "30         \"email_address\": \"\", \n31         \"email_password\": \"\", \n32         \"test_mode\": False, \n33         \"admin_email\": \"\"\n34     })\n35     \n36     # 1. Environment Variables (Override File) - Standard for Cloud/GitHub Actions\n37     if 'SUPABASE_URL' in os.environ:\n38         config['supabase_url'] = os.environ['SUPABASE_URL']\n",
+      "col_offset": 8,
+      "end_col_offset": 24,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\config.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 259,
+        "link": "https://cwe.mitre.org/data/definitions/259.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Possible hardcoded password: ''",
+      "line_number": 31,
+      "line_range": [
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html",
+      "test_id": "B105",
+      "test_name": "hardcoded_password_string"
+    },
+    {
+      "code": "64             config['supabase_service_key'] = st.secrets['SUPABASE_SERVICE_KEY']\n65     except:\n66         pass # Not running in Streamlit\n67     \n",
+      "col_offset": 4,
+      "end_col_offset": 12,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\config.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 65,
+      "line_range": [
+        65,
+        66
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "111                         # print(\"\u2705 Student Data Initialized.\")\n112                     except Exception as db_e:\n113                         # print(f\"\u26a0\ufe0f Student Init Note: {db_e}\")\n114                         pass # Row might exist from triggers\n115 \n",
+      "col_offset": 20,
+      "end_col_offset": 28,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\db_supabase.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 112,
+      "line_range": [
+        112,
+        113,
+        114
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "129             self.supabase.auth.sign_out()\n130         except:\n131             pass\n132 \n",
+      "col_offset": 8,
+      "end_col_offset": 16,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\db_supabase.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 130,
+      "line_range": [
+        130,
+        131
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "290 \n291     def admin_create_student(self, email, name, password=\"ChangeMe123!\"):\n292         \"\"\"\n293         Creates a new Auth User + Profile + Student Data row.\n294         \"\"\"\n295         if not self.admin_supabase: return False, \"No Admin Key\"\n296         try:\n297             # 1. Create Auth User\n298             res = self.admin_supabase.auth.admin.create_user({\n299                 \"email\": email,\n300                 \"password\": password,\n301                 \"email_confirm\": True,\n302                 \"user_metadata\": { \"full_name\": name }\n303             })\n304             \n305             user_id = res.user.id\n306             \n307             # 2. Upsert student_data\n308             self.admin_supabase.table('student_data').upsert({\n309                 \"student_id\": user_id,\n310                 \"current_day\": 1,\n311                 \"status\": \"pending\"\n312             }).execute()\n313             \n314             return True, \"User Created\"\n315         except Exception as e:\n316             msg = str(e)\n317             if \"already registered\" in msg:\n318                 return False, \"User already exists\"\n319             print(f\"\u274c Create Student Failed: {e}\")\n320             return False, msg\n321 \n",
+      "col_offset": 4,
+      "end_col_offset": 29,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\db_supabase.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 259,
+        "link": "https://cwe.mitre.org/data/definitions/259.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Possible hardcoded password: 'ChangeMe123!'",
+      "line_number": 291,
+      "line_range": [
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311,
+        312,
+        313,
+        314,
+        315,
+        316,
+        317,
+        318,
+        319,
+        320
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b107_hardcoded_password_default.html",
+      "test_id": "B107",
+      "test_name": "hardcoded_password_default"
+    },
+    {
+      "code": "350             ]\n351             theme = random.choice(themes)\n352             \n",
+      "col_offset": 20,
+      "end_col_offset": 41,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\backend\\gemini_service.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 330,
+        "link": "https://cwe.mitre.org/data/definitions/330.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+      "line_number": 351,
+      "line_range": [
+        351
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random",
+      "test_id": "B311",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "1 import os\n2 import subprocess\n3 import shutil\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\scaffolder.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 2,
+      "line_range": [
+        2
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "123             # but subprocess allows 'code' usually.\n124             subprocess.Popen([\"code\", str(path)], shell=True)\n125             return True, f\"Launched VS Code at {path}\"\n",
+      "col_offset": 12,
+      "end_col_offset": 61,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\scaffolder.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 124,
+      "line_range": [
+        124
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "123             # but subprocess allows 'code' usually.\n124             subprocess.Popen([\"code\", str(path)], shell=True)\n125             return True, f\"Launched VS Code at {path}\"\n",
+      "col_offset": 12,
+      "end_col_offset": 61,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\scaffolder.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "HIGH",
+      "issue_text": "subprocess call with shell=True identified, security issue.",
+      "line_number": 124,
+      "line_range": [
+        124
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b602_subprocess_popen_with_shell_equals_true.html",
+      "test_id": "B602",
+      "test_name": "subprocess_popen_with_shell_equals_true"
+    },
+    {
+      "code": "146         try:\n147             result = subprocess.run(\n148                 [\"pytest\", str(test_file), \"-v\", \"--tb=short\"],\n149                 cwd=str(exercise_path),\n150                 capture_output=True,\n151                 text=True,\n152                 timeout=30  # 30 second timeout\n153             )\n154             \n",
+      "col_offset": 21,
+      "end_col_offset": 13,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\scaffolder.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 147,
+      "line_range": [
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "146         try:\n147             result = subprocess.run(\n148                 [\"pytest\", str(test_file), \"-v\", \"--tb=short\"],\n149                 cwd=str(exercise_path),\n150                 capture_output=True,\n151                 text=True,\n152                 timeout=30  # 30 second timeout\n153             )\n154             \n",
+      "col_offset": 21,
+      "end_col_offset": 13,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\scaffolder.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 147,
+      "line_range": [
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "1 import os\n2 import subprocess\n3 import shutil\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\workspace.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 2,
+      "line_range": [
+        2
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "67             # Code is usually in PATH.\n68             subprocess.Popen([\"code\", str(job_dir)], shell=True)\n69             return f\"Job started at {job_dir}. Grid updated.\"\n",
+      "col_offset": 12,
+      "end_col_offset": 64,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\workspace.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 68,
+      "line_range": [
+        68
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "67             # Code is usually in PATH.\n68             subprocess.Popen([\"code\", str(job_dir)], shell=True)\n69             return f\"Job started at {job_dir}. Grid updated.\"\n",
+      "col_offset": 12,
+      "end_col_offset": 64,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\workspace.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "HIGH",
+      "issue_text": "subprocess call with shell=True identified, security issue.",
+      "line_number": 68,
+      "line_range": [
+        68
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b602_subprocess_popen_with_shell_equals_true.html",
+      "test_id": "B602",
+      "test_name": "subprocess_popen_with_shell_equals_true"
+    },
+    {
+      "code": "81             # Run pytest in the directory\n82             result = subprocess.run(\n83                 [\"pytest\"], \n84                 cwd=str(job_dir), \n85                 capture_output=True, \n86                 text=True\n87             )\n88             \n",
+      "col_offset": 21,
+      "end_col_offset": 13,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\workspace.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 82,
+      "line_range": [
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "81             # Run pytest in the directory\n82             result = subprocess.run(\n83                 [\"pytest\"], \n84                 cwd=str(job_dir), \n85                 capture_output=True, \n86                 text=True\n87             )\n88             \n",
+      "col_offset": 21,
+      "end_col_offset": 13,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\services\\workspace.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 82,
+      "line_range": [
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "54         self.user_avatar = self.session.get(\"pynexus_user_avatar\")\n55         self.tip = random.choice(TIPS)\n56         \n",
+      "col_offset": 19,
+      "end_col_offset": 38,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\views\\home.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 330,
+        "link": "https://cwe.mitre.org/data/definitions/330.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+      "line_number": 55,
+      "line_range": [
+        55
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random",
+      "test_id": "B311",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "126                 self.sidebar_content.update()\n127         except Exception as e:\n128              # Ignore UI update errors during init (control not added to page yet)\n129              pass\n130 \n",
+      "col_offset": 8,
+      "end_col_offset": 17,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PyNexus\\src\\views\\library.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 127,
+      "line_range": [
+        127,
+        128,
+        129
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "332             }).execute()\n333         except Exception:\n334             pass\n335             \n",
+      "col_offset": 8,
+      "end_col_offset": 16,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\backend\\db_textbook.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 333,
+      "line_range": [
+        333,
+        334
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "61                 try: q_obj = json.loads(q_obj)\n62                 except: pass\n63             quiz_str = json.dumps(q_obj, indent=2)\n",
+      "col_offset": 16,
+      "end_col_offset": 28,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\backend\\gemini_textbook.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 62,
+      "line_range": [
+        62
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "4 import tempfile\n5 import subprocess\n6 \n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\backend\\pdf_exporter.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 5,
+      "line_range": [
+        5
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "53         logging.info(f\"Running pandoc: {' '.join(cmd)}\")\n54         result = subprocess.run(cmd, capture_output=True, text=True)\n55         \n",
+      "col_offset": 17,
+      "end_col_offset": 68,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\backend\\pdf_exporter.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 54,
+      "line_range": [
+        54
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "31             db.client.table(\"textbook_images\").delete().neq(\"id\", \"impossible_id\").execute()\n32         except: pass\n33         \n",
+      "col_offset": 8,
+      "end_col_offset": 20,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\cleanup_textbook_tables.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 32,
+      "line_range": [
+        32
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "37              db.client.table(\"textbook_craft\").delete().neq(\"id\", -1).execute()\n38         except: pass\n39 \n",
+      "col_offset": 8,
+      "end_col_offset": 20,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\cleanup_textbook_tables.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 38,
+      "line_range": [
+        38
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "43              db.client.table(\"textbook_generation_log\").delete().neq(\"id\", -1).execute()\n44         except: pass\n45         \n",
+      "col_offset": 8,
+      "end_col_offset": 20,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\cleanup_textbook_tables.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 44,
+      "line_range": [
+        44
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "49             db.client.table(\"textbook_chapters\").delete().neq(\"day\", -1).execute()\n50         except: pass\n51         \n",
+      "col_offset": 8,
+      "end_col_offset": 20,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\cleanup_textbook_tables.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 50,
+      "line_range": [
+        50
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "7 import os\n8 import subprocess\n9 import sys\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 8,
+      "line_range": [
+        8
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "20         readme_path = os.path.join(PROJECT_ROOT, \"README.md\")\n21         assert os.path.exists(readme_path), \"README.md not found\"\n22         with open(readme_path, 'r', encoding='utf-8') as f:\n",
+      "col_offset": 8,
+      "end_col_offset": 65,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 21,
+      "line_range": [
+        21
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "23             content = f.read()\n24         assert \"PythonBook\" in content, \"README should mention PythonBook\"\n25         assert \"Implementation\" in content or \"Phase\" in content, \"README should have implementation details\"\n",
+      "col_offset": 8,
+      "end_col_offset": 74,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 24,
+      "line_range": [
+        24
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "24         assert \"PythonBook\" in content, \"README should mention PythonBook\"\n25         assert \"Implementation\" in content or \"Phase\" in content, \"README should have implementation details\"\n26     \n",
+      "col_offset": 8,
+      "end_col_offset": 109,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 25,
+      "line_range": [
+        25
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "29         req_path = os.path.join(PROJECT_ROOT, \"requirements.txt\")\n30         assert os.path.exists(req_path), \"requirements.txt not found\"\n31         with open(req_path, 'r') as f:\n",
+      "col_offset": 8,
+      "end_col_offset": 69,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 30,
+      "line_range": [
+        30
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "32             content = f.read()\n33         assert \"streamlit\" in content, \"streamlit should be in requirements\"\n34         assert \"supabase\" in content, \"supabase should be in requirements\"\n",
+      "col_offset": 8,
+      "end_col_offset": 76,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 33,
+      "line_range": [
+        33
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "33         assert \"streamlit\" in content, \"streamlit should be in requirements\"\n34         assert \"supabase\" in content, \"supabase should be in requirements\"\n35         assert \"google-generativeai\" in content, \"google-generativeai should be in requirements\"\n",
+      "col_offset": 8,
+      "end_col_offset": 74,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 34,
+      "line_range": [
+        34
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "34         assert \"supabase\" in content, \"supabase should be in requirements\"\n35         assert \"google-generativeai\" in content, \"google-generativeai should be in requirements\"\n36     \n",
+      "col_offset": 8,
+      "end_col_offset": 96,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 35,
+      "line_range": [
+        35
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "39         backend_path = os.path.join(PROJECT_ROOT, \"backend\")\n40         assert os.path.isdir(backend_path), \"backend/ folder not found\"\n41         init_path = os.path.join(backend_path, \"__init__.py\")\n",
+      "col_offset": 8,
+      "end_col_offset": 71,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 40,
+      "line_range": [
+        40
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "41         init_path = os.path.join(backend_path, \"__init__.py\")\n42         assert os.path.exists(init_path), \"backend/__init__.py not found\"\n43     \n",
+      "col_offset": 8,
+      "end_col_offset": 73,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 42,
+      "line_range": [
+        42
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "46         prompts_path = os.path.join(PROJECT_ROOT, \"prompts\")\n47         assert os.path.isdir(prompts_path), \"prompts/ folder not found\"\n48         \n",
+      "col_offset": 8,
+      "end_col_offset": 71,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 47,
+      "line_range": [
+        47
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "56             prompt_path = os.path.join(prompts_path, prompt_file)\n57             assert os.path.exists(prompt_path), f\"prompts/{prompt_file} not found\"\n58     \n",
+      "col_offset": 12,
+      "end_col_offset": 82,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 57,
+      "line_range": [
+        57
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "61         views_path = os.path.join(PROJECT_ROOT, \"views\")\n62         assert os.path.isdir(views_path), \"views/ folder not found\"\n63     \n",
+      "col_offset": 8,
+      "end_col_offset": 67,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 62,
+      "line_range": [
+        62
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "66         assets_path = os.path.join(PROJECT_ROOT, \"assets\")\n67         assert os.path.isdir(assets_path), \"assets/ folder not found\"\n68         sql_path = os.path.join(assets_path, \"setup_tables.sql\")\n",
+      "col_offset": 8,
+      "end_col_offset": 69,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 67,
+      "line_range": [
+        67
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "68         sql_path = os.path.join(assets_path, \"setup_tables.sql\")\n69         assert os.path.exists(sql_path), \"assets/setup_tables.sql not found\"\n70     \n",
+      "col_offset": 8,
+      "end_col_offset": 76,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 69,
+      "line_range": [
+        69
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "73         workflow_path = os.path.join(PROJECT_ROOT, \".github\", \"workflows\", \"textbook_scheduler.yml\")\n74         assert os.path.exists(workflow_path), \".github/workflows/textbook_scheduler.yml not found\"\n75 \n",
+      "col_offset": 8,
+      "end_col_offset": 98,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 74,
+      "line_range": [
+        74
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "81         \"\"\"CLI should show help message.\"\"\"\n82         result = subprocess.run(\n83             [sys.executable, \"run_textbook_bot.py\", \"--help\"],\n84             cwd=PROJECT_ROOT,\n85             capture_output=True,\n86             text=True\n87         )\n88         assert result.returncode == 0, f\"CLI help failed: {result.stderr}\"\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 82,
+      "line_range": [
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "87         )\n88         assert result.returncode == 0, f\"CLI help failed: {result.stderr}\"\n89         assert \"--day\" in result.stdout, \"Help should mention --day\"\n",
+      "col_offset": 8,
+      "end_col_offset": 74,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 88,
+      "line_range": [
+        88
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "88         assert result.returncode == 0, f\"CLI help failed: {result.stderr}\"\n89         assert \"--day\" in result.stdout, \"Help should mention --day\"\n90         assert \"--part\" in result.stdout, \"Help should mention --part\"\n",
+      "col_offset": 8,
+      "end_col_offset": 68,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 89,
+      "line_range": [
+        89
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "89         assert \"--day\" in result.stdout, \"Help should mention --day\"\n90         assert \"--part\" in result.stdout, \"Help should mention --part\"\n91         assert \"--weekly\" in result.stdout, \"Help should mention --weekly\"\n",
+      "col_offset": 8,
+      "end_col_offset": 70,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 90,
+      "line_range": [
+        90
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "90         assert \"--part\" in result.stdout, \"Help should mention --part\"\n91         assert \"--weekly\" in result.stdout, \"Help should mention --weekly\"\n92         assert \"--final\" in result.stdout, \"Help should mention --final\"\n",
+      "col_offset": 8,
+      "end_col_offset": 74,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 91,
+      "line_range": [
+        91
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "91         assert \"--weekly\" in result.stdout, \"Help should mention --weekly\"\n92         assert \"--final\" in result.stdout, \"Help should mention --final\"\n93     \n",
+      "col_offset": 8,
+      "end_col_offset": 72,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 92,
+      "line_range": [
+        92
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "95         \"\"\"CLI should accept --day argument.\"\"\"\n96         result = subprocess.run(\n97             [sys.executable, \"run_textbook_bot.py\", \"--day\", \"1\", \"--part\", \"part1\"],\n98             cwd=PROJECT_ROOT,\n99             capture_output=True,\n100             text=True\n101         )\n102         # Should run without error (even if not implemented)\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 96,
+      "line_range": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "102         # Should run without error (even if not implemented)\n103         assert result.returncode == 0, f\"CLI failed: {result.stderr}\"\n104         output = result.stdout + result.stderr  # Logging goes to stderr\n",
+      "col_offset": 8,
+      "end_col_offset": 69,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 103,
+      "line_range": [
+        103
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "104         output = result.stdout + result.stderr  # Logging goes to stderr\n105         assert \"Day 1\" in output or \"not yet implemented\" in output\n106     \n",
+      "col_offset": 8,
+      "end_col_offset": 67,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 105,
+      "line_range": [
+        105
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "108         \"\"\"CLI should accept --weekly argument.\"\"\"\n109         result = subprocess.run(\n110             [sys.executable, \"run_textbook_bot.py\", \"--weekly\", \"1\"],\n111             cwd=PROJECT_ROOT,\n112             capture_output=True,\n113             text=True\n114         )\n115         assert result.returncode == 0, f\"CLI failed: {result.stderr}\"\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 109,
+      "line_range": [
+        109,
+        110,
+        111,
+        112,
+        113,
+        114
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "114         )\n115         assert result.returncode == 0, f\"CLI failed: {result.stderr}\"\n116     \n",
+      "col_offset": 8,
+      "end_col_offset": 69,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 115,
+      "line_range": [
+        115
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "118         \"\"\"CLI should accept --final argument.\"\"\"\n119         result = subprocess.run(\n120             [sys.executable, \"run_textbook_bot.py\", \"--final\"],\n121             cwd=PROJECT_ROOT,\n122             capture_output=True,\n123             text=True\n124         )\n125         assert result.returncode == 0, f\"CLI failed: {result.stderr}\"\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 119,
+      "line_range": [
+        119,
+        120,
+        121,
+        122,
+        123,
+        124
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "124         )\n125         assert result.returncode == 0, f\"CLI failed: {result.stderr}\"\n126 \n",
+      "col_offset": 8,
+      "end_col_offset": 69,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 125,
+      "line_range": [
+        125
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "136         \n137         assert \"{{topic}}\" in content or \"{{day}}\" in content, \"Template should have placeholders\"\n138         assert \"What You'll Learn\" in content, \"Should have 'What You'll Learn' section\"\n",
+      "col_offset": 8,
+      "end_col_offset": 98,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 137,
+      "line_range": [
+        137
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "137         assert \"{{topic}}\" in content or \"{{day}}\" in content, \"Template should have placeholders\"\n138         assert \"What You'll Learn\" in content, \"Should have 'What You'll Learn' section\"\n139         assert \"Theory\" in content, \"Should have 'Theory' section\"\n",
+      "col_offset": 8,
+      "end_col_offset": 88,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 138,
+      "line_range": [
+        138
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "138         assert \"What You'll Learn\" in content, \"Should have 'What You'll Learn' section\"\n139         assert \"Theory\" in content, \"Should have 'Theory' section\"\n140         assert \"IMAGE_PLACEHOLDER\" in content, \"Should explain image placeholder format\"\n",
+      "col_offset": 8,
+      "end_col_offset": 66,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 139,
+      "line_range": [
+        139
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "139         assert \"Theory\" in content, \"Should have 'Theory' section\"\n140         assert \"IMAGE_PLACEHOLDER\" in content, \"Should explain image placeholder format\"\n141     \n",
+      "col_offset": 8,
+      "end_col_offset": 88,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 140,
+      "line_range": [
+        140
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "147         \n148         assert \"Real-World\" in content, \"Should have real-world use case section\"\n149         assert \"Quiz\" in content, \"Should mention quiz questions\"\n",
+      "col_offset": 8,
+      "end_col_offset": 81,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 148,
+      "line_range": [
+        148
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "148         assert \"Real-World\" in content, \"Should have real-world use case section\"\n149         assert \"Quiz\" in content, \"Should mention quiz questions\"\n150         assert \"Boss\" in content or \"Challenge\" in content, \"Should mention boss challenge\"\n",
+      "col_offset": 8,
+      "end_col_offset": 65,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 149,
+      "line_range": [
+        149
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "149         assert \"Quiz\" in content, \"Should mention quiz questions\"\n150         assert \"Boss\" in content or \"Challenge\" in content, \"Should mention boss challenge\"\n151     \n",
+      "col_offset": 8,
+      "end_col_offset": 91,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 150,
+      "line_range": [
+        150
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "157         \n158         assert \"Pro Tip\" in content, \"Should have pro tips section\"\n159         assert \"Mentor\" in content, \"Should have mentor moment section\"\n",
+      "col_offset": 8,
+      "end_col_offset": 67,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 158,
+      "line_range": [
+        158
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "158         assert \"Pro Tip\" in content, \"Should have pro tips section\"\n159         assert \"Mentor\" in content, \"Should have mentor moment section\"\n160         assert \"Exercise\" in content, \"Should have exercises section\"\n",
+      "col_offset": 8,
+      "end_col_offset": 71,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 159,
+      "line_range": [
+        159
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "159         assert \"Mentor\" in content, \"Should have mentor moment section\"\n160         assert \"Exercise\" in content, \"Should have exercises section\"\n161     \n",
+      "col_offset": 8,
+      "end_col_offset": 69,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 160,
+      "line_range": [
+        160
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "167         \n168         assert \"week\" in content.lower(), \"Should mention week\"\n169         assert \"Summary\" in content or \"summary\" in content, \"Should have summary section\"\n",
+      "col_offset": 8,
+      "end_col_offset": 63,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 168,
+      "line_range": [
+        168
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "168         assert \"week\" in content.lower(), \"Should mention week\"\n169         assert \"Summary\" in content or \"summary\" in content, \"Should have summary section\"\n170 \n",
+      "col_offset": 8,
+      "end_col_offset": 90,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 169,
+      "line_range": [
+        169
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "180         \n181         assert \"textbook_chapters\" in content, \"Should have textbook_chapters table\"\n182         assert \"day INTEGER\" in content, \"Should have day column\"\n",
+      "col_offset": 8,
+      "end_col_offset": 84,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 181,
+      "line_range": [
+        181
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "181         assert \"textbook_chapters\" in content, \"Should have textbook_chapters table\"\n182         assert \"day INTEGER\" in content, \"Should have day column\"\n183         assert \"content_part1_theory\" in content, \"Should have content_part1_theory column\"\n",
+      "col_offset": 8,
+      "end_col_offset": 65,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 182,
+      "line_range": [
+        182
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "182         assert \"day INTEGER\" in content, \"Should have day column\"\n183         assert \"content_part1_theory\" in content, \"Should have content_part1_theory column\"\n184     \n",
+      "col_offset": 8,
+      "end_col_offset": 91,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 183,
+      "line_range": [
+        183
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "190         \n191         assert \"textbook_images\" in content, \"Should have textbook_images table\"\n192         assert \"suggested_urls\" in content, \"Should have suggested_urls column\"\n",
+      "col_offset": 8,
+      "end_col_offset": 80,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 191,
+      "line_range": [
+        191
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "191         assert \"textbook_images\" in content, \"Should have textbook_images table\"\n192         assert \"suggested_urls\" in content, \"Should have suggested_urls column\"\n193     \n",
+      "col_offset": 8,
+      "end_col_offset": 79,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 192,
+      "line_range": [
+        192
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "199         \n200         assert \"textbook_craft\" in content, \"Should have textbook_craft table\"\n201 \n",
+      "col_offset": 8,
+      "end_col_offset": 78,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 200,
+      "line_range": [
+        200
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "208         app_path = os.path.join(PROJECT_ROOT, \"streamlit_app.py\")\n209         result = subprocess.run(\n210             [sys.executable, \"-m\", \"py_compile\", app_path],\n211             capture_output=True,\n212             text=True\n213         )\n214         assert result.returncode == 0, f\"Syntax error in streamlit_app.py: {result.stderr}\"\n",
+      "col_offset": 17,
+      "end_col_offset": 9,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 209,
+      "line_range": [
+        209,
+        210,
+        211,
+        212,
+        213
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "213         )\n214         assert result.returncode == 0, f\"Syntax error in streamlit_app.py: {result.stderr}\"\n215 \n",
+      "col_offset": 8,
+      "end_col_offset": 91,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tests\\test_phase1.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 214,
+      "line_range": [
+        214
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "38         try:\n39             resp = requests.head(public_url)\n40             print(f\"   HTTP Status: {resp.status_code}\")\n",
+      "col_offset": 19,
+      "end_col_offset": 44,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\debug_storage.py",
+      "issue_confidence": "LOW",
+      "issue_cwe": {
+        "id": 400,
+        "link": "https://cwe.mitre.org/data/definitions/400.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Call to requests without timeout",
+      "line_number": 39,
+      "line_range": [
+        39
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html",
+      "test_id": "B113",
+      "test_name": "request_without_timeout"
+    },
+    {
+      "code": "80                         continue\n81                 except: pass\n82 \n",
+      "col_offset": 16,
+      "end_col_offset": 28,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\projects\\PythonBook\\tools\\extract_textbook_exercises.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 81,
+      "line_range": [
+        81
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "24         print(\"   resetting password to: AdminRecovery123!\")\n25         db.admin_supabase.auth.admin.update_user_by_id(user_id, {\"password\": \"AdminRecovery123!\"})\n26     else:\n",
+      "col_offset": 65,
+      "end_col_offset": 75,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\admin\\fix_admin_account.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 259,
+        "link": "https://cwe.mitre.org/data/definitions/259.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Possible hardcoded password: 'AdminRecovery123!'",
+      "line_number": 25,
+      "line_range": [
+        25
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html",
+      "test_id": "B105",
+      "test_name": "hardcoded_password_string"
+    },
+    {
+      "code": "30             \"email\": email,\n31             \"password\": \"AdminRecovery123!\",\n32             \"email_confirm\": True,\n33             \"user_metadata\": { \"full_name\": \"Admin\" }\n34         })\n35         user_id = res.user.id\n36         print(f\"   \u2705 Created User (ID: {user_id})\")\n37 \n",
+      "col_offset": 12,
+      "end_col_offset": 22,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\admin\\fix_admin_account.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 259,
+        "link": "https://cwe.mitre.org/data/definitions/259.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Possible hardcoded password: 'AdminRecovery123!'",
+      "line_number": 31,
+      "line_range": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html",
+      "test_id": "B105",
+      "test_name": "hardcoded_password_string"
+    },
+    {
+      "code": "73                 target_email = json.load(f).get('admin_email')\n74         except: pass\n75         \n",
+      "col_offset": 8,
+      "end_col_offset": 20,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\admin\\fix_admin_account.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 74,
+      "line_range": [
+        74
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "78             return # Already exists\n79     except Exception as e:\n80         pass\n81 \n",
+      "col_offset": 4,
+      "end_col_offset": 12,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\generate_nuggets_v2.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 79,
+      "line_range": [
+        79,
+        80
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "88                 save_nugget_v2(db, day, n)\n89             except: pass\n90 \n",
+      "col_offset": 12,
+      "end_col_offset": 24,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\generate_nuggets_v2.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 89,
+      "line_range": [
+        89
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "30             print(f\"DEBUG: Found Admin Email in Config: {ADMIN_EMAIL}\")\n31     except: pass\n32 \n",
+      "col_offset": 4,
+      "end_col_offset": 16,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\migrations\\factory_reset.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 31,
+      "line_range": [
+        31
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "72         pass\n73     except: pass\n74 \n",
+      "col_offset": 4,
+      "end_col_offset": 16,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\migrations\\factory_reset.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 73,
+      "line_range": [
+        73
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "110                 print(f\"   \ud83d\uddd1\ufe0f Removed local file: {f}\")\n111             except: pass\n112 \n",
+      "col_offset": 12,
+      "end_col_offset": 24,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\tools\\migrations\\factory_reset.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 111,
+      "line_range": [
+        111
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "21                 return ip\n22     except Exception:\n23         pass\n24     \n",
+      "col_offset": 4,
+      "end_col_offset": 12,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\utils\\network.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 22,
+      "line_range": [
+        22,
+        23
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "33             return headers.get(\"X-Real-Ip\")\n34     except Exception:\n35         pass\n36     \n",
+      "col_offset": 4,
+      "end_col_offset": 12,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\utils\\network.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 34,
+      "line_range": [
+        34,
+        35
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "47             return headers.get(\"User-Agent\")\n48     except:\n49         pass\n50     return None\n",
+      "col_offset": 4,
+      "end_col_offset": 12,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\utils\\network.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 48,
+      "line_range": [
+        48,
+        49
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "11             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)\n12     except: pass\n13 \n",
+      "col_offset": 4,
+      "end_col_offset": 16,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\admin\\contacts.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 12,
+      "line_range": [
+        12
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "39                     chars = string.ascii_letters + string.digits + \"!@#\"\n40                     temp_pass = ''.join(random.choice(chars) for _ in range(10))\n41                     \n",
+      "col_offset": 40,
+      "end_col_offset": 60,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\admin\\contacts.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 330,
+        "link": "https://cwe.mitre.org/data/definitions/330.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
+      "line_number": 40,
+      "line_range": [
+        40
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random",
+      "test_id": "B311",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "18             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)\n19     except: pass\n20 \n",
+      "col_offset": 4,
+      "end_col_offset": 16,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\admin\\dashboard.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 19,
+      "line_range": [
+        19
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    },
+    {
+      "code": "10             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)\n11     except: pass\n12 \n",
+      "col_offset": 4,
+      "end_col_offset": 16,
+      "filename": "c:\\Users\\reach\\.gemini\\antigravity\\scratch\\relaunchpython\\PyDaily\\views\\admin\\settings.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Try, Except, Pass detected.",
+      "line_number": 11,
+      "line_range": [
+        11
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html",
+      "test_id": "B110",
+      "test_name": "try_except_pass"
+    }
+  ]
+}

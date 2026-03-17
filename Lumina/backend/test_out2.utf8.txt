@@ -1,8 +1,0 @@
-'implemented in Python. Variables are described as labels for values, which '
-'Variables and Simple\xa0Data\xa0Types\xa0\xa0\xa021'
-'Using Variables in Strings'
-'Variables and Simple\xa0Data\xa0Types\xa0\xa0\xa023'
-'Variables and Simple\xa0Data\xa0Types\xa0\xa0\xa025'
-'Variables and Simple\xa0Data\xa0Types\xa0\xa0\xa027'
-'Variables and Simple\xa0Data\xa0Types\xa0\xa0\xa029'
-'Variables and Simple\xa0Data\xa0Types\xa0\xa0\xa031'
