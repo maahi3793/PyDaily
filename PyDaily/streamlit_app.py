@@ -98,9 +98,12 @@ def save_auth_cookies(access_token, refresh_token, email, days=30):
 
 def clear_auth_cookies():
     """Clear auth cookies on logout."""
-    cookie_manager.delete("pydaily_auth_token", key="del_auth")
-    cookie_manager.delete("pydaily_refresh_token", key="del_refresh")
-    cookie_manager.delete("pydaily_user_email", key="del_email")
+    cookies_to_clear = ["pydaily_auth_token", "pydaily_refresh_token", "pydaily_user_email"]
+    
+    for c in cookies_to_clear:
+        if cookie_manager.get(c):
+            cookie_manager.delete(c, key=f"del_{c}")
+            
     print("🗑️ Auth cookies cleared")
 
 # 4. Session State Initialization
