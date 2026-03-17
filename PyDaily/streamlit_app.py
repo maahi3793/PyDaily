@@ -91,16 +91,16 @@ def restore_session_from_cookie():
 def save_auth_cookies(access_token, refresh_token, email, days=30):
     """Save auth token AND refresh token to browser cookies for persistence."""
     expiry = datetime.now() + timedelta(days=days)
-    cookie_manager.set("pydaily_auth_token", access_token, expires_at=expiry)
-    cookie_manager.set("pydaily_refresh_token", refresh_token, expires_at=expiry)
-    cookie_manager.set("pydaily_user_email", email, expires_at=expiry)
+    cookie_manager.set("pydaily_auth_token", access_token, expires_at=expiry, key="set_auth")
+    cookie_manager.set("pydaily_refresh_token", refresh_token, expires_at=expiry, key="set_refresh")
+    cookie_manager.set("pydaily_user_email", email, expires_at=expiry, key="set_email")
     print(f"🍪 Auth cookies saved for {email} (expires: {expiry})")
 
 def clear_auth_cookies():
     """Clear auth cookies on logout."""
-    cookie_manager.delete("pydaily_auth_token")
-    cookie_manager.delete("pydaily_refresh_token")
-    cookie_manager.delete("pydaily_user_email")
+    cookie_manager.delete("pydaily_auth_token", key="del_auth")
+    cookie_manager.delete("pydaily_refresh_token", key="del_refresh")
+    cookie_manager.delete("pydaily_user_email", key="del_email")
     print("🗑️ Auth cookies cleared")
 
 # 4. Session State Initialization
