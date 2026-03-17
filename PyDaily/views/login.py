@@ -3,39 +3,32 @@ import time
 from backend.db_supabase import SupabaseManager
 
 def run():
-    # 1. Custom CSS for Landing Page (Premium Design)
+    # 1. Custom CSS for Landing Page (Premium Design - Zen Nature)
     st.markdown("""
     <style>
-    /* IMPORT PREMIUM FONT: 'Outfit' */
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+    /* IMPORT PREMIUM FONTS */
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap');
     
-    /* FORCE LIGHT MODE — Override dark mode browsers */
+    /* FORCE LIGHT MODE */
     .stApp, .stApp * {
         color-scheme: light !important;
     }
     
-    /* Force text colors everywhere (except gradient title) */
-    .stApp p, .stApp span, .stApp label, .stApp h1:not(.hero-title), .stApp h2, .stApp h3, 
-    .stApp h4, .stApp h5, .stApp h6, .stApp div, .stApp li, .stApp td, .stApp th {
-        color: #111827 !important;
+    /* Zen Nature Variables */
+    :root {
+        --bg-beige: #f9f6f0;
+        --sage-green: #8aa899;
+        --sage-dark: #6a8879;
+        --sage-light: #e6ece9;
+        --text-main: #2c3e35;
+        --text-muted: #5a7065;
+        --border-light: #dce3df;
     }
     
-    /* Force input fields light */
-    .stApp input, .stApp textarea, .stApp select {
-        background-color: #F8FAFC !important;
-        color: #111827 !important;
-    }
-    
-    /* Force label/caption text */
-    .stApp .stCaption, .stApp small {
-        color: #64748b !important;
-    }
-    
-    /* Force containers/tabs to light bg */
-    .stApp [data-testid="stForm"], 
-    .stApp [data-testid="stExpander"],
-    .stApp [data-baseweb="tab-panel"] {
-        background-color: transparent !important;
+    /* Typography Overrides */
+    .stApp p, .stApp span:not(.logo-icon), .stApp label, .stApp div, .stApp li {
+        color: var(--text-main) !important;
+        font-family: 'DM Sans', sans-serif !important;
     }
     
     /* HIDE SIDEBAR & DECORATION */
@@ -43,28 +36,20 @@ def run():
     header { visibility: hidden; }
     footer { visibility: hidden; }
     
-    /* FULL PAGE - NO SCROLL INITIALLY, BUT ALLOW IF CONTENT EXPANDS */
-    html, body {
-        height: 100vh !important;
-        overflow-y: auto !important; /* Allow scroll if needed (expander) */
-        scrollbar-width: none; /* Firefox */
-    }
-    
-    /* Hide Scrollbar (Chrome/Safari) */
-    html::-webkit-scrollbar, body::-webkit-scrollbar, .stApp::-webkit-scrollbar {
-        display: none;
-    }
-    
+    /* FULL PAGE BACKGROUND */
     .stApp {
-        background: linear-gradient(135deg, #faf5ff 0%, #ede9fe 50%, #ddd6fe 100%) !important;
-        font-family: 'Outfit', sans-serif !important;
+        background-color: var(--bg-beige) !important;
+        background-image: 
+            radial-gradient(circle at 100% 0%, var(--sage-light) 0%, transparent 40%),
+            radial-gradient(circle at 0% 100%, #f4eee2 0%, transparent 40%) !important;
+        font-family: 'DM Sans', sans-serif !important;
         min-height: 100vh !important;
     }
     
     .block-container {
         padding-top: 2rem !important;
         padding-bottom: 2rem !important;
-        max-width: 100% !important;
+        max-width: 1200px !important;
     }
     
     /* HERO SECTION */
@@ -75,20 +60,18 @@ def run():
     }
     
     .hero-title {
-        font-size: 3rem;
-        font-weight: 800;
+        font-family: 'DM Serif Display', serif !important;
+        font-size: 3.5rem;
+        font-weight: 400;
         line-height: 1.1;
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: var(--text-main) !important;
         margin-bottom: 0.8rem;
-        letter-spacing: -0.03em;
     }
     
     .hero-subtitle {
-        font-size: 1rem;
-        color: #475569;
-        line-height: 1.5;
+        font-size: 1.1rem;
+        color: var(--text-muted) !important;
+        line-height: 1.6;
         margin-bottom: 1.2rem;
         font-weight: 400;
     }
@@ -103,25 +86,33 @@ def run():
         display: flex;
         align-items: center;
         gap: 0.4rem;
-        background: white;
+        background: rgba(255, 255, 255, 0.6);
         padding: 0.5rem 0.8rem;
-        border-radius: 10px;
-        border: 1px solid #E2E8F0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        border-radius: 100px;
+        border: 1px solid var(--border-light);
         font-weight: 500;
-        color: #334155;
-        font-size: 0.8rem;
+        color: var(--text-main);
+        font-size: 0.85rem;
     }
     
-    /* LOGIN CARD */
+    /* LOGIN CARD CONTAINER */
     .login-container {
-        margin-top: 5vh; /* Reduced top margin to give more room */
+        margin-top: 5vh; 
+    }
+    
+    /* Streamlit Container (The Form Card) */
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        border-radius: 32px !important;
+        border: none !important;
+        background: white !important;
+        box-shadow: 0 12px 40px rgba(44, 62, 53, 0.08) !important;
+        padding: 10px !important;
     }
     
     /* PILL TABS - 50/50 SPLIT */
     div[data-baseweb="tab-list"] {
-        background: #f1f5f9 !important;
-        border-radius: 12px !important;
+        background: #f0ede5 !important;
+        border-radius: 100px !important;
         padding: 4px !important;
         gap: 0 !important;
         display: flex !important;
@@ -130,54 +121,72 @@ def run():
     
     button[data-baseweb="tab"] {
         background: transparent !important;
-        border-radius: 10px !important;
+        border-radius: 100px !important;
         padding: 8px 0 !important;
-        font-weight: 600 !important;
-        color: #64748b !important;
-        flex: 1 !important; /* Force 50% width */
+        font-weight: 500 !important;
+        color: var(--text-muted) !important;
+        flex: 1 !important;
         text-align: center !important;
         justify-content: center !important;
     }
     
     button[aria-selected="true"] {
         background: white !important;
-        color: #0f172a !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+        color: var(--text-main) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
     }
     
-    div[data-baseweb="tab-highlight"],
-    div[data-baseweb="tab-border"] {
+    div[data-baseweb="tab-highlight"], div[data-baseweb="tab-border"] {
         display: none !important;
     }
     
     /* BUTTON STYLING */
     .stButton > button, .stFormSubmitButton > button {
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%) !important;
+        background: var(--sage-dark) !important;
         color: white !important;
         border: none !important;
-        height: 44px !important;
-        font-weight: 600 !important;
-        border-radius: 10px !important;
-        font-size: 0.95rem !important;
-        transition: all 0.2s !important;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+        height: 48px !important;
+        font-weight: 500 !important;
+        border-radius: 100px !important;
+        font-size: 1rem !important;
+        transition: all 0.3s !important;
     }
     
     .stButton > button:hover, .stFormSubmitButton > button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4) !important;
+        background: #557061 !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 16px rgba(106, 136, 121, 0.25) !important;
+    }
+    
+    /* Button Secondary (For Explore Demo) */
+    .stButton[data-testid="stButton"] button:has(div:contains("Explore Demo")) {
+        background: transparent !important;
+        border: 1px solid var(--sage-dark) !important;
+        color: var(--sage-dark) !important;
+        box-shadow: none !important;
+    }
+    .stButton[data-testid="stButton"] button:has(div:contains("Explore Demo")):hover {
+        background: var(--sage-light) !important;
     }
     
     /* Inputs */
     input {
-        background-color: #F8FAFC !important;
-        border: 1px solid #E2E8F0 !important;
-        border-radius: 10px !important;
+        background-color: var(--bg-beige) !important;
+        border: 1px solid var(--border-light) !important;
+        border-radius: 100px !important;
+        color: var(--text-main) !important;
+        padding-left: 1rem !important;
+    }
+    input:focus {
+        border-color: var(--sage-green) !important;
+        background: white !important;
+        box-shadow: 0 0 0 4px var(--sage-light) !important;
     }
     
     /* Expander styling */
     .stExpander {
         border: none !important;
+        background: transparent !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -195,18 +204,18 @@ def run():
         st.write("")
         # REMOVED: Beta Badge
         
-        st.markdown('<h1 class="hero-title">1% Better Every Day.</h1>', unsafe_allow_html=True)
-        st.markdown('<h2 class="hero-subtitle">The consistent path to mastery. Build the daily habit of coding without the burnout.</h2>', unsafe_allow_html=True)
+        st.markdown('<h1 class="hero-title">Grow 1% Better<br>Every Day.</h1>', unsafe_allow_html=True)
+        st.markdown('<h2 class="hero-subtitle">The consistent, peaceful path to Python mastery. Build the daily habit of coding—without the burnout.</h2>', unsafe_allow_html=True)
         
-        # COMPACT FEATURES (Revised Copy)
+        # COMPACT FEATURES (Zen Copy)
         st.markdown("""
         <div class="feature-grid">
-            <div class="feature-item">🧩 Bite-sized Lessons</div>
-            <div class="feature-item">🔥 Streak & Consistency</div>
+            <div class="feature-item">🌱 Bite-sized Lessons</div>
+            <div class="feature-item">☕ Streak & Consistency</div>
         </div>
         <div class="feature-grid">
             <div class="feature-item">🧠 Smart Review</div>
-            <div class="feature-item">🚀 Career Growth</div>
+            <div class="feature-item">🗻 Career Growth</div>
         </div>
         """, unsafe_allow_html=True)
         
@@ -222,47 +231,47 @@ def run():
         st.markdown("""
         <div style="max-width: 280px; margin: 0 auto;">
             <!-- Phone Frame -->
-            <div style="background: #1a1a2e; border-radius: 30px; padding: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <div style="background: #2c3e35; border-radius: 30px; padding: 10px; box-shadow: 0 20px 60px rgba(44, 62, 53, 0.12);">
                 <!-- Status Bar -->
-                <div style="text-align: center; color: #888; font-size: 11px; padding: 6px 0 4px;">
+                <div style="text-align: center; color: #8aa899; font-size: 11px; padding: 6px 0 4px;">
                     9:41 AM
                 </div>
                 <!-- Gmail Header -->
                 <div style="background: #ffffff; border-radius: 20px 20px 0 0; padding: 12px 15px;">
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span style="font-size: 1.3rem;">📧</span>
-                        <span style="font-weight: 700; font-size: 1.1rem; color: #202124;">Inbox</span>
-                        <span style="margin-left: auto; background: #ea4335; color: white; border-radius: 10px; padding: 1px 7px; font-size: 11px; font-weight: 600;">3 new</span>
+                        <span style="font-weight: 700; font-size: 1.1rem; color: #2c3e35;">Inbox</span>
+                        <span style="margin-left: auto; background: #e07a5f; color: white; border-radius: 10px; padding: 1px 7px; font-size: 11px; font-weight: 600;">3 new</span>
                     </div>
                 </div>
                 <!-- Email List -->
                 <div style="background: #ffffff; padding: 0;">
                     <!-- Email 1 -->
-                    <div style="padding: 12px 15px; border-bottom: 1px solid #f0f0f0; background: #eef6ff;">
-                        <div style="font-weight: 700; font-size: 0.85rem; color: #202124;">PyDaily</div>
-                        <div style="font-size: 0.82rem; color: #202124; font-weight: 600;">🐍 Day 1: Variables & Data Types</div>
-                        <div style="font-size: 0.75rem; color: #5f6368; margin-top: 2px;">Welcome to your Python journey! Today we...</div>
+                    <div style="padding: 12px 15px; border-bottom: 1px solid #dce3df; background: #fdfyf9;">
+                        <div style="font-weight: 700; font-size: 0.85rem; color: #2c3e35;">PyDaily</div>
+                        <div style="font-size: 0.82rem; color: #2c3e35; font-weight: 600;">🐍 Day 1: Variables & Data Types</div>
+                        <div style="font-size: 0.75rem; color: #5a7065; margin-top: 2px;">Welcome to your Python journey! Today we...</div>
                     </div>
                     <!-- Email 2 -->
-                    <div style="padding: 12px 15px; border-bottom: 1px solid #f0f0f0; background: #eef6ff;">
-                        <div style="font-weight: 700; font-size: 0.85rem; color: #202124;">PyDaily</div>
-                        <div style="font-size: 0.82rem; color: #202124; font-weight: 600;">⚡ Mid-Day Boost: Keep Going!</div>
-                        <div style="font-size: 0.75rem; color: #5f6368; margin-top: 2px;">"The expert was once a beginner" — here's your...</div>
+                    <div style="padding: 12px 15px; border-bottom: 1px solid #dce3df; background: #eef6ff;">
+                        <div style="font-weight: 700; font-size: 0.85rem; color: #2c3e35;">PyDaily</div>
+                        <div style="font-size: 0.82rem; color: #2c3e35; font-weight: 600;">⚡ Mid-Day Boost: Keep Going!</div>
+                        <div style="font-size: 0.75rem; color: #5a7065; margin-top: 2px;">"The expert was once a beginner" — here's your...</div>
                     </div>
                     <!-- Email 3 -->
                     <div style="padding: 12px 15px; background: #eef6ff;">
-                        <div style="font-weight: 700; font-size: 0.85rem; color: #202124;">PyDaily</div>
-                        <div style="font-size: 0.82rem; color: #202124; font-weight: 600;">🌙 Nightly Check-in: Day 1</div>
-                        <div style="font-size: 0.75rem; color: #5f6368; margin-top: 2px;">Did you finish the challenge? Tomorrow we'll...</div>
+                        <div style="font-weight: 700; font-size: 0.85rem; color: #2c3e35;">PyDaily</div>
+                        <div style="font-size: 0.82rem; color: #2c3e35; font-weight: 600;">🌙 Nightly Check-in: Day 1</div>
+                        <div style="font-size: 0.75rem; color: #5a7065; margin-top: 2px;">Did you finish the challenge? Tomorrow we'll...</div>
                     </div>
                 </div>
                 <!-- Bottom Nav -->
                 <div style="background: #ffffff; border-radius: 0 0 20px 20px; padding: 8px; text-align: center;">
-                    <span style="font-size: 0.7rem; color: #999;">📩 Mail &nbsp;&nbsp; 💬 Chat &nbsp;&nbsp; 📹 Meet</span>
+                    <span style="font-size: 0.7rem; color: #8aa899;">📩 Mail &nbsp;&nbsp; 💬 Chat &nbsp;&nbsp; 📹 Meet</span>
                 </div>
             </div>
         </div>
-        <p style="text-align: center; color: #64748b; font-size: 0.8rem; margin-top: 10px;">↑ What your inbox looks like as a PyDaily student</p>
+        <p style="text-align: center; color: #5a7065; font-size: 0.8rem; margin-top: 10px;">↑ Your inbox as a PyDaily student</p>
         """, unsafe_allow_html=True)
         
         st.markdown('</div>', unsafe_allow_html=True) # End hero-container
@@ -284,7 +293,7 @@ def run():
                     email = st.text_input("Email", placeholder="you@example.com")
                     password = st.text_input("Password", type="password")
                     st.write("")
-                    submit = st.form_submit_button("Sign In ->", type="primary", use_container_width=True)
+                    submit = st.form_submit_button("Sign In 🌿", type="primary", use_container_width=True)
                 
                 if submit:
                     with st.spinner("Authenticating..."):
@@ -330,7 +339,7 @@ def run():
                     new_email = st.text_input("Email")
                     new_password = st.text_input("Choose Password", type="password")
                     st.write("")
-                    submit_new = st.form_submit_button("Join Class (Free)", type="primary", use_container_width=True)
+                    submit_new = st.form_submit_button("Join Class (Free) 🌿", type="primary", use_container_width=True)
                 
                 if submit_new:
                     if len(new_password) < 6:
