@@ -90,31 +90,28 @@ jobs:
                    print("⚠️ WARNING: Regenerate selected but Day is 0. Please specify a day.")
               
           elif event_name == "schedule":
-              now = datetime.datetime.utcnow()
-              hour = now.hour
-              minute = now.minute
-              print(f"🔹 Schedule Trigger Detected. UTC Time: {hour:02d}:{minute:02d}")
+              cron_trigger = "${{ github.event.schedule }}"
+              print(f"🔹 Schedule Trigger Detected. Cron: {cron_trigger}")
               
-              # Robust Time Windows (Widened for Delays)
-              
-              # Morning (Sched 02:30): Accept 02:00 - 05:59 (Allow ~3.5h delay)
-              if 2 <= hour <= 5:
+              if cron_trigger == '30 2 * * *':
                   mode = "morning"
-                  
-              # Motivation (Sched 06:30): Accept 06:00 - 08:59 (Stop before Boss@09:30)
-              elif 6 <= hour <= 8:
+              elif cron_trigger == '30 6 * * *':
                   mode = "motivation"
-                  
-              # Evening (Sched 14:30): Accept 14:00 - 16:59 (Stop before Insights@17:30)
-              elif 14 <= hour <= 16:
+              elif cron_trigger == '30 14 * * *':
                   mode = "evening"
-
-              # Insights (Sched 17:30): Accept 17:00 - 20:59 (Huge gap until next morning)
-              elif 17 <= hour <= 20:
+              elif cron_trigger == '30 17 * * *':
                   mode = "insights"
-          
+              else:
+                  # Fallback just in case manual execution doesn't provide it
+                  now = datetime.datetime.utcnow()
+                  hour = now.hour
+                  if 2 <= hour <= 5: mode = "morning"
+                  elif 6 <= hour <= 8: mode = "motivation"
+                  elif 14 <= hour <= 16: mode = "evening"
+                  elif 17 <= hour <= 20: mode = "insights"
+                  
           if not mode:
-              print("❌ Could not determine mode! Time might be too far off schedule.")
+              print("❌ Could not determine mode! Time/Schedule too far off.")
               import sys
               sys.exit(1)
           
