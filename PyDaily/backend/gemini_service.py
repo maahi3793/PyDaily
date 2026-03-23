@@ -109,18 +109,25 @@ Friendly, Mentor-like, use emojis sparingly.
 
             3. NO MARKDOWN. RETURN ONLY THE HTML STRING.
             """
-            response = self.client.models.generate_content(
-                model=self.model_name,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    system_instruction=self.system_instruction,
-                )
-            )
-            logging.info("Content generated successfully")
-            return response.text
-        except Exception as e:
-            logging.error(f"Gemini API Error: {str(e)}")
-            return f"Error generating content: {str(e)}"
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    response = self.client.models.generate_content(
+                        model=self.model_name,
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            system_instruction=self.system_instruction,
+                        )
+                    )
+                    logging.info("Content generated successfully")
+                    return response.text
+                except Exception as e:
+                    logging.warning(f"Gemini API Error on Attempt {attempt+1}: {str(e)}")
+                    if attempt < max_retries - 1:
+                        time.sleep(5)
+            
+            logging.error("All Gemini Lesson Retries Failed.")
+            return "Error generating content: Max retries exceeded."
 
     def generate_quiz(self, day_number, recent_topics, cumulative_topics):
         logging.info(f"Attempting to generate JSON QUIZ for Day {day_number}")
@@ -322,17 +329,23 @@ Friendly, Mentor-like, use emojis sparingly.
 
             2. NO MARKDOWN. RETURN ONLY THE HTML STRING.
             """
-            response = self.client.models.generate_content(
-                model=self.model_name,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    system_instruction=self.system_instruction,
-                )
-            )
-            return response.text
-        except Exception as e:
-            logging.error(f"Gemini API Error (Reminder): {str(e)}")
-            return f"Error generating reminder: {str(e)}"
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    response = self.client.models.generate_content(
+                        model=self.model_name,
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            system_instruction=self.system_instruction,
+                        )
+                    )
+                    return response.text
+                except Exception as e:
+                    logging.warning(f"Gemini API Error (Reminder) on Attempt {attempt+1}: {str(e)}")
+                    if attempt < max_retries - 1:
+                        time.sleep(3)
+                        
+            return "Error generating reminder: Max retries exceeded."
             
     def generate_motivation(self):
         logging.info("Attempting to generate MID-DAY motivation")
