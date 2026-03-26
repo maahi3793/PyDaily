@@ -54,80 +54,79 @@ Friendly, Mentor-like, use emojis sparingly.
         # Debug Log
         print(f"🎨 Generating Content for Day {day_number}: {topic}")
 
-        try:
-            prompt = f"""
-            Generate the official PyDaily Newsletter for Day {day_number}.
-            
-            {context_str}
-            
-            CONTENT REQUIREMENTS:
-            - **Tone**: Enthusiastic, Emoji-Rich, Friendly, and "Bright". Use emojis frequently! 🌟
-            - **Length**: COMPREHENSIVE (5-6 minute read). ~600-800 words of core lesson content. Do NOT skimp on the explanation.
-            - **Structure**:
-                1. **Introduction**: A high-energy hook.
-                2. **The Concept**: Deep dive with analogies (Explain Like I'm Five).
-                3. **Code Examples**: Clear, well-commented code.
-                4. **Real World**: Why do we care?
-                5. **Daily Challenge**: Small task.
-                6. **Cumulative Practice**: The 5 extra problems.
-            
-            NEGATIVE CONSTRAINTS:
-            - Do NOT mention "100 Days of Code".
-            - Do NOT make up your own topic.
-            - Do NOT list the specific "Past Topics" in the text (e.g. don't say "Combine with Variables, Loops..."). Just say "Combine with previous concepts."
-            
-            STRICT FORMATTING RULES:
-            1. Output VALID HTML matching this structure:
-               <div style="font-family: 'Segoe UI', Helvetica, Arial, sans-serif; max-width:600px; margin:0 auto; border:1px solid #e0e0e0; border-radius:12px; overflow:hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-                 <!-- HEADER: Bright & Happy Gradient -->
-                 <div style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color:white; padding:32px 24px; text-align:center;">
-                   <div style="text-transform:uppercase; letter-spacing:1.5px; font-size:0.85rem; font-weight:700; color:rgba(255,255,255,0.9); margin-bottom:8px;">🚀 PyDaily &bull; Day {day_number}</div>
-                   <h1 style="margin:0; font-size:1.8rem; font-weight:800; line-height:1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.1); color:#ffffff;">{topic}</h1>
-                 </div>
-                 
-                 <div style="padding:32px; color:#334155; line-height:1.7; font-size:16px;">
-                    <!-- Insert Long, Emoji-Rich Content Here -->
-                    [Content...]
-                    
-                    <pre style="background-color:#1e293b; color:#f8fafc; padding:15px; border-radius:8px; overflow-x:auto; border:1px solid #334155;"><code>
-                    print("Code Example")
-                    </code></pre>
+        prompt = f"""
+        Generate the official PyDaily Newsletter for Day {day_number}.
+        
+        {context_str}
+        
+        CONTENT REQUIREMENTS:
+        - **Tone**: Enthusiastic, Emoji-Rich, Friendly, and "Bright". Use emojis frequently! 🌟
+        - **Length**: COMPREHENSIVE (5-6 minute read). ~600-800 words of core lesson content. Do NOT skimp on the explanation.
+        - **Structure**:
+            1. **Introduction**: A high-energy hook.
+            2. **The Concept**: Deep dive with analogies (Explain Like I'm Five).
+            3. **Code Examples**: Clear, well-commented code.
+            4. **Real World**: Why do we care?
+            5. **Daily Challenge**: Small task.
+            6. **Cumulative Practice**: The 5 extra problems.
+        
+        NEGATIVE CONSTRAINTS:
+        - Do NOT mention "100 Days of Code".
+        - Do NOT make up your own topic.
+        - Do NOT list the specific "Past Topics" in the text (e.g. don't say "Combine with Variables, Loops..."). Just say "Combine with previous concepts."
+        
+        STRICT FORMATTING RULES:
+        1. Output VALID HTML matching this structure:
+           <div style="font-family: 'Segoe UI', Helvetica, Arial, sans-serif; max-width:600px; margin:0 auto; border:1px solid #e0e0e0; border-radius:12px; overflow:hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+             <!-- HEADER: Bright & Happy Gradient -->
+             <div style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color:white; padding:32px 24px; text-align:center;">
+               <div style="text-transform:uppercase; letter-spacing:1.5px; font-size:0.85rem; font-weight:700; color:rgba(255,255,255,0.9); margin-bottom:8px;">🚀 PyDaily &bull; Day {day_number}</div>
+               <h1 style="margin:0; font-size:1.8rem; font-weight:800; line-height:1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.1); color:#ffffff;">{topic}</h1>
+             </div>
+             
+             <div style="padding:32px; color:#334155; line-height:1.7; font-size:16px;">
+                <!-- Insert Long, Emoji-Rich Content Here -->
+                [Content...]
+                
+                <pre style="background-color:#1e293b; color:#f8fafc; padding:15px; border-radius:8px; overflow-x:auto; border:1px solid #334155;"><code>
+                print("Code Example")
+                </code></pre>
 
-                    <hr style="border:0; border-top:2px dashed #e2e8f0; margin:30px 0;">
-                    
-                    <h3 style="color:#4f46e5;">🏋️ Cumulative Practice (5 Problems)</h3>
-                    <p><em>Combine what you learned today with your previous superpowers!</em></p>
-                    <ol>
-                        <li><strong>[Problem Title]</strong>: ...</li>
-                    </ol>
-                 </div>
-                 
-                 <div style="background-color:#f8fafc; padding:15px; text-align:center; color:#64748b; font-size:13px; border-top:1px solid #e2e8f0;">
-                    Made with 🐍 and 💜 by PyDaily
-                 </div>
-               </div>
+                <hr style="border:0; border-top:2px dashed #e2e8f0; margin:30px 0;">
+                
+                <h3 style="color:#4f46e5;">🏋️ Cumulative Practice (5 Problems)</h3>
+                <p><em>Combine what you learned today with your previous superpowers!</em></p>
+                <ol>
+                    <li><strong>[Problem Title]</strong>: ...</li>
+                </ol>
+             </div>
+             
+             <div style="background-color:#f8fafc; padding:15px; text-align:center; color:#64748b; font-size:13px; border-top:1px solid #e2e8f0;">
+                Made with 🐍 and 💜 by PyDaily
+             </div>
+           </div>
 
-            3. NO MARKDOWN. RETURN ONLY THE HTML STRING.
-            """
-            max_retries = 3
-            for attempt in range(max_retries):
-                try:
-                    response = self.client.models.generate_content(
-                        model=self.model_name,
-                        contents=prompt,
-                        config=types.GenerateContentConfig(
-                            system_instruction=self.system_instruction,
-                        )
+        3. NO MARKDOWN. RETURN ONLY THE HTML STRING.
+        """
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = self.client.models.generate_content(
+                    model=self.model_name,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        system_instruction=self.system_instruction,
                     )
-                    logging.info("Content generated successfully")
-                    return response.text
-                except Exception as e:
-                    logging.warning(f"Gemini API Error on Attempt {attempt+1}: {str(e)}")
-                    if attempt < max_retries - 1:
-                        time.sleep(5)
-            
-            logging.error("All Gemini Lesson Retries Failed.")
-            return "Error generating content: Max retries exceeded."
+                )
+                logging.info("Content generated successfully")
+                return response.text
+            except Exception as e:
+                logging.warning(f"Gemini API Error on Attempt {attempt+1}: {str(e)}")
+                if attempt < max_retries - 1:
+                    time.sleep(5)
+        
+        logging.error("All Gemini Lesson Retries Failed.")
+        return "Error generating content: Max retries exceeded."
 
     def generate_quiz(self, day_number, recent_topics, cumulative_topics):
         logging.info(f"Attempting to generate JSON QUIZ for Day {day_number}")
@@ -301,51 +300,50 @@ Friendly, Mentor-like, use emojis sparingly.
 
     def generate_reminder(self, day_number, topic_name="General Python", next_topic_name="Python Concepts"):
         logging.info(f"Attempting to generate REMINDER for Day {day_number} (Topic: {topic_name})")
-        try:
-            prompt = f"""
-            Generate a short, encouraging evening check-in email for Day {day_number}.
-            Current Topic: {topic_name}
-            Tomorrow's Topic: {next_topic_name}
-            
-            CONTENT GOALS:
-            - Ask if they finished the Challenge/Quiz?
-            - Provide a 2-3 sentence "Pro Tip" related to {topic_name}.
-            - Motivate them for tomorrow's topic: "{next_topic_name}". TEASE IT EXCITINGLY.
-            - Ensure the email body is substantial (at least 2 paragraphs).
+        prompt = f"""
+        Generate a short, encouraging evening check-in email for Day {day_number}.
+        Current Topic: {topic_name}
+        Tomorrow's Topic: {next_topic_name}
+        
+        CONTENT GOALS:
+        - Ask if they finished the Challenge/Quiz?
+        - Provide a 2-3 sentence "Pro Tip" related to {topic_name}.
+        - Motivate them for tomorrow's topic: "{next_topic_name}". TEASE IT EXCITINGLY.
+        - Ensure the email body is substantial (at least 2 paragraphs).
 
-            STRICT FORMATTING RULES:
-            1. Output VALID HTML matching this structure:
-               <div style="font-family: Helvetica, Arial, sans-serif; max-width:600px; margin:0 auto; border:1px solid #e0e0e0; border-radius:10px;">
-                 <div style="background-color:#2c3e50; color:white; padding:15px; text-align:center; border-radius:10px 10px 0 0;">
-                   <h3>🌙 Nightly Check-in: Day {day_number}</h3>
-                 </div>
-                 <div style="padding:20px; color:#333; background-color:#f9f9f9;">
-                    [Insert Content Here...]
-                 </div>
-                 <div style="text-align:center; padding:15px;">
-                    <a href="https://pydaily.streamlit.app" style="background-color:#27ae60; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Go to Student Portal 🚀</a>
-                 </div>
-               </div>
+        STRICT FORMATTING RULES:
+        1. Output VALID HTML matching this structure:
+           <div style="font-family: Helvetica, Arial, sans-serif; max-width:600px; margin:0 auto; border:1px solid #e0e0e0; border-radius:10px;">
+             <div style="background-color:#2c3e50; color:white; padding:15px; text-align:center; border-radius:10px 10px 0 0;">
+               <h3>🌙 Nightly Check-in: Day {day_number}</h3>
+             </div>
+             <div style="padding:20px; color:#333; background-color:#f9f9f9;">
+                [Insert Content Here...]
+             </div>
+             <div style="text-align:center; padding:15px;">
+                <a href="https://pydaily.streamlit.app" style="background-color:#27ae60; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Go to Student Portal 🚀</a>
+             </div>
+           </div>
 
-            2. NO MARKDOWN. RETURN ONLY THE HTML STRING.
-            """
-            max_retries = 3
-            for attempt in range(max_retries):
-                try:
-                    response = self.client.models.generate_content(
-                        model=self.model_name,
-                        contents=prompt,
-                        config=types.GenerateContentConfig(
-                            system_instruction=self.system_instruction,
-                        )
+        2. NO MARKDOWN. RETURN ONLY THE HTML STRING.
+        """
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = self.client.models.generate_content(
+                    model=self.model_name,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        system_instruction=self.system_instruction,
                     )
-                    return response.text
-                except Exception as e:
-                    logging.warning(f"Gemini API Error (Reminder) on Attempt {attempt+1}: {str(e)}")
-                    if attempt < max_retries - 1:
-                        time.sleep(3)
-                        
-            return "Error generating reminder: Max retries exceeded."
+                )
+                return response.text
+            except Exception as e:
+                logging.warning(f"Gemini API Error (Reminder) on Attempt {attempt+1}: {str(e)}")
+                if attempt < max_retries - 1:
+                    time.sleep(3)
+                    
+        return "Error generating reminder: Max retries exceeded."
             
     def generate_motivation(self):
         logging.info("Attempting to generate MID-DAY motivation")
