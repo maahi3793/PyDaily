@@ -135,7 +135,7 @@ Friendly, Mentor-like, use emojis sparingly.
         all_allowed_topics = recent_topics + cumulative_topics
         scope_str = "\n".join([f"- {t}" for t in all_allowed_topics])
 
-        max_retries = 3
+        max_retries = 2
         for attempt in range(max_retries):
             try:
                 logging.info(f"Quiz Generation Attempt {attempt + 1}/{max_retries}")
@@ -197,12 +197,8 @@ Friendly, Mentor-like, use emojis sparingly.
                 )
             )
                 
-                # Clean potential markdown
-                text = response.text.strip()
-                if "```json" in text:
-                    text = text.split("```json")[1].split("```")[0].strip()
-                elif "```" in text:
-                    text = text.split("```")[1].split("```")[0].strip()
+                # Clean potential markdown with new Robust Repair Helper
+                text = self._repair_json(response.text)
                 
                 # Basic Validation: Check if it looks like JSON
                 if not text.startswith("{") or not text.endswith("}"):

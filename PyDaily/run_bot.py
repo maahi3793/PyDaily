@@ -314,11 +314,29 @@ def run_morning_cycle(gemini, mailer, cache):
                     recent_topics = [f"Day {d}: {curriculum.TOPICS.get(d, 'Topic')}" for d in recent_days if d > 0]
                     
                     # Cumulative: All days before recent (e.g. for Day 9: Day 1..6)
-                    # We pick a random sample if list is huge? For now, list all up to day-3.
                     all_prior_days = range(1, day-2)
                     cumulative_topics = [f"Day {d}: {curriculum.TOPICS.get(d, 'Topic')}" for d in all_prior_days if d > 0 and "Quiz" not in curriculum.TOPICS.get(d, "")]
                     
-                    content = gemini.generate_quiz(day, recent_topics, cumulative_topics)
+                    try:
+                        content = gemini.generate_quiz(day, recent_topics, cumulative_topics)
+                    except Exception as quiz_err:
+                        logging.error(f"⚠️ QUIZ SAFETY NET TRIGGERED for Day {day}: {quiz_err}")
+                        # Fallback: Send yesterday's lesson with an apology
+                        yesterday_content = cache.get_lesson(day - 1)
+                        if yesterday_content:
+                            apology = """<div style="background-color:#fee2e2; border-left:4px solid #ef4444; padding:15px; margin-bottom:20px; border-radius:4px; font-family:sans-serif;">
+                                <p style="margin:0; color:#991b1b; font-weight:bold;">⚠️ Quick Update!</p>
+                                <p style="margin:5px 0 0; color:#991b1b; font-size:14px;">
+                                    Hey there, we hit a small technical hiccup generating today's Quiz. We've notified the admin to fix it! 
+                                    In the meantime, so you don't miss your morning Python routine, here's a recap of yesterday's lesson. 
+                                    The Quiz will be waiting for you in the dashboard soon!
+                                </p>
+                            </div>"""
+                            content = apology + yesterday_content
+                            is_quiz_day = False # Force lesson formatting for this email
+                            logging.warning(f"✅ Fallback to Day {day-1} lesson sent to Day {day} group.")
+                        else:
+                            raise quiz_err # If no yesterday content, let the outer handler skip the group
                 else:
                     logging.info(f"Cache Miss: Generating Day {day} Lesson...")
                     
