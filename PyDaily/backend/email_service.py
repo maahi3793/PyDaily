@@ -14,27 +14,29 @@ class EmailService:
 
     def send_email(self, recipient_list, subject, html_content):
         if not self.sender_email or not self.sender_password:
-             return False, "Credentials missing"
+             return [], [{"email": "N/A", "error": "Credentials missing"}]
+
+        success_list = []
+        failure_list = []
 
         try:
             # 1. Connect & Login
             server = smtplib.SMTP(self.smtp_server, self.smtp_port)
+            server.set_debuglevel(0) # Reduce noise
             server.starttls()
             server.login(self.sender_email, self.sender_password)
             
             # 2. Iterate and Send
-            failed = []
             for recipient in recipient_list:
+                target_email = recipient.get('email', 'Unknown')
                 try:
                     # SANDBOX LOGIC
-                    target_email = recipient['email']
                     final_subject = subject
 
                     if self.test_mode:
                         if not self.admin_email:
                             print(f"⚠️ Test Mode ON but no Admin Email set! Skipping {target_email}")
                             continue
-                        print(f"🧪 [TEST MODE] Redirecting {target_email} -> {self.admin_email}")
                         target_email = self.admin_email
                         final_subject = f"[TEST MODE] {subject}"
                         
@@ -44,8 +46,7 @@ class EmailService:
                     
                     # 5. Unsubscribe Footer
                     import urllib.parse
-                    # Don't unsubscribe admin in test mode
-                    unsub_email = urllib.parse.quote(recipient['email'])
+                    unsub_email = urllib.parse.quote(recipient.get('email', ''))
                     footer = f"""
                     <div style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 10px; font-size: 12px; color: #888; text-align: center;">
                         <p>You received this because you are part of the PyDaily Challenge.</p>
@@ -63,20 +64,26 @@ class EmailService:
                     
                     server.send_message(msg)
                     print(f"✅ Sent email to {target_email}")
+                    success_list.append(recipient)
                     
                 except Exception as e:
                     print(f"❌ Failed to send to {target_email}: {e}")
-                    failed.append(f"{target_email}: {str(e)}")
+                    f_rec = recipient.copy()
+                    f_rec['error'] = str(e)
+                    failure_list.append(f_rec)
 
             # 3. Quit
-            server.quit()
+            try:
+                server.quit()
+            except:
+                pass
             
-            if failed:
-                return False, f"Partial failure: {', '.join(failed)}"
-            return True, "Emails sent successfully!"
+            return success_list, failure_list
 
         except Exception as e:
-            return False, str(e)
+            print(f"🛑 SMTP Connection/Login Error: {e}")
+            # If the connection itself fails, all are marked as failed
+            return [], [{"email": "all", "error": str(e)}]
 
     def test_connection(self):
         try:

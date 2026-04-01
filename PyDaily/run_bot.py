@@ -86,12 +86,12 @@ def _send_motivation_quote(gemini, mailer, cache, today):
         return
 
     logging.info(f"Sending motivation to {len(active_students)} students...")
-    success, msg = mailer.send_email(active_students, "⚡ PyDaily: Mid-Day Boost", content)
+    success_list, failure_list = mailer.send_email(active_students, "⚡ PyDaily: Mid-Day Boost", content)
     
-    if success:
-        logging.info("✅ Motivation sent successfully.")
-    else:
-        logging.error(f"❌ Failed to send motivation: {msg}")
+    if success_list:
+        logging.info(f"✅ Motivation sent to {len(success_list)} students.")
+    if failure_list:
+        logging.error(f"❌ Failed to send motivation to {len(failure_list)} students: {failure_list}")
 
 
 def _send_weekly_digest(mailer, curriculum, today):
@@ -269,11 +269,12 @@ def _send_weekly_digest(mailer, curriculum, today):
         </div>
         '''
         
-        success, msg = mailer.send_email([student], "📅 Your Weekly Progress", email_body)
-        if success:
-            logging.info(f"✅ Weekly Digest sent to {student_email}")
+        success_list, failure_list = mailer.send_email([student], "📅 Your Weekly Progress", email_body)
+        if success_list:
+            # We don't strictly update a 'status' for weekly, but we can log success
+            logging.info(f"✅ Weekly Digest sent to {student['email']}")
         else:
-            logging.error(f"❌ Failed: {student_email}: {msg}")
+            logging.error(f"❌ Failed Weekly Digest for {student['email']}: {failure_list}")
 
 def run_morning_cycle(gemini, mailer, cache):
     logging.info("🌞 Starting Morning Cycle (Lessons)...")
@@ -417,16 +418,17 @@ def run_morning_cycle(gemini, mailer, cache):
                 logging.warning(f"Failed to inject Deep Dive link: {e}")
             # --------------------------------------------------------
 
-        success, msg = mailer.send_email(group, subject, email_body)
+        success_list, failure_list = mailer.send_email(group, subject, email_body)
         
-        if success:
+        if success_list:
             # 3. Update Status
             db = SupabaseManager()
-            for student in group:
+            for student in success_list:
                 db.admin_update_student_progress(student['email'], status='lesson_sent')
-            logging.info(f"✅ Sent Day {day} to {len(group)} students.")
-        else:
-            logging.error(f"❌ Failed Day {day}: {msg}")
+            logging.info(f"✅ Sent Day {day} to {len(success_list)} students.")
+        
+        if failure_list:
+            logging.error(f"❌ Failed Day {day} for {len(failure_list)} students. They will remain in PENDING. Errors: {failure_list}")
 
     # --- LINKEDIN AUTOMATION ---
     # (Scrapped: User declined Personal Profile posting)
@@ -509,15 +511,17 @@ def run_evening_cycle(gemini, mailer, cache):
                     db.save_daily_reminder(day, content)
             
             # 2. Send
-            success, msg = mailer.send_email(group, f"🌙 PyDaily Check-in: Day {day}", content)
-            if success:
+            success_list, failure_list = mailer.send_email(group, f"🌙 PyDaily Check-in: Day {day}", content)
+            
+            if success_list:
                 # 3. Update Status (Complete + Increment Day)
                 db = SupabaseManager()
-                for student in group:
+                for student in success_list:
                     db.admin_update_student_progress(student['email'], day=day+1, status='pending')
-                logging.info(f"✅ Sent Day {day} Reminders. Students promoted to Day {day+1}.")
-            else:
-                logging.error(f"❌ Failed Day {day} Reminders: {msg}")
+                logging.info(f"✅ Sent Day {day} Reminders to {len(success_list)} students. Promoted to Day {day+1}.")
+            
+            if failure_list:
+                logging.error(f"❌ Failed Day {day} Reminders for {len(failure_list)} students. Errors: {failure_list}")
         except Exception as e:
             logging.error(f"⚠️ CRITICAL: Failed to process Evening Batch for Day {day}: {e}")
             logging.warning("Skipping this group. Check logs.")
@@ -595,10 +599,9 @@ def run_insights_cycle(gemini, mailer, cache):
                 
                 subject = f"Feedback on Day {day}: {item.get('subject', 'Keep going!')}"
                 
-                success, msg = mailer.send_email([{'email': email}], subject, html_body)
-                
-                if success:
-                    # Mark as Sent
+                success_list, failure_list = mailer.send_email([{'email': email}], subject, html_body)
+                if success_list:
+                    # Mark feedback as sent
                     matched_sid = None
                     for va in valid_attempts:
                         if va['email'] == email:
@@ -608,6 +611,8 @@ def run_insights_cycle(gemini, mailer, cache):
                     if matched_sid:
                         db.admin_mark_feedback_sent(matched_sid, day)
                         logging.info(f"✅ Feedback sent to {email} for Day {day}.")
+                else:
+                    logging.error(f"❌ Failed AI Feedback for {email}: {failure_list}")
                 
         except Exception as e:
             logging.error(f"Failed to process insights for Day {day}: {e}")
