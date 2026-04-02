@@ -508,10 +508,11 @@ def render_dashboard():
                         st.warning("⚠️ Not Generated")
                         if st.button(f"⚡ Generate Quiz Day {day}"):
                              with st.spinner("Building Senior-Level Quiz..."):
-                                 # 1. Get History
-                                 history = cache.get_topics_history(day)
-                                 # 2. Generate
-                                 content = gemini.generate_quiz(day, history)
+                                 # Quiz scope: last 2 days only
+                                 from backend import curriculum
+                                 recent_days = [day-2, day-1]
+                                 recent_topics = [f"Day {d}: {curriculum.TOPICS.get(d, 'Topic')}" for d in recent_days if d > 0]
+                                 content = gemini.generate_quiz(day, recent_topics)
                                  cache.save_lesson(day, content)
                              st.success("Generated & Saved!")
                              st.rerun()
@@ -528,9 +529,11 @@ def render_dashboard():
                     
                     content = cache.get_lesson(day)
                     if not content:
-                        status_text.write(f"Generating Quiz...")
-                        history = cache.get_topics_history(day)
-                        content = gemini.generate_quiz(day, history)
+                        # Quiz scope: last 2 days only
+                        from backend import curriculum
+                        recent_days = [day-2, day-1]
+                        recent_topics = [f"Day {d}: {curriculum.TOPICS.get(d, 'Topic')}" for d in recent_days if d > 0]
+                        content = gemini.generate_quiz(day, recent_topics)
                         cache.save_lesson(day, content)
                     
                     status_text.write(f"Sending to {len(group)} students...")

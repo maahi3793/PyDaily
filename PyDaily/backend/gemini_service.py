@@ -128,43 +128,35 @@ Friendly, Mentor-like, use emojis sparingly.
         logging.error("All Gemini Lesson Retries Failed.")
         return "Error generating content: Max retries exceeded."
 
-    def generate_quiz(self, day_number, recent_topics, cumulative_topics):
+    def generate_quiz(self, day_number, recent_topics):
         logging.info(f"Attempting to generate JSON QUIZ for Day {day_number}")
         
-        # Combine lists for a Master Scope
-        all_allowed_topics = recent_topics + cumulative_topics
-        scope_str = "\n".join([f"- {t}" for t in all_allowed_topics])
+        scope_str = "\n".join([f"- {t}" for t in recent_topics])
 
         max_retries = 2
         for attempt in range(max_retries):
             try:
                 logging.info(f"Quiz Generation Attempt {attempt + 1}/{max_retries}")
                 
-                # Dynamic Prompt with Strict POSITIVE Constraints
                 prompt = f"""
                 You are a strict Exam Proctor generating a Python Quiz for a beginner student on Day {day_number}.
                 
-                *** CRITICAL SCOPE INSTRUCTION ***
-                The student has ONLY learned the following topics. 
-                You must NOT ask about anything outside this list. 
-                If a concept is not listed below, it does not exist in the student's universe yet.
+                *** ABSOLUTE SCOPE RESTRICTION ***
+                The student has ONLY learned the following 2 topics in the last 2 days.
+                You must generate ALL questions strictly from these topics ONLY.
+                Do NOT test ANY concept, syntax, or function that is not directly covered in these topics.
+                If you are unsure whether something was taught, DO NOT include it.
                 
-                ALLOWED KNOWLEDGE BASE:
+                THE ONLY ALLOWED TOPICS:
                 {scope_str}
-                
-                STRICT TOPIC SOURCES:
-                1. RECENT TOPICS (80% of Questions form here): {recent_topics}
-                2. REVIEW TOPICS (20% of Questions form here): {cumulative_topics}
                 
                 QUIZ SPECIFICATIONS:
                 - **Total Questions**: EXACTLY 20.
                 - **Format**: JSON.
                 - **Question Types**:
-                    - 12 Questions: Multiple Choice Theory/Concept Checks.
-                    - 8 Questions: "Guess the Output" Code Snippets (Multiple Choice).
-                - **Topic Distribution**:
-                    - 16 Questions must test RECENT TOPICS.
-                    - 4 Questions must test REVIEW TOPICS.
+                    - 12 Questions: Multiple Choice Theory/Concept Checks about the above topics.
+                    - 8 Questions: "Guess the Output" Code Snippets (Multiple Choice) using ONLY the above topics.
+                - **ALL 20 questions must test the topics listed above. No exceptions.**
                 
                 JSON SCHEMA:
                 {{
@@ -185,8 +177,8 @@ Friendly, Mentor-like, use emojis sparingly.
                 1. Return ONLY the raw JSON string. No Markdown.
                 2. Ensure "options" is a list of 4 distinct strings.
                 3. "answer" must match one of the "options" exactly.
-                4. **SCOPE CHECK**: Before generating a question, ask yourself: "Is the syntax/concept required to answer this found in the ALLOWED KNOWLEDGE BASE?" If no, discard it.
-                5. specifically, do NOT use Loops or Functions unless "Loops" or "Functions" appear explicitly in the ALLOWED KNOWLEDGE BASE.
+                4. **SCOPE CHECK**: Before generating EACH question, verify: "Is this concept in the ALLOWED TOPICS list?" If NO, discard it immediately.
+                5. Do NOT use any Python feature not explicitly mentioned in the allowed topics.
                 """
                 
                 response = self.client.models.generate_content(
@@ -204,12 +196,12 @@ Friendly, Mentor-like, use emojis sparingly.
                 if not text.startswith("{") or not text.endswith("}"):
                     raise ValueError("Output is not valid JSON structure")
 
-                # DEEP VALIDATION (The Fix for 'Empty Options')
+                # DEEP VALIDATION
                 import json
                 data = json.loads(text)
                 questions = data.get('questions', [])
                 
-                if len(questions) != 20: # STRICT CHECK
+                if len(questions) != 20:
                      raise ValueError(f"Incorrect question count: {len(questions)} (Expected 20)")
                 
                 for q in questions:
@@ -217,7 +209,7 @@ Friendly, Mentor-like, use emojis sparingly.
                     options = q.get('options', [])
                     if len(options) != 4: raise ValueError(f"Question {q.get('id')} has {len(options)} options (Expected 4)")
                     for opt in options:
-                        if len(opt.strip()) < 3: # "A) " is 3 chars. "A)" is 2. Empty string is 0.
+                        if len(opt.strip()) < 3:
                             raise ValueError(f"Empty or Malformed Option Detected: '{opt}'")
                 
                 logging.info("✅ Valid Quiz JSON Generated.")
@@ -227,9 +219,8 @@ Friendly, Mentor-like, use emojis sparingly.
                 logging.warning(f"Gemini Attempt {attempt+1} Failed Validation: {e}")
                 time.sleep(2)
         
-        # If we get here, all retries failed.
         logging.error("All Gemini Quiz Retries Failed.")
-        raise Exception("Failed to generate Quiz after 3 attempts.")
+        raise Exception("Failed to generate Quiz after retries.")
 
     def generate_class_insights(self, quiz_results_list, topic_context):
         logging.info(f"Generating CLASS INSIGHTS for {len(quiz_results_list)} students")

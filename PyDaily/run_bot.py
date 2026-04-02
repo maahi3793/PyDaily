@@ -308,17 +308,12 @@ def run_morning_cycle(gemini, mailer, cache):
                 if is_quiz_day:
                     logging.info(f"🎯 Quiz Day detected: Generating Quiz for Day {day}...")
                     
-                    # [FIX] Strict Curriculum Context (80/20 Rule)
-                    # Recent: The 2 days leading up to the quiz (e.g. for Day 9: Day 7, 8)
+                    # Quiz scope: ONLY the 2 days leading up to the quiz
                     recent_days = [day-2, day-1]
                     recent_topics = [f"Day {d}: {curriculum.TOPICS.get(d, 'Topic')}" for d in recent_days if d > 0]
                     
-                    # Cumulative: All days before recent (e.g. for Day 9: Day 1..6)
-                    all_prior_days = range(1, day-2)
-                    cumulative_topics = [f"Day {d}: {curriculum.TOPICS.get(d, 'Topic')}" for d in all_prior_days if d > 0 and "Quiz" not in curriculum.TOPICS.get(d, "")]
-                    
                     try:
-                        content = gemini.generate_quiz(day, recent_topics, cumulative_topics)
+                        content = gemini.generate_quiz(day, recent_topics)
                     except Exception as quiz_err:
                         logging.error(f"⚠️ QUIZ SAFETY NET TRIGGERED for Day {day}: {quiz_err}")
                         # Fallback: Send yesterday's lesson with an apology
@@ -708,13 +703,11 @@ def run_regeneration_cycle(day, gemini, mailer, cache):
     try:
         if is_quiz_day:
             logging.info(f"🎯 Regenerating Quiz for Day {day}...")
-            # Context Logic (Same as Morning Cycle)
+            # Quiz scope: ONLY the 2 days leading up to the quiz
             recent_days = [day-2, day-1]
             recent_topics = [f"Day {d}: {curriculum.TOPICS.get(d, 'Topic')}" for d in recent_days if d > 0]
-            all_prior_days = range(1, day-2)
-            cumulative_topics = [f"Day {d}: {curriculum.TOPICS.get(d, 'Topic')}" for d in all_prior_days if d > 0 and "Quiz" not in curriculum.TOPICS.get(d, "")]
             
-            content = gemini.generate_quiz(day, recent_topics, cumulative_topics)
+            content = gemini.generate_quiz(day, recent_topics)
             subject = f"🎯 [REGEN] Quiz Day {day}"
         else:
             logging.info(f"📘 Regenerating Lesson for Day {day}...")
