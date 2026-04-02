@@ -13,18 +13,23 @@ class SupabaseManager:
     """
     
     def __init__(self):
-        url = os.getenv("SUPABASE_URL")
-        key = os.getenv("SUPABASE_KEY")
-        service_key = os.getenv("SUPABASE_SERVICE_KEY")
+        # Try Streamlit Secrets first (Cloud), then fall back to os.getenv (local)
+        try:
+            import streamlit as st
+            url = st.secrets.get("SUPABASE_URL", "") or os.getenv("SUPABASE_URL")
+            key = st.secrets.get("SUPABASE_KEY", "") or os.getenv("SUPABASE_KEY")
+            service_key = st.secrets.get("SUPABASE_SERVICE_KEY", "") or os.getenv("SUPABASE_SERVICE_KEY")
+        except Exception:
+            url = os.getenv("SUPABASE_URL")
+            key = os.getenv("SUPABASE_KEY")
+            service_key = os.getenv("SUPABASE_SERVICE_KEY")
         
         if not url:
-            print(f"❌ Supabase URL Missing.")
             self.supabase = None
             self.admin_supabase = None
             return
 
         if not key and not service_key:
-             print(f"❌ Supabase Keys Missing (Need at least Anon Key or Service Key).")
              self.supabase = None
              self.admin_supabase = None
              return
