@@ -282,7 +282,6 @@ def run():
             with tab1:
                 # === DIAGNOSTIC BANNER (shows what the app can see) ===
                 try:
-                    import streamlit as st
                     has_url = "SUPABASE_URL" in st.secrets
                     has_key = "SUPABASE_KEY" in st.secrets
                     has_svc = "SUPABASE_SERVICE_KEY" in st.secrets
