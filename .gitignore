@@ -27,3 +27,21 @@ projects/PyNexus/dist/
 *.exe
 *.pkg
 *.pyz
+
+# Non-PyDaily projects (keep repo clean)
+TaskManager/
+git-odyssey/
+PythonBook/
+Practice/
+zen_nature_concept*
+EnterpriseDocIntel/
+LegacyLens/
+PyMandir/
+
+# Misc junk
+bandit_output.json
+parse_bandit.py
+parsed_bandit.txt
+check_git.py
+git_status_dump.txt
+non_pydaily.txt

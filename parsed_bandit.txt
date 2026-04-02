@@ -1,9 +1,0 @@
-SEVERITY: HIGH | FILE: c:\Users\reach\.gemini\antigravity\scratch\relaunchpython\PyDaily\projects\PyNexus\src\services\scaffolder.py | LINE: 124
-TEXT: subprocess call with shell=True identified, security issue.
---------------------------------------------------
-SEVERITY: HIGH | FILE: c:\Users\reach\.gemini\antigravity\scratch\relaunchpython\PyDaily\projects\PyNexus\src\services\workspace.py | LINE: 68
-TEXT: subprocess call with shell=True identified, security issue.
---------------------------------------------------
-SEVERITY: MEDIUM | FILE: c:\Users\reach\.gemini\antigravity\scratch\relaunchpython\PyDaily\projects\PythonBook\tools\debug_storage.py | LINE: 39
-TEXT: Call to requests without timeout
---------------------------------------------------
