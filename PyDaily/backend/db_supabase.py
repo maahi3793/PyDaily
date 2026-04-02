@@ -59,7 +59,7 @@ class SupabaseManager:
             })
             return res
         except Exception as e:
-            print(f"Login Failed: {e}")
+            raise Exception(f"Supabase: {e}")
             return None
 
     def refresh_session(self, refresh_token):
