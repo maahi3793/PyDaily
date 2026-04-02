@@ -280,6 +280,18 @@ def run():
 
             # LOGIN FORM
             with tab1:
+                # === DIAGNOSTIC BANNER (shows what the app can see) ===
+                try:
+                    import streamlit as st
+                    has_url = "SUPABASE_URL" in st.secrets
+                    has_key = "SUPABASE_KEY" in st.secrets
+                    has_svc = "SUPABASE_SERVICE_KEY" in st.secrets
+                    url_val = st.secrets.get("SUPABASE_URL", "NOT FOUND")
+                    masked = f"{url_val[:12]}...{url_val[-8:]}" if len(str(url_val)) > 20 else url_val
+                    st.caption(f"🔧 Secrets Check — URL: `{has_url}` ({masked}) | KEY: `{has_key}` | SVC: `{has_svc}` | db.supabase: `{db.supabase is not None}`")
+                except Exception as diag_err:
+                    st.caption(f"🔧 Diag error: {diag_err}")
+
                 with st.form("login_form"):
                     email = st.text_input("Email", placeholder="you@example.com")
                     password = st.text_input("Password", type="password")
@@ -287,24 +299,29 @@ def run():
                     submit = st.form_submit_button("Sign In ->", type="primary", use_container_width=True)
                 
                 if submit:
-                    with st.spinner("Authenticating..."):
-                        session = db.sign_in(email, password)
-                        if session:
-                            st.session_state["role"] = db.get_user_role(session.session.access_token)
-                            st.session_state["auth_token"] = session.session.access_token
-                            st.session_state["user_email"] = email
-                            
-                            # === SAVE TO COOKIES FOR PERSISTENT LOGIN ===
+                    if not db.supabase:
+                        st.error("⛔ Cannot sign in: Supabase client failed to initialize. Check your SUPABASE_URL and SUPABASE_KEY in Streamlit Secrets.")
+                    else:
+                        with st.spinner("Authenticating..."):
                             try:
-                                from streamlit_app import save_auth_cookies
-                                save_auth_cookies(session.session.access_token, session.session.refresh_token, email)
-                            except Exception as cookie_err:
-                                print(f"⚠️ Cookie save failed: {cookie_err}")
-                            
-
-                            st.rerun()
-                        else:
-                            st.error("Login failed.")
+                                session = db.sign_in(email, password)
+                                if session:
+                                    st.session_state["role"] = db.get_user_role(session.session.access_token)
+                                    st.session_state["auth_token"] = session.session.access_token
+                                    st.session_state["user_email"] = email
+                                    
+                                    # === SAVE TO COOKIES FOR PERSISTENT LOGIN ===
+                                    try:
+                                        from streamlit_app import save_auth_cookies
+                                        save_auth_cookies(session.session.access_token, session.session.refresh_token, email)
+                                    except Exception as cookie_err:
+                                        pass
+                                    
+                                    st.rerun()
+                                else:
+                                    st.error("❌ Login returned None (invalid credentials or empty response).")
+                            except Exception as e:
+                                st.error(f"🔴 **Login Exception:** `{e}`")
                 
                 # Forgot Password Section
                 st.markdown("---")
