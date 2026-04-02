@@ -280,15 +280,7 @@ def run():
 
             # LOGIN FORM
             with tab1:
-                # === DIAGNOSTIC BANNER (shows what the app can see) ===
-                try:
-                    has_url = "SUPABASE_URL" in st.secrets
-                    has_key = "SUPABASE_KEY" in st.secrets
-                    has_svc = "SUPABASE_SERVICE_KEY" in st.secrets
-                    url_val = st.secrets["SUPABASE_URL"] if has_url else "NOT FOUND"
-                    st.caption(f"🔧 Secrets Check — URL: `{url_val}` (len={len(str(url_val))}) | KEY: `{has_key}` | SVC: `{has_svc}` | db.supabase: `{db.supabase is not None}`")
-                except Exception as diag_err:
-                    st.caption(f"🔧 Diag error: {diag_err}")
+
 
                 with st.form("login_form"):
                     email = st.text_input("Email", placeholder="you@example.com")
