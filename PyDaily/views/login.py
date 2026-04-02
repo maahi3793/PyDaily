@@ -286,7 +286,7 @@ def run():
                     has_url = "SUPABASE_URL" in st.secrets
                     has_key = "SUPABASE_KEY" in st.secrets
                     has_svc = "SUPABASE_SERVICE_KEY" in st.secrets
-                    url_val = st.secrets.get("SUPABASE_URL", "NOT FOUND")
+                    url_val = st.secrets["SUPABASE_URL"] if has_url else "NOT FOUND"
                     masked = f"{url_val[:12]}...{url_val[-8:]}" if len(str(url_val)) > 20 else url_val
                     st.caption(f"🔧 Secrets Check — URL: `{has_url}` ({masked}) | KEY: `{has_key}` | SVC: `{has_svc}` | db.supabase: `{db.supabase is not None}`")
                 except Exception as diag_err:

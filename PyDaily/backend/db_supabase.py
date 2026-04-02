@@ -16,9 +16,9 @@ class SupabaseManager:
         # Try Streamlit Secrets first (Cloud), then fall back to os.getenv (local)
         try:
             import streamlit as st
-            url = st.secrets.get("SUPABASE_URL", "") or os.getenv("SUPABASE_URL")
-            key = st.secrets.get("SUPABASE_KEY", "") or os.getenv("SUPABASE_KEY")
-            service_key = st.secrets.get("SUPABASE_SERVICE_KEY", "") or os.getenv("SUPABASE_SERVICE_KEY")
+            url = st.secrets["SUPABASE_URL"] if "SUPABASE_URL" in st.secrets else os.getenv("SUPABASE_URL")
+            key = st.secrets["SUPABASE_KEY"] if "SUPABASE_KEY" in st.secrets else os.getenv("SUPABASE_KEY")
+            service_key = st.secrets["SUPABASE_SERVICE_KEY"] if "SUPABASE_SERVICE_KEY" in st.secrets else os.getenv("SUPABASE_SERVICE_KEY")
         except Exception:
             url = os.getenv("SUPABASE_URL")
             key = os.getenv("SUPABASE_KEY")
