@@ -130,13 +130,14 @@ Friendly, Mentor-like, use emojis sparingly.
 
     def generate_quiz(self, day_number, recent_topics):
         logging.info(f"Attempting to generate JSON QUIZ for Day {day_number}")
+        print(f"🎯 QUIZ GENERATION: Day {day_number} | Topics: {recent_topics}")
         
         scope_str = "\n".join([f"- {t}" for t in recent_topics])
 
-        max_retries = 2
+        max_retries = 3
         for attempt in range(max_retries):
             try:
-                logging.info(f"Quiz Generation Attempt {attempt + 1}/{max_retries}")
+                print(f"  Attempt {attempt + 1}/{max_retries}...")
                 
                 prompt = f"""
                 You are a strict Exam Proctor generating a Python Quiz for a beginner student on Day {day_number}.
@@ -212,15 +213,18 @@ Friendly, Mentor-like, use emojis sparingly.
                         if len(opt.strip()) < 3:
                             raise ValueError(f"Empty or Malformed Option Detected: '{opt}'")
                 
+                print(f"  ✅ Quiz generated successfully! ({len(questions)} questions, {len(text)} chars)")
                 logging.info("✅ Valid Quiz JSON Generated.")
                 return text
                 
             except Exception as e:
+                print(f"  ❌ Attempt {attempt+1} FAILED: {e}")
                 logging.warning(f"Gemini Attempt {attempt+1} Failed Validation: {e}")
-                time.sleep(2)
+                time.sleep(3)
         
+        print(f"❌ ALL {max_retries} QUIZ RETRIES FAILED for Day {day_number}")
         logging.error("All Gemini Quiz Retries Failed.")
-        raise Exception("Failed to generate Quiz after retries.")
+        raise Exception(f"Failed to generate Quiz for Day {day_number} after {max_retries} attempts.")
 
     def generate_class_insights(self, quiz_results_list, topic_context):
         logging.info(f"Generating CLASS INSIGHTS for {len(quiz_results_list)} students")
