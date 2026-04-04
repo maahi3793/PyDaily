@@ -514,7 +514,7 @@ Friendly, Mentor-like, use emojis sparingly.
                     system_instruction=self.system_instruction,
                 )
             )
-            text = response.text.replace('```json', '').replace('```', '').strip()
+            text = self._repair_json(response.text)
             
             import json
             # Validation check
@@ -526,3 +526,31 @@ Friendly, Mentor-like, use emojis sparingly.
         except Exception as e:
             logging.error(f"Boss Battle Gen Error: {e}")
             return []
+
+    def _repair_json(self, text):
+        """Cleans Gemini output to ensure it's a valid JSON string."""
+        if not text:
+            return ""
+        
+        # Remove markdown code blocks
+        text = text.replace('```json', '').replace('```', '').strip()
+        
+        # Find the first '{' or '[' and the last '}' or ']'
+        # To handle both single objects and arrays
+        start_obj = text.find('{')
+        start_arr = text.find('[')
+        
+        if start_obj == -1 and start_arr == -1:
+            return text
+            
+        start = start_obj if (start_obj != -1 and (start_arr == -1 or start_obj < start_arr)) else start_arr
+        
+        end_obj = text.rfind('}')
+        end_arr = text.rfind(']')
+        
+        end = end_obj if (end_obj > end_arr) else end_arr
+        
+        if start != -1 and end != -1 and end > start:
+            return text[start:end+1]
+            
+        return text
