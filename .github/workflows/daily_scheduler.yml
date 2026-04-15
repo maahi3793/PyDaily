@@ -32,7 +32,9 @@ jobs:
   run-bot:
     runs-on: ubuntu-latest
     
-    # ✅ FIX: Define secrets ONCE here. All steps below will inherit them.
+    permissions:
+      contents: write
+      
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
@@ -41,7 +43,6 @@ jobs:
       EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
       ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
       LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
-      MODE: '' # Initialize to silence linter
 
     steps:
       - uses: actions/checkout@v4
@@ -54,82 +55,24 @@ jobs:
       - name: Install Dependencies
         run: pip install -r PyDaily/requirements.txt
       
-      # ✅ DEBUG STEP
-      - name: Debug Secrets
-        run: |
-          python -c "import os; url = os.getenv('SUPABASE_URL', ''); print(f'DEBUG CHECK: URL Length is {len(url)}')"
-
-      # 🕵️‍♂️ DETERMINE RUN MODE (Fixes Schedule Issue + Delays)
-      - name: Determine Run Mode
-        id: mode
-        shell: python
-        run: |
-          import os
-          import datetime
-          
-          # 1. Check for Manual Trigger
-          event_name = "${{ github.event_name }}"
-          manual_action = "${{ github.event.inputs.action }}"
-          
-          mode = ""
-          
-          if event_name == "workflow_dispatch":
-              print(f"🔹 Manual Trigger Detected: {manual_action}")
-              mapping = {
-                  "Morning Lessons": "morning",
-                  "Quiz Insights": "insights",
-                  "Motivation Boost": "motivation",
-                  "Evening Reminders": "evening",
-                  "Regenerate Content": "regenerate"
-              }
-              mode = mapping.get(manual_action, "")
-              
-              # Handle Day Input
-              target_day = "${{ github.event.inputs.target_day }}"
-              if mode == "regenerate" and target_day == "0":
-                   print("⚠️ WARNING: Regenerate selected but Day is 0. Please specify a day.")
-              
-          elif event_name == "schedule":
-              cron_trigger = "${{ github.event.schedule }}"
-              print(f"🔹 Schedule Trigger Detected. Cron: {cron_trigger}")
-              
-              if cron_trigger == '30 2 * * *':
-                  mode = "morning"
-              elif cron_trigger == '30 6 * * *':
-                  mode = "motivation"
-              elif cron_trigger == '30 14 * * *':
-                  mode = "evening"
-              elif cron_trigger == '30 17 * * *':
-                  mode = "insights"
-              else:
-                  # Fallback just in case manual execution doesn't provide it
-                  now = datetime.datetime.utcnow()
-                  hour = now.hour
-                  if 2 <= hour <= 5: mode = "morning"
-                  elif 6 <= hour <= 8: mode = "motivation"
-                  elif 14 <= hour <= 16: mode = "evening"
-                  elif 17 <= hour <= 20: mode = "insights"
-                  
-          if not mode:
-              print("❌ Could not determine mode! Time/Schedule too far off.")
-              import sys
-              sys.exit(1)
-          
-          print(f"✅ Selected Mode: {mode}")
-          
-          # Write to GITHUB_ENV
-          with open(os.environ['GITHUB_ENV'], 'a') as f:
-              f.write(f"MODE={mode}\n")
-              if mode == "regenerate":
-                 f.write(f"TARGET_DAY={target_day}\n")
-
-      # 🚀 EXECUTE BOT
-      - name: Run Bot
-        if: env.MODE != ''
+      - name: Run PyDaily Bot
         working-directory: ./PyDaily
         run: |
-          if [ "${{ env.MODE }}" == "regenerate" ]; then
-            python run_bot.py --mode ${{ env.MODE }} --day ${{ env.TARGET_DAY }}
+          # Use manual override if workflow_dispatch was used, else use 'auto'
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+             if [ "${{ github.event.inputs.action }}" == "Regenerate Content" ]; then
+                python run_bot.py --mode regenerate --day ${{ github.event.inputs.target_day }}
+             elif [ "${{ github.event.inputs.action }}" == "Morning Lessons" ]; then
+                python run_bot.py --mode morning
+             elif [ "${{ github.event.inputs.action }}" == "Quiz Insights" ]; then
+                python run_bot.py --mode insights
+             elif [ "${{ github.event.inputs.action }}" == "Motivation Boost" ]; then
+                python run_bot.py --mode motivation
+             elif [ "${{ github.event.inputs.action }}" == "Evening Reminders" ]; then
+                python run_bot.py --mode evening
+             else
+                python run_bot.py --mode auto
+             fi
           else
-            python run_bot.py --mode ${{ env.MODE }}
+             python run_bot.py --mode auto
           fi

@@ -615,6 +615,60 @@ def run_insights_cycle(gemini, mailer, cache):
         except Exception as e:
             logging.error(f"Failed to process insights for Day {day}: {e}")
 
+def run_auto_cycle(gemini, mailer, cache):
+    """
+    State-Driven Smart Dispatcher.
+    Determines what needs to be done based on IST time and DB state.
+    """
+    import datetime
+    
+    # IST is UTC + 5:30
+    now_utc = datetime.datetime.utcnow()
+    ist_offset = datetime.timedelta(hours=5, minutes=30)
+    now_ist = now_utc + ist_offset
+    today_ist = now_ist.date()
+    hour_ist = now_ist.hour
+    
+    logging.info(f"🤖 Auto-Cycle Wakeup | IST Time: {now_ist.strftime('%H:%M')} | Date: {today_ist}")
+
+    db = SupabaseManager()
+    
+    # 1. MORNING LESSONS (Always catch up if students are pending)
+    contacts = db.admin_get_all_students()
+    pending = [c for c in contacts if c.get('status') == 'pending']
+    if pending:
+        logging.info(f"📋 Found {len(pending)} students pending lessons. Starting Morning Cycle Catch-up...")
+        run_morning_cycle(gemini, mailer, cache)
+    else:
+        logging.info("✅ No students pending lessons.")
+
+    # 2. MOTIVATION (Target: IST 12:00 onwards)
+    if hour_ist >= 12:
+        today_str = today_ist.isoformat()
+        content = cache.get_motivation(today_str)
+        if not content:
+            logging.info(f"⚡ Today's motivation missing in DB. Starting Motivation Cycle...")
+            run_motivation_cycle(gemini, mailer, cache)
+        else:
+            logging.info("✅ Motivation already sent/cached for today.")
+
+    # 3. EVENING REMINDERS (Target: IST 20:00 onwards)
+    if hour_ist >= 20:
+        # Check if anyone is in 'lesson_sent' status
+        contacts = db.admin_get_all_students()
+        sent = [c for c in contacts if c.get('status') == 'lesson_sent']
+        if sent:
+            logging.info(f"🌙 Found {len(sent)} students awaiting reminders. Starting Evening Cycle...")
+            
+            # THE "ONE CALENDAR DAY" CATCH-UP LOGIC
+            # If we are running very late (towards midnight), we don't enforce the 6-hour buffer
+            # to ensure they get all 3 mails before the date flips.
+            run_evening_cycle(gemini, mailer, cache)
+        else:
+            logging.info("✅ No students awaiting reminders for the evening.")
+
+    logging.info("🏁 Auto-Cycle Complete.")
+
 def main():
     parser = argparse.ArgumentParser(description="PyDaily Automation Bot")
     parser.add_argument('--mode', choices=['morning', 'evening', 'motivation', 'insights', 'regenerate'], required=True, help="Mode to run")
@@ -664,6 +718,8 @@ def main():
         run_motivation_cycle(gemini, mailer, cache)
     elif args.mode == 'insights':
         run_insights_cycle(gemini, mailer, cache)
+    elif args.mode == 'auto':
+        run_auto_cycle(gemini, mailer, cache)
     elif args.mode == 'regenerate':
         if not args.day:
             logging.error("❌ You must specify --day for regeneration mode.")
