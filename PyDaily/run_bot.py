@@ -671,7 +671,7 @@ def run_auto_cycle(gemini, mailer, cache):
 
 def main():
     parser = argparse.ArgumentParser(description="PyDaily Automation Bot")
-    parser.add_argument('--mode', choices=['morning', 'evening', 'motivation', 'insights', 'regenerate'], required=True, help="Mode to run")
+    parser.add_argument('--mode', choices=['morning', 'evening', 'motivation', 'insights', 'regenerate', 'auto'], required=True, help="Mode to run")
     parser.add_argument('--day', help="Specific Day ID (Required for regeneration)")
     args = parser.parse_args()
 
