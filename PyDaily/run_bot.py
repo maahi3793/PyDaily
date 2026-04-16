@@ -667,6 +667,11 @@ def run_auto_cycle(gemini, mailer, cache):
         else:
             logging.info("✅ No students awaiting reminders for the evening.")
 
+    # 4. QUIZ INSIGHTS (Target: IST 23:00 onwards)
+    if hour_ist >= 22: # 22 is safer than 23 just in case of slight early execution
+        logging.info("🧠 Checking for AI Insights generation...")
+        run_insights_cycle(gemini, mailer, cache)
+
     logging.info("🏁 Auto-Cycle Complete.")
 
 def main():
