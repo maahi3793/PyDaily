@@ -633,12 +633,30 @@ def run_auto_cycle(gemini, mailer, cache):
 
     db = SupabaseManager()
     
+    # --- DATE BARRIER LOGIC ---
+    # Prevents processing multiple days in a single calendar date (IST)
+    already_progressed_today = False
+    try:
+        res = db.admin_supabase.table('daily_content').select('created_at').order('created_at', desc=True).limit(1).execute()
+        if res.data:
+            latest_dt_str = res.data[0]['created_at']
+            latest_dt = datetime.datetime.fromisoformat(latest_dt_str.replace('Z', '+00:00'))
+            latest_ist = latest_dt + ist_offset
+            if latest_ist.date() == today_ist:
+                already_progressed_today = True
+    except Exception as e:
+        logging.error(f"Error checking date barrier: {e}")
+
     # 1. MORNING LESSONS (Always catch up if students are pending)
     contacts = db.admin_get_all_students()
     pending = [c for c in contacts if c.get('status') == 'pending']
     if pending:
-        logging.info(f"📋 Found {len(pending)} students pending lessons. Starting Morning Cycle Catch-up...")
-        run_morning_cycle(gemini, mailer, cache)
+        if already_progressed_today:
+            logging.info("⏸️ A lesson was already generated today. Skipping Morning cycle to avoid double-days.")
+        else:
+            logging.info(f"📋 Found {len(pending)} students pending lessons. Starting Morning Cycle Catch-up...")
+            run_morning_cycle(gemini, mailer, cache)
+            already_progressed_today = True
     else:
         logging.info("✅ No students pending lessons.")
 
