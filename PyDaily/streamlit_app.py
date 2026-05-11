@@ -137,37 +137,18 @@ def main():
                 clear_auth_cookies()
                 st.rerun()
 
-    # --- ROUTING ---
-    # 0. Public Routes (Query Param Based)
-    query_params = st.query_params
-    if query_params.get("page") == "unsubscribe":
-        from views import unsubscribe
-        unsubscribe.run()
-        return # Stop execution of main app
-
-    # 1. Private Routes (Role Based)
-    if role == "guest":
-        from views import login
-        login.run()
-    
-    elif role == "demo":
-        from views.student import demo
-        demo.run()
-    elif role == "admin":
-        from views.admin import dashboard
-        dashboard.run()
-        
-    elif role == "student" or role == "user":
-        # 'user' is the new standard role for students
-        # st.info("🎓 Student Portal Under Construction")
-        from views.student import dashboard
-        dashboard.run()
-        
-    else:
-        st.error(f"Unknown Role: {role}")
-        if st.button("Reset"):
-            st.session_state["role"] = "guest"
-            st.rerun()
+    # --- SHUTDOWN OVERRIDE ---
+    st.markdown("""
+    <div style="text-align: center; padding: 50px; margin-top: 50px; border: 1px solid #e0e0e0; border-radius: 12px; background-color: #f9fafb;">
+        <h1 style="font-size: 2.5rem; color: #4F46E5; margin-bottom: 20px;">PyDaily is Paused</h1>
+        <p style="font-size: 18px; color: #475569; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+            Thank you for being part of the PyDaily community! The program is currently paused and the learning portal is temporarily shut down. 
+        </p>
+        <p style="font-size: 16px; color: #64748b; margin-top: 20px;">
+            Keep coding! 🚀
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
