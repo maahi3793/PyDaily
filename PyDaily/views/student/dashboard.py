@@ -306,6 +306,8 @@ def run():
                         
                         for q in quiz_data.get('questions', []):
                             st.markdown(f"**Q{q.get('id')}: {q.get('question')}**")
+                            if q.get('code_snippet'):
+                                st.code(q.get('code_snippet'), language='python')
                             # Radio button for options
                             user_val = st.radio(
                                 "Select Answer:", 

@@ -4,6 +4,8 @@ from google import genai
 from google.genai import types
 import logging
 import warnings
+from pydantic import BaseModel, Field
+from typing import List, Optional
 
 # Suppress Deprecation Warnings (valid until late 2026)
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -14,6 +16,19 @@ logging.basicConfig(
     level=logging.INFO, 
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
+
+class QuizQuestion(BaseModel):
+    id: int
+    type: str = Field(description="Question type. Must be 'theory' (concept checks) or 'code' (guess the output/analyze snippet).")
+    question: str = Field(description="The question prompt. Do NOT embed Python code snippets directly here; use the code_snippet field for code.")
+    code_snippet: Optional[str] = Field(None, description="Optional Python code snippet (strictly formatted, valid syntax) for 'code' type questions. Keep null/None for 'theory' questions.")
+    options: List[str] = Field(description="Exactly 4 distinct multiple-choice options. One of these options must match the correct answer exactly.")
+    answer: str = Field(description="The correct answer. Must match one of the items in 'options' exactly.")
+    explanation: str = Field(description="A brief explanation of why the answer is correct.")
+
+class Quiz(BaseModel):
+    title: str
+    questions: List[QuizQuestion]
 
 class GeminiService:
     def __init__(self, api_key):
@@ -153,51 +168,35 @@ Friendly, Mentor-like, use emojis sparingly.
                 
                 QUIZ SPECIFICATIONS:
                 - **Total Questions**: EXACTLY 20.
-                - **Format**: JSON.
                 - **Question Types**:
                     - 12 Questions: Multiple Choice Theory/Concept Checks about the above topics.
                     - 8 Questions: "Guess the Output" Code Snippets (Multiple Choice) using ONLY the above topics.
+                      For 'code' type questions:
+                      - Put the Python code in the `code_snippet` field.
+                      - Do NOT include the code snippet text in the `question` field; the `question` field should only contain the prompt (e.g. "What is the output of this code?").
+                      - Ensure the code snippet has correct syntax and is executable.
                 - **ALL 20 questions must test the topics listed above. No exceptions.**
                 
-                JSON SCHEMA:
-                {{
-                    "title": "Day {day_number} Checkpoint",
-                    "questions": [
-                        {{
-                            "id": 1,
-                            "type": "theory",
-                            "question": "What is the result of ...",
-                            "options": ["A) ...", "B) ...", "C) ...", "D) ..."],
-                            "answer": "A) ...", 
-                            "explanation": "..."
-                        }}
-                    ]
-                }}
-                
                 STRICT RULES:
-                1. Return ONLY the raw JSON string. No Markdown.
-                2. Ensure "options" is a list of 4 distinct strings.
-                3. "answer" must match one of the "options" exactly.
-                4. **SCOPE CHECK**: Before generating EACH question, verify: "Is this concept in the ALLOWED TOPICS list?" If NO, discard it immediately.
-                5. Do NOT use any Python feature not explicitly mentioned in the allowed topics.
+                1. Ensure "options" is a list of exactly 4 distinct strings.
+                2. "answer" must match one of the "options" exactly.
+                3. **SCOPE CHECK**: Before generating EACH question, verify: "Is this concept in the ALLOWED TOPICS list?" If NO, discard it immediately.
+                4. Do NOT use any Python feature not explicitly mentioned in the allowed topics.
                 """
                 
                 response = self.client.models.generate_content(
-                model=self.model_name,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    system_instruction=self.system_instruction,
+                    model=self.model_name,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        system_instruction=self.system_instruction,
+                        response_mime_type="application/json",
+                        response_schema=Quiz,
+                    )
                 )
-            )
                 
-                # Clean potential markdown with new Robust Repair Helper
-                text = self._repair_json(response.text)
+                text = response.text
                 
-                # Basic Validation: Check if it looks like JSON
-                if not text.startswith("{") or not text.endswith("}"):
-                    raise ValueError("Output is not valid JSON structure")
-
-                # DEEP VALIDATION
+                # Double-check JSON structure
                 import json
                 data = json.loads(text)
                 questions = data.get('questions', [])
@@ -212,6 +211,9 @@ Friendly, Mentor-like, use emojis sparingly.
                     for opt in options:
                         if len(opt.strip()) < 3:
                             raise ValueError(f"Empty or Malformed Option Detected: '{opt}'")
+                    # Ensure answer matches one of the options
+                    if q.get('answer') not in options:
+                        raise ValueError(f"Correct answer '{q.get('answer')}' is not one of the options: {options}")
                 
                 print(f"  ✅ Quiz generated successfully! ({len(questions)} questions, {len(text)} chars)")
                 logging.info("✅ Valid Quiz JSON Generated.")
