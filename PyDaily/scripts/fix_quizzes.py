@@ -102,8 +102,8 @@ def main():
         logging.info("🎉 All quizzes are up-to-date and conform to the new schema. Nothing to do!")
         return
         
-    # 5. Process and regenerate up to 3 quizzes in this run
-    max_regenerations = 3
+    # 5. Process and regenerate up to 1 quizzes in this run
+    max_regenerations = 1
     processed_count = 0
     
     for day, reason in legacy_or_missing_days:
