@@ -70,7 +70,7 @@ def main():
     for day in quiz_days:
         content = existing_content.get(day)
         if not content:
-            legacy_or_missing_days.append((day, "Missing in DB"))
+            # Skip future quiz days that have not been generated in the DB yet
             continue
             
         try:
