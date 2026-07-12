@@ -142,7 +142,8 @@ def main():
             logging.error(f"Failed to regenerate quiz for Day {day}: {e}")
             if "429" in error_msg or "quota" in error_msg or "exhausted" in error_msg:
                 logging.critical("API Quota Exhausted! Aborting the script entirely to prevent spamming the API.")
-                break
+                import sys
+                sys.exit(1)
             # Continue to next day
             continue
             
