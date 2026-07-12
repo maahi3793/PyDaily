@@ -36,7 +36,7 @@ class GeminiService:
         logging.info(f"Configuring Gemini with Key: {api_key[:5]}...{api_key[-3:]}")
         self.client = genai.Client(api_key=api_key)
         
-        self.model_name = 'gemini-2.5-flash'
+        self.model_name = 'gemini-1.5-flash'
         logging.info(f"Using Model: {self.model_name}")
         self.system_instruction = """
 You are "PyDaily", an enthusiastic, expert Python Tutor bot.
