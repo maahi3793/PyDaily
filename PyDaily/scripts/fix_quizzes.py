@@ -138,7 +138,11 @@ def main():
             processed_count += 1
             
         except Exception as e:
+            error_msg = str(e).lower()
             logging.error(f"Failed to regenerate quiz for Day {day}: {e}")
+            if "429" in error_msg or "quota" in error_msg or "exhausted" in error_msg:
+                logging.critical("API Quota Exhausted! Aborting the script entirely to prevent spamming the API.")
+                break
             # Continue to next day
             continue
             
