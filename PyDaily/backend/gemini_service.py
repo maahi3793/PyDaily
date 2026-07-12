@@ -11,11 +11,8 @@ from typing import List, Optional
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Setup Logging
-logging.basicConfig(
-    filename='pydaily.log', 
-    level=logging.INFO, 
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+# Removed basicConfig to prevent hijacking the root logger. Scripts that import this should configure logging themselves.
+
 
 class QuizQuestion(BaseModel):
     id: int
@@ -145,7 +142,7 @@ Friendly, Mentor-like, use emojis sparingly.
 
     def generate_quiz(self, day_number, recent_topics):
         logging.info(f"Attempting to generate JSON QUIZ for Day {day_number}")
-        print(f"🎯 QUIZ GENERATION: Day {day_number} | Topics: {recent_topics}")
+        print(f"QUIZ GENERATION: Day {day_number} | Topics: {recent_topics}")
         
         scope_str = "\n".join([f"- {t}" for t in recent_topics])
 
@@ -209,22 +206,22 @@ Friendly, Mentor-like, use emojis sparingly.
                     options = q.get('options', [])
                     if len(options) != 4: raise ValueError(f"Question {q.get('id')} has {len(options)} options (Expected 4)")
                     for opt in options:
-                        if len(opt.strip()) < 3:
-                            raise ValueError(f"Empty or Malformed Option Detected: '{opt}'")
+                        if len(opt.strip()) < 1:
+                            raise ValueError(f"Empty Option Detected: '{opt}'")
                     # Ensure answer matches one of the options
                     if q.get('answer') not in options:
                         raise ValueError(f"Correct answer '{q.get('answer')}' is not one of the options: {options}")
                 
-                print(f"  ✅ Quiz generated successfully! ({len(questions)} questions, {len(text)} chars)")
-                logging.info("✅ Valid Quiz JSON Generated.")
+                print(f"  Quiz generated successfully! ({len(questions)} questions, {len(text)} chars)")
+                logging.info("Valid Quiz JSON Generated.")
                 return text
                 
             except Exception as e:
-                print(f"  ❌ Attempt {attempt+1} FAILED: {e}")
+                print(f"  Attempt {attempt+1} FAILED: {e}")
                 logging.warning(f"Gemini Attempt {attempt+1} Failed Validation: {e}")
                 time.sleep(3)
         
-        print(f"❌ ALL {max_retries} QUIZ RETRIES FAILED for Day {day_number}")
+        print(f"ALL {max_retries} QUIZ RETRIES FAILED for Day {day_number}")
         logging.error("All Gemini Quiz Retries Failed.")
         raise Exception(f"Failed to generate Quiz for Day {day_number} after {max_retries} attempts.")
 

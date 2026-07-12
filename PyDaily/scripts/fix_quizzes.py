@@ -7,6 +7,10 @@ from dotenv import load_dotenv
 # Ensure we are in the PyDaily directory or add to path
 sys.path.append(os.getcwd())
 
+# Force UTF-8 encoding for standard output to support emojis on Windows runners
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 from backend import curriculum
 from backend.db_supabase import SupabaseManager
 from backend.gemini_service import GeminiService
@@ -19,11 +23,12 @@ logging.basicConfig(
     handlers=[
         logging.FileHandler("pydaily.log"),
         logging.StreamHandler(sys.stdout)
-    ]
+    ],
+    force=True
 )
 
 def main():
-    logging.info("🚀 Starting Scheduled Quiz Auto-Regeneration Script...")
+    logging.info("Starting Scheduled Quiz Auto-Regeneration Script...")
     
     # Load Environment variables
     load_dotenv()
@@ -99,7 +104,7 @@ def main():
     logging.info(f"Found {len(legacy_or_missing_days)} quizzes that are legacy or missing.")
     
     if not legacy_or_missing_days:
-        logging.info("🎉 All quizzes are up-to-date and conform to the new schema. Nothing to do!")
+        logging.info("All quizzes are up-to-date and conform to the new schema. Nothing to do!")
         return
         
     # 5. Process and regenerate up to 1 quizzes in this run
@@ -111,7 +116,7 @@ def main():
             logging.info(f"Reached limit of {max_regenerations} regenerations per run. Exiting.")
             break
             
-        logging.info(f"🔄 Regenerating Quiz for Day {day}. Reason: {reason}")
+        logging.info(f"Regenerating Quiz for Day {day}. Reason: {reason}")
         
         # Determine strict 2-day scope (preceding two days)
         recent_days = [day - 2, day - 1]
@@ -129,15 +134,15 @@ def main():
             
             # Save/Overwrite to DB
             cache.save_lesson(day, new_quiz_json, topic_override="Quiz Day (Review)")
-            logging.info(f"✅ Successfully regenerated and saved quiz for Day {day}.")
+            logging.info(f"Successfully regenerated and saved quiz for Day {day}.")
             processed_count += 1
             
         except Exception as e:
-            logging.error(f"❌ Failed to regenerate quiz for Day {day}: {e}")
+            logging.error(f"Failed to regenerate quiz for Day {day}: {e}")
             # Continue to next day
             continue
             
-    logging.info(f"🏁 Finished run. Regenerated {processed_count} quizzes.")
+    logging.info(f"Finished run. Regenerated {processed_count} quizzes.")
 
 if __name__ == "__main__":
     main()
