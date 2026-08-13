@@ -149,26 +149,22 @@ def main():
     if role == "guest":
         from views import login
         login.run()
-    else:
-        # PAUSE SCREEN FOR ALL LOGGED IN USERS
-        st.markdown("""
-        <div style="text-align: center; padding: 50px; margin-top: 50px; border: 1px solid #e0e0e0; border-radius: 12px; background-color: #f9fafb;">
-            <h1 style="font-size: 2.5rem; color: #4F46E5; margin-bottom: 20px;">Dashboard is Paused</h1>
-            <p style="font-size: 18px; color: #475569; max-width: 600px; margin: 0 auto; line-height: 1.6;">
-                Thank you for logging in! The student portal is temporarily paused for maintenance.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+    elif role == "demo":
+        from views.student import demo
+        demo.run()
+    elif role == "admin":
+        from views.admin import dashboard
+        dashboard.run()
         
-        if st.button("Logout"):
-            from backend.db_supabase import SupabaseManager
-            db = SupabaseManager()
-            db.sign_out()
+    elif role == "student" or role == "user":
+        # 'user' is the new standard role for students
+        from views.student import dashboard
+        dashboard.run()
+        
+    else:
+        st.error(f"Unknown Role: {role}")
+        if st.button("Reset"):
             st.session_state["role"] = "guest"
-            st.session_state.pop("user_email", None)
-            st.session_state.pop("auth_token", None)
-            st.session_state.pop("session_restored", None)
-            clear_auth_cookies()
             st.rerun()
 
 if __name__ == "__main__":
