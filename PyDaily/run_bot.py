@@ -5,6 +5,10 @@ import logging
 import time
 import datetime
 
+# PAUSE ALL AUTOMATIONS
+print("All automations are currently paused by Admin request.")
+sys.exit(0)
+
 # print("--- STARTUP DIAGNOSTICS ---")
 # print(f"CWD: {os.getcwd()}")
 # print(f"PYTHONPATH: {sys.path}")

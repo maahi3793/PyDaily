@@ -4,6 +4,10 @@ import json
 import logging
 from dotenv import load_dotenv
 
+# PAUSE ALL AUTOMATIONS
+print("All automations are currently paused by Admin request.")
+sys.exit(0)
+
 # Ensure we are in the PyDaily directory or add to path
 sys.path.append(os.getcwd())
 
